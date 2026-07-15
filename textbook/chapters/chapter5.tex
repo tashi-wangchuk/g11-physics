@@ -66,7 +66,27 @@ there are two distinguishing types when surfaces are in contact with each other.
 
 When two surfaces move relative to one another, the friction is called \textbf{\textit{kinetic friction}} (or \textbf{\textit{sliding friction}}). When the surfaces are stationary relative to each other but a lateral force is present, the friction is called \textbf{\textit{static friction}}.
 
-Leonardo da Vinci was the first to record systematic measurements of kinetic friction, over a period spanning 1493 to about 1515. His results were rediscovered and published by Guillaume Amontons in 1699, and extended by Charles-Augustin Coulomb, who showed that kinetic friction is also independent of sliding speed for ordinary speeds.
+\begin{predictbox}[5.1: The brick, flat or standing?]
+Take a brick (or this textbook). You can drag it lying \emph{flat} (large face
+down) or standing on its \emph{edge} (small face down). The weight is the same
+either way; only the contact area changes --- by a factor of three or four.
+Predict: to slide it at steady speed, which orientation needs the harder
+pull? Flat, on edge, or no difference? Write your answer down with a one-line
+reason --- then, if a spring scale or a rubber band is handy, test it before
+reading on.
+\end{predictbox}
+
+You have just repeated, with a brick, the experiments Leonardo da Vinci
+recorded in his notebooks over the years 1493 to about 1515 --- the first
+systematic measurements of kinetic friction ever made. Dragging blocks with
+hanging weights and pulleys, he found the two facts that still carry his
+fingerprints today: the force needed to slide a block is proportional to how
+hard the surfaces are pressed together, and --- the surprise --- it does
+\emph{not} depend on the area of contact. Da Vinci never published; his
+results were rediscovered and published by Guillaume Amontons in 1699, and
+extended by Charles-Augustin Coulomb, who showed that kinetic friction is
+also independent of sliding speed for ordinary speeds. Hold on to your brick
+prediction; the second of da Vinci's facts will grade it in a moment.
 
 \subsection{Kinetic Friction}
 
@@ -74,7 +94,7 @@ The magnitude of the kinetic friction force $\vec{f}^{\,k}$ is proportional to t
 \begin{equation}
     f_k = \mu_k \mathscr{N}\,,
 \end{equation}
-where $\mu_k$ is the \textbf{\textit{coefficient of kinetic friction}}, a dimensionless constant depending only on the two materials in contact. A notable result is that $f_k$ is independent of the apparent contact area. Two blocks of the same mass but different footprints require the same force to slide at constant speed (Figure~\ref{fig:kineticarea}). This follows from the microscopic structure of surfaces, as discussed in the next section.
+where $\mu_k$ is the \textbf{\textit{coefficient of kinetic friction}}, a dimensionless constant depending only on the two materials in contact. Now look at what this law does \emph{not} contain: the contact area. The flat brick and the standing brick need exactly the same pull --- if your prediction in Stop and Predict 5.1 said otherwise, you are with the majority, and with common sense; but the experiment (da Vinci's and yours) says no difference. Two blocks of the same mass but different footprints require the same force to slide at constant speed (Figure~\ref{fig:kineticarea}). Roughly speaking: the flat brick spreads its weight over more contact points, but presses each one more lightly; the standing brick concentrates the same weight on fewer, harder-pressed points. The two effects cancel. This follows from the microscopic structure of surfaces, as discussed in the next section.
 
 \begin{figure}[ht]
 \centering
@@ -416,8 +436,33 @@ A common misconception deserves to be addressed before we proceed. The normal fo
 
 
 \section*{Experience in an Elevator}
- 
-Consider a person of mass $m = 60\,\mathrm{kg}$ standing on a scale inside an elevator.
+
+Now we take the bathroom scale somewhere interesting. If a scale measures
+the normal force --- not gravity --- then the reading should change whenever the
+normal force has to do something other than just hold you up. An elevator is
+the perfect laboratory: it can accelerate up, accelerate down, cruise, and
+(in a thought experiment we will keep hypothetical) drop freely.
+
+\begin{predictbox}[5.2: Four rides on a scale]
+A 60\,kg person stands on a scale in an elevator. At rest the scale reads
+60.0\,kg. Predict --- more than 60, less than 60, exactly 60, or zero? --- for
+each ride, \emph{before} reading the analysis:
+\begin{enumerate}[leftmargin=2em, itemsep=1pt]
+  \item The elevator moves \emph{upward at a steady} $5\,\mathrm{m/s}$.
+  \item The elevator \emph{accelerates upward}.
+  \item The elevator \emph{accelerates downward} (slowing while going up, or
+        speeding up while going down).
+  \item The cable snaps and the elevator \emph{falls freely}.
+\end{enumerate}
+Ride 1 is the one people argue about longest --- ``moving up'' feels like it
+should read more. Commit to all four; the next pages check them one by one.
+\end{predictbox}
+
+\noindent\textit{On the companion site:} the \textbf{elevator simulator}
+(\texttt{Chapter 5} on the course website) has an acceleration slider and a
+live scale readout --- test your four predictions there before or after the
+analysis, and watch the cable snap in case~4.
+
 In each case exactly two forces act on the person: the gravitational force $m\vec{g}$
 directed downward and the normal force $\vec{\mathscr{N}}$ directed upward.
  
@@ -439,6 +484,12 @@ so that
 \end{equation*}
 The scale displays $\mathscr{N}/g = 60.0\,\mathrm{kg}$. Here the apparent weight equals the
 true weight, which is why we never notice the distinction in ordinary standing.
+Note what this settles about ride~1 of your predictions: a steady
+$5\,\mathrm{m/s}$ upward is \emph{zero acceleration}, so the scale reads
+exactly 60.0 --- the reading cares about acceleration, never about velocity.
+If a sealed elevator cruises perfectly smoothly, no scale (and no sensation
+in your stomach) can tell you whether you are moving at all. That is the
+first law speaking.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.6\textwidth}
@@ -619,9 +670,27 @@ because there is no longer any contact force to register. This is exactly what w
  
 
 
-\section*{A Glimpse of Something Deeper (Supplementary)}
+\begin{checkpoint}[5.1: The floating astronaut]
+Astronauts on the International Space Station float freely inside the cabin.
+The station orbits about 400\,km above the Earth's surface. The astronauts
+float because
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0pt]
+  \item at that altitude they are beyond the reach of the Earth's gravity.
+  \item the Earth's gravity is cancelled by the pull of the Moon and Sun.
+  \item they and the station are both in free fall, falling around the Earth together.
+  \item the station's speed generates an outward force that balances gravity.
+\end{enumerate}
+\checkanswer{Answer: (c). At 400 km up, the Earth's gravity is still about
+90\% of its surface strength --- answer (a) is the single most common
+misconception in this course. The station and everyone in it are permanently
+in case (d) of the elevator: falling freely, together, all the time. Their
+sideways speed simply makes them keep missing the Earth --- which is what an
+orbit is, as the section on gravitation will make precise.}
+\end{checkpoint}
 
-We close with a question that troubled Einstein and ultimately led him to general relativity.
+\begin{supplementary}{A Glimpse of Something Deeper: The Equivalence Principle}
+
+We close the elevator story with a question that troubled Einstein and ultimately led him to general relativity.
 Imagine you wake up inside a sealed box with no windows. You feel a normal force pressing
 up on your feet. How could you tell whether you are sitting stationary on the surface of the
 Earth, with gravity pulling you down, or drifting in empty space far from any planet, with
@@ -662,6 +731,7 @@ energy. Objects in free fall follow the straightest possible paths through this 
 The bending of light, the slowing of clocks in gravitational fields, the existence of
 gravitational waves, and the physics of black holes all follow from the same geometric
 framework. The elevator we analysed today is the first step in that journey.
+\end{supplementary}
 
 
 
@@ -998,3 +1068,250 @@ Then integrate again to find the angle:
     \theta(t_1) - \theta(0) = \int_0^{t_1}\omega_z(t')\,dt' = \int_0^{t_1} b\!\left(t' - \frac{t'^2}{2t_1}\right)dt' = b\!\left[\frac{t_1^2}{2} - \frac{t_1^2}{6}\right] = \frac{bt_1^2}{3}.
 \]
 \end{workedexample}
+
+
+\newpage
+% ==============================================================
+\section{Gravitation: The Moon is Falling}
+% ==============================================================
+
+At the start of our circular-motion story we repeated Newton's remark: the
+Moon is always \emph{falling} towards the Earth --- otherwise, by the first
+law, it would fly off in a straight line. We now have every tool needed to
+take that remark seriously, and it leads to one of the greatest
+predict-and-check episodes in the history of science. This section retells
+it, and asks you to redo Newton's arithmetic yourself.
+
+In 1665 the plague closed Cambridge University, and the 23-year-old Newton
+retreated to his family farm at Woolsthorpe. By his own (much later) telling,
+watching an apple fall in the garden set him wondering: the Earth's pull
+evidently reaches the top of the tallest tree --- might it reach all the way
+to the Moon? If so, the Moon's endless circling and the apple's brief drop
+would be \emph{the same phenomenon}. No one had ever connected the heavens
+and the ground by a single law. The idea is bold; what makes it science is
+that it can be checked by a number.
+
+\begin{predictbox}[5.3: Newton's own prediction]
+Suppose the Earth's pull weakens with the \emph{square} of the distance from
+the Earth's centre --- Newton's guess, partly inspired by how the light of a
+lamp dilutes with distance. An apple sits about one Earth radius from the
+centre ($R_E \approx 6.37\times10^6$\,m). The Moon sits about
+\emph{sixty} Earth radii away. Under the inverse-square guess:
+\begin{enumerate}[leftmargin=2em, itemsep=1pt]
+  \item How many times weaker should gravity be at the Moon than at the apple?
+  \item The apple accelerates at $g = 9.8\;\mathrm{m/s^2}$. Predict the Moon's
+        acceleration.
+\end{enumerate}
+Answer both before reading on --- then we will \emph{measure} the Moon's actual
+acceleration, using nothing but the circular-motion formulas you just learned
+and two numbers astronomers have known since antiquity.
+\end{predictbox}
+
+\subsection{The Moon Test}
+
+If the inverse-square guess is right, gravity at the Moon should be weaker by
+a factor of $60^2 = 3600$, so the Moon should be falling with acceleration
+\begin{equation*}
+    a_{\text{predicted}} = \frac{g}{3600} = \frac{9.8}{3600}
+    \approx 2.7\times10^{-3}\;\mathrm{m/s^2}.
+\end{equation*}
+That is the prediction. Now the check. The Moon moves in a (nearly) circular
+orbit, and for circular motion we know exactly what the centripetal
+acceleration must be --- Eq.~\eqref{eq:ar4}:
+\begin{equation*}
+    |a_r| = \frac{4\pi^2 r}{T^2}.
+\end{equation*}
+The orbital radius is $r = 3.84\times10^8$\,m and the orbital period is
+$T = 27.3\;\text{days} = 2.36\times10^6$\,s. Therefore the Moon's actual
+acceleration is
+\begin{equation*}
+    |a_r| = \frac{4\pi^2 (3.84\times10^8)}{(2.36\times10^6)^2}
+    \approx 2.7\times10^{-3}\;\mathrm{m/s^2}.
+\end{equation*}
+The prediction and the measurement agree. Newton, recalling the calculation
+years later, wrote that he ``compared the force requisite to keep the Moon in
+her orb with the force of gravity at the surface of the earth, and found them
+answer pretty nearly.'' \emph{Pretty nearly} --- the understatement of the
+seventeenth century. The apple and the Moon fall by the same law, and the
+law is inverse-square.
+
+Notice what kind of argument this is: guess a law, extract a numerical
+prediction, and confront it with a measurement that had no right to agree by
+accident. A factor of 3600, predicted from a hunch about lamplight, confirmed
+to within a percent. You will use exactly this pattern --- predict, then
+check --- in your own experiments this year, if with slightly smaller stakes.
+
+\subsection{The Law of Universal Gravitation}
+
+Newton generalised the moon test into a law that applies to every pair of
+masses in the universe --- two galaxies, or two sesame seeds.
+
+\begin{keybox}[Newton's Law of Universal Gravitation]
+Any two point masses $m_1$ and $m_2$ separated by a distance $r$ attract each
+other along the line joining them with a force of magnitude
+\begin{equation}
+    F_g = G\,\frac{m_1 m_2}{r^2},
+\end{equation}
+where $G$ is the \textbf{universal gravitational constant},
+\begin{equation*}
+    G = 6.674\times10^{-11}\;\mathrm{N\,m^2\,kg^{-2}}.
+\end{equation*}
+By the Third Law the two masses feel equal and opposite pulls: the Earth
+pulls the apple, and the apple pulls the Earth, with the same force.
+\end{keybox}
+
+Two remarks. First, for a sphere (like the Earth) the law applies as if all
+the mass were concentrated at the centre --- a theorem that cost Newton real
+effort to prove, and part of why he delayed publishing for twenty years.
+That is why the apple's distance counts as one Earth \emph{radius}, measured
+from the centre, not from the ground. Second, the constant $G$ is
+astonishingly small: gravity is by far the weakest force you will meet in
+this course. Two 1\,kg masses held 1\,m apart attract with about
+$10^{-10}$\,N --- roughly the weight of a single flake of dust. Gravity runs
+the universe only because masses like planets are enormous, and because,
+unlike electricity, gravity has no negative charge to cancel it.
+
+The value of $G$ was not measured in Newton's lifetime. In 1798 Henry
+Cavendish --- a man so shy he communicated with his housekeeper by notes ---
+suspended a dumbbell of small lead spheres from a fine wire and measured the
+twist produced by the gravitational pull of two larger spheres, a whisper of
+a force in a sealed room. Knowing $G$, one can put the Earth itself on the
+balance: from $g$ and $R_E$, the Earth's mass follows at once (try the next
+example). Cavendish's contemporaries called his experiment ``weighing the
+Earth.''
+
+\begin{workedexample}[5.5: Weighing the Earth]
+Given $g = 9.81\;\mathrm{m/s^2}$ at the surface, $R_E = 6.37\times10^6$\,m,
+and Cavendish's $G$, find the mass of the Earth.
+
+\medskip
+\textit{Solution.} A mass $m$ at the surface feels the attraction of the
+whole Earth acting from its centre:
+\begin{equation*}
+    mg = G\,\frac{M_E\,m}{R_E^2}
+    \implies M_E = \frac{g R_E^2}{G}
+    = \frac{(9.81)(6.37\times10^6)^2}{6.674\times10^{-11}}
+    \approx 5.97\times10^{24}\;\mathrm{kg}.
+\end{equation*}
+Notice that $m$ cancelled: \emph{every} mass at the surface accelerates at
+the same $g = GM_E/R_E^2$, which is the deep reason (first noticed by
+Galileo) that heavy and light objects fall together. Notice also what the
+formula says about altitude: at the International Space Station,
+$r = R_E + 400\,\mathrm{km}$, and $g$ drops only to about
+$8.7\;\mathrm{m/s^2}$ --- 89\% of its surface value, exactly as Checkpoint
+5.1 claimed.
+\end{workedexample}
+
+\subsection{Circular Orbits}
+
+For a satellite of mass $m$ in a circular orbit of radius $r$ about the Earth,
+gravity is the only force, and it must supply exactly the centripetal
+acceleration $v^2/r$ that circular motion demands. Newton's second law in the
+radial direction gives
+\begin{equation}
+    G\,\frac{M_E\,m}{r^2} = \frac{m v^2}{r}
+    \implies v = \sqrt{\frac{G M_E}{r}}.
+\end{equation}
+The satellite's mass cancels again --- a heavy satellite and a paint flake
+share any given orbit at the same speed. Writing $v = 2\pi r/T$ and squaring:
+\begin{equation}
+    T^2 = \frac{4\pi^2}{G M_E}\,r^3. \label{eq:kepler3}
+\end{equation}
+The square of the period is proportional to the \emph{cube} of the orbital
+radius. Keep this result in view; it is about to connect us to an astronomer
+who died twelve years before Newton was born.
+
+\subsection{Kepler's Laws}
+
+Between 1576 and 1601, on an island observatory financed by the Danish crown,
+Tycho Brahe measured the positions of the planets night after night for
+twenty-five years --- the finest naked-eye data ever taken, accurate to about
+one-sixtieth of a degree. Johannes Kepler, his difficult and brilliant
+assistant, inherited the data and spent nearly a decade in ``war with Mars,''
+trying orbit after orbit until the numbers finally surrendered. What they
+surrendered to are three laws, published in 1609 and 1619. We state them here;
+deriving them fully belongs to a later chapter, but you should know what they
+say and where they came from.
+
+\begin{keybox}[Kepler's Laws of Planetary Motion]
+\begin{enumerate}[leftmargin=2em, itemsep=2pt]
+  \item \textbf{The Law of Ellipses.} Each planet moves on an \emph{ellipse}
+        with the Sun at one focus. (A circle is the special case of an
+        ellipse with both foci together.)
+  \item \textbf{The Law of Equal Areas.} The line from the Sun to a planet
+        sweeps out equal areas in equal times --- so a planet moves fastest
+        when nearest the Sun and slowest when farthest.
+  \item \textbf{The Harmonic Law.} The square of a planet's orbital period is
+        proportional to the cube of its mean distance from the Sun:
+        $T^2 \propto a^3$, with the \emph{same} constant of proportionality
+        for every planet.
+\end{enumerate}
+\end{keybox}
+
+Kepler found these laws empirically --- pure pattern, no mechanism. He never
+knew \emph{why} they were true, though he suspected the Sun. Now look back at
+Eq.~\eqref{eq:kepler3}: for circular orbits, the third law fell out of the
+law of gravitation in two lines of algebra, complete with the constant
+$4\pi^2/GM$ --- the same for every body orbiting the same central mass, just
+as Kepler said. (Done with ellipses instead of circles, the same follows
+exactly; that computation is beyond us this year.) This was the argument that
+convinced Newton's contemporaries: one law, guessed from a falling apple,
+reproduced three laws distilled from twenty-five years of Tycho's data. The
+second law, the equal-areas rule, has an even prettier origin --- it turns out
+to be a disguised conservation law, and it will fall into our hands almost
+for free when we meet angular momentum in the next chapter.
+
+\begin{whiteboard}[5.1: The satellite that stands still]
+Television dishes in Bhutan point at a fixed spot in the sky. The satellite
+they aim at is \emph{geostationary}: it hangs over the same point on the
+equator forever.
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=1pt]
+  \item Before computing: what must such a satellite's orbital period be?
+  \item Use Eq.~\eqref{eq:kepler3} to find the orbital radius, and hence the
+        altitude above the ground. ($M_E = 5.97\times10^{24}$\,kg; the
+        sidereal day is $T = 86\,164$\,s.)
+  \item A minister asks for a geostationary satellite parked directly above
+        Paro (latitude $27^\circ$N), to improve coverage. As a group, decide:
+        is this possible? Defend your answer with the physics of circular
+        motion --- where must the centre of any Earth orbit lie?
+\end{enumerate}
+\textit{(You should find $r \approx 4.2\times10^4$\,km, an altitude of about
+36\,000\,km --- a tenth of the way to the Moon. And no: the centre of every
+orbit must be the Earth's centre, so a satellite hovering off the equator is
+impossible; it would need a circle whose centre is inside northern India.)}
+\end{whiteboard}
+
+\begin{supplementary}{The Tides, or: the Sea Breathes Twice a Day}
+Bhutan is landlocked, so here is something many of us have never watched: at
+the ocean's edge, the water level rises and falls by a metre or more, twice
+every day. Newton's law explains this breathing --- and the explanation is
+subtler than ``the Moon pulls the water.''
+
+If the Moon simply pulled the water, there would be \emph{one} bulge of ocean
+on the Moon's side, and one high tide per day as the Earth turns through it.
+The observed rhythm --- two high tides a day --- says otherwise. The key is
+that the Moon's pull is \emph{inverse-square}, so it is not uniform across
+the Earth: the near-side ocean (about $59\,R_E$ from the Moon) is pulled
+harder than the Earth's centre ($60\,R_E$), which in turn is pulled harder
+than the far-side ocean ($61\,R_E$). Relative to the Earth, the near water
+is pulled ahead, and the Earth is pulled away from the far water. Result:
+\emph{two} bulges, one facing the Moon and one facing away, and every coast
+passes through both each day. (The Sun pulls far harder in absolute terms,
+but tides care about the \emph{difference} in pull across the Earth, and by
+that measure the nearby Moon wins --- the Sun's tide is about half the
+Moon's. When Sun and Moon line up, at new and full moon, the tides run
+extra high.)
+
+How big is the effect? In mid-ocean, under a metre. But geography can
+amplify it spectacularly. The world record is the Bay of Fundy in eastern
+Canada, where the water rises and falls up to \emph{sixteen metres} --- a
+four-storey building, twice daily. The bay is a long, tapering funnel whose
+natural sloshing period happens to be close to the 12.4-hour tidal rhythm,
+so each tide arrives in step with the bay's own oscillation and pumps it
+higher, the way well-timed pushes build up a playground swing. Resonance ---
+an idea that will return, from swings to musical instruments to circuits.
+
+Newton's tidal theory, published in the \emph{Principia} in 1687, was the
+first time in history the tides had an explanation rather than a mere
+timetable. Same law, third appearance: the apple, the Moon, and the sea.
+\end{supplementary}
