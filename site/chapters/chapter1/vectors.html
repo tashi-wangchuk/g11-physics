@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vector Addition Sandbox — Chapter 1</title>
+<style>
+  :root {
+    --paper: #F2E4C2;
+    --ink: #222;
+    --blue: #2E86C1;
+    --red: #C0392B;
+    --green: #1E8449;
+    --rule: #333;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: #faf6ec;
+    line-height: 1.5;
+  }
+  header {
+    background: var(--paper);
+    border-bottom: 5px solid var(--rule);
+    padding: 1.2rem 1rem 0.9rem;
+  }
+  header h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    margin: 0 auto;
+    max-width: 960px;
+  }
+  header a { color: var(--blue); font-size: 0.9rem; }
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+  .panel {
+    flex: 1 1 260px;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem 1.2rem;
+  }
+  .figure {
+    flex: 1 1 480px;
+    background: var(--paper);
+    border: 1px solid #d8c89e;
+    border-radius: 6px;
+    padding: 0.4rem;
+  }
+  h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 0.2rem;
+  }
+  .readout {
+    margin-top: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    font-size: 0.93rem;
+  }
+  .readout table { border-collapse: collapse; width: 100%; }
+  .readout td { padding: 2px 4px; }
+  .readout td:last-child { font-family: 'Courier New', monospace; text-align: right; }
+  .va { color: var(--blue); font-weight: bold; }
+  .vb { color: var(--red); font-weight: bold; }
+  .vr { color: #111; font-weight: bold; }
+  .note { font-size: 0.87rem; color: #555; }
+  button {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.7rem;
+    background: #f1f1f1;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    margin: 0.2rem 0.2rem 0 0;
+  }
+  button:hover { background: var(--paper); }
+  label { font-family: Helvetica, Arial, sans-serif; font-size: 0.85rem; display: block; margin-top: 0.5rem; }
+  .challenge {
+    margin-top: 0.8rem;
+    padding: 0.6rem 0.8rem;
+    background: #fdf6e3;
+    border: 1px dashed #c9a94f;
+    font-size: 0.88rem;
+  }
+  .challenge .win { color: var(--green); font-weight: bold; font-family: Helvetica, Arial, sans-serif; }
+  svg { display: block; width: 100%; height: auto; touch-action: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Vector Addition Sandbox
+    <span style="float:right; font-weight:normal"><a href="../../index.html">&larr; all simulations</a></span>
+  </h1>
+</header>
+
+<div class="wrap">
+
+  <div class="figure">
+    <svg id="board" viewBox="0 0 560 460" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="mA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#2E86C1"/>
+        </marker>
+        <marker id="mB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/>
+        </marker>
+        <marker id="mBg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#C0392B" opacity="0.35"/>
+        </marker>
+        <marker id="mR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111"/>
+        </marker>
+      </defs>
+      <g id="grid"></g>
+      <line id="axx" x1="0" y1="0" x2="0" y2="0" stroke="#999" stroke-width="1"/>
+      <line id="axy" x1="0" y1="0" x2="0" y2="0" stroke="#999" stroke-width="1"/>
+      <!-- component dashes for R -->
+      <g id="comps" stroke="#1E8449" stroke-dasharray="5,5" stroke-width="1.5" visibility="hidden">
+        <line id="compx"/><line id="compy"/>
+        <text id="compxl" font-size="12" fill="#1E8449" font-style="italic"></text>
+        <text id="compyl" font-size="12" fill="#1E8449" font-style="italic"></text>
+      </g>
+      <!-- ghost of b, moved head-to-tail -->
+      <line id="bg" stroke="#C0392B" stroke-width="3" opacity="0.35" marker-end="url(#mBg)"/>
+      <!-- resultant -->
+      <line id="rr" stroke="#111" stroke-width="4" marker-end="url(#mR)"/>
+      <!-- the two vectors -->
+      <line id="va" stroke="#2E86C1" stroke-width="4" marker-end="url(#mA)"/>
+      <line id="vb" stroke="#C0392B" stroke-width="4" marker-end="url(#mB)"/>
+      <!-- drag handles -->
+      <circle id="ha" r="14" fill="#2E86C1" fill-opacity="0.15" stroke="#2E86C1" stroke-width="1.5" cursor="grab"/>
+      <circle id="hb" r="14" fill="#C0392B" fill-opacity="0.15" stroke="#C0392B" stroke-width="1.5" cursor="grab"/>
+      <text id="la" font-size="17" font-style="italic" fill="#2E86C1" font-weight="bold">a</text>
+      <text id="lb" font-size="17" font-style="italic" fill="#C0392B" font-weight="bold">b</text>
+      <text id="lr" font-size="17" font-style="italic" fill="#111" font-weight="bold">a+b</text>
+    </svg>
+  </div>
+
+  <div class="panel">
+    <h2>Readout</h2>
+    <p class="note" style="margin-top:0">Drag the circled arrowheads. The faint
+    red copy of <span class="vb">b</span> shows the head-to-tail rule; the
+    black arrow is the sum.</p>
+
+    <div class="readout">
+      <table>
+        <tr><td class="va">|a|</td><td id="maga"></td></tr>
+        <tr><td class="vb">|b|</td><td id="magb"></td></tr>
+        <tr><td>angle &theta; between them</td><td id="ang"></td></tr>
+        <tr><td class="vr">|a+b|</td><td id="magr"></td></tr>
+      </table>
+      <div class="note" style="margin-top:0.4rem">
+        Check against the formula:
+        <i>R</i> = &radic;(a&sup2; + 2ab&thinsp;cos&thinsp;&theta; + b&sup2;) =
+        <span id="formr" style="font-family:'Courier New',monospace"></span>
+      </div>
+    </div>
+
+    <label><input type="checkbox" id="showcomp"> show components of the sum</label>
+
+    <div class="challenge" id="chbox">
+      <b>Challenge (from the textbook):</b> lock the magnitudes at
+      <span class="va">4</span> and <span class="vb">3</span>, then rotate the
+      arrows until <b>4 + 3 = 5</b>. What angle does it take?
+      <br><button id="lockbtn">Lock magnitudes at 4 and 3</button>
+      <div id="chmsg"></div>
+    </div>
+
+    <button id="resetbtn">Reset</button>
+  </div>
+
+</div>
+
+<script>
+  // Geometry: 1 grid unit = 40 px. Origin fixed; drag each vector's head.
+  var U = 40;
+  var ORG = { x: 200, y: 300 };
+  var W = 560, H = 460;
+
+  var a = { x: 4, y: 0 };   // in grid units, y up
+  var b = { x: 0, y: 3 };
+  var locked = false;
+
+  var svg = document.getElementById('board');
+
+  // grid
+  (function () {
+    var g = document.getElementById('grid'), s = '';
+    for (var x = 0; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#00000012" stroke-width="1"/>';
+    for (var y = 0; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#00000012" stroke-width="1"/>';
+    g.innerHTML = s;
+    document.getElementById('axx').setAttribute('x1', 0);
+    document.getElementById('axx').setAttribute('y1', ORG.y);
+    document.getElementById('axx').setAttribute('x2', W);
+    document.getElementById('axx').setAttribute('y2', ORG.y);
+    document.getElementById('axy').setAttribute('x1', ORG.x);
+    document.getElementById('axy').setAttribute('y1', 0);
+    document.getElementById('axy').setAttribute('x2', ORG.x);
+    document.getElementById('axy').setAttribute('y2', H);
+  })();
+
+  function px(v) { return { x: ORG.x + v.x * U, y: ORG.y - v.y * U }; }
+
+  function setLine(id, from, to) {
+    var e = document.getElementById(id);
+    e.setAttribute('x1', from.x); e.setAttribute('y1', from.y);
+    e.setAttribute('x2', to.x);   e.setAttribute('y2', to.y);
+  }
+
+  function mag(v) { return Math.hypot(v.x, v.y); }
+
+  function update() {
+    var pa = px(a), pb = px(b);
+    var r = { x: a.x + b.x, y: a.y + b.y };
+    var pr = px(r);
+
+    setLine('va', {x:ORG.x,y:ORG.y}, pa);
+    setLine('vb', {x:ORG.x,y:ORG.y}, pb);
+    setLine('bg', pa, pr);            // ghost b from head of a
+    setLine('rr', {x:ORG.x,y:ORG.y}, pr);
+
+    var ha = document.getElementById('ha'); ha.setAttribute('cx', pa.x); ha.setAttribute('cy', pa.y);
+    var hb = document.getElementById('hb'); hb.setAttribute('cx', pb.x); hb.setAttribute('cy', pb.y);
+
+    function lab(id, p, dx, dy) {
+      var e = document.getElementById(id);
+      e.setAttribute('x', p.x + dx); e.setAttribute('y', p.y + dy);
+    }
+    lab('la', pa, 10, -8);
+    lab('lb', pb, 10, -8);
+    lab('lr', pr, 10, 20);
+
+    var ma = mag(a), mb = mag(b), mr = mag(r);
+    var cosT = (ma && mb) ? (a.x*b.x + a.y*b.y)/(ma*mb) : 1;
+    cosT = Math.max(-1, Math.min(1, cosT));
+    var theta = Math.acos(cosT) * 180 / Math.PI;
+
+    document.getElementById('maga').textContent = ma.toFixed(2);
+    document.getElementById('magb').textContent = mb.toFixed(2);
+    document.getElementById('ang').textContent  = theta.toFixed(1) + '°';
+    document.getElementById('magr').textContent = mr.toFixed(2);
+    document.getElementById('formr').textContent =
+      Math.sqrt(ma*ma + 2*ma*mb*cosT + mb*mb).toFixed(2);
+
+    // components of R
+    var comps = document.getElementById('comps');
+    if (document.getElementById('showcomp').checked) {
+      comps.setAttribute('visibility', 'visible');
+      setLine('compx', {x:ORG.x,y:ORG.y}, {x:pr.x,y:ORG.y});
+      setLine('compy', {x:pr.x,y:ORG.y}, pr);
+      var cx = document.getElementById('compxl');
+      cx.setAttribute('x', (ORG.x+pr.x)/2 - 14); cx.setAttribute('y', ORG.y + 16);
+      cx.textContent = 'Rx = ' + r.x.toFixed(2);
+      var cy = document.getElementById('compyl');
+      cy.setAttribute('x', pr.x + 6); cy.setAttribute('y', (ORG.y+pr.y)/2);
+      cy.textContent = 'Ry = ' + r.y.toFixed(2);
+    } else {
+      comps.setAttribute('visibility', 'hidden');
+    }
+
+    // challenge
+    var msg = document.getElementById('chmsg');
+    if (locked) {
+      if (Math.abs(mr - 5) < 0.05) {
+        msg.innerHTML = '<span class="win">4 + 3 = 5 — you did it!</span> ' +
+          'The angle reads ' + theta.toFixed(1) + '°. The textbook says it must be exactly 90° — cosθ has to vanish.';
+      } else {
+        msg.innerHTML = '<span class="note">|a+b| = ' + mr.toFixed(2) + ' — keep rotating…</span>';
+      }
+    } else {
+      msg.textContent = '';
+    }
+  }
+
+  // dragging — listeners go on window so the drag survives leaving the handle
+  var dragging = null;   // the vector currently being dragged
+
+  function pointFromEvent(e) {
+    var rect = svg.getBoundingClientRect();
+    var sx = (e.clientX - rect.left) * (W / rect.width);
+    var sy = (e.clientY - rect.top) * (H / rect.height);
+    return { gx: (sx - ORG.x) / U, gy: (ORG.y - sy) / U };
+  }
+
+  function applyDrag(e) {
+    if (!dragging) return;
+    var p = pointFromEvent(e);
+    if (locked) {
+      // keep magnitude fixed, follow the pointer's direction
+      var m = mag(dragging) || 1;
+      var d = Math.hypot(p.gx, p.gy) || 1;
+      dragging.x = p.gx / d * m; dragging.y = p.gy / d * m;
+    } else {
+      // snap to quarter-grid for tidy numbers
+      dragging.x = Math.round(p.gx * 4) / 4;
+      dragging.y = Math.round(p.gy * 4) / 4;
+    }
+    update();
+  }
+
+  function makeDraggable(handleId, vec) {
+    var h = document.getElementById(handleId);
+    function start(e) { dragging = vec; e.preventDefault(); }
+    h.addEventListener('pointerdown', start);
+    h.addEventListener('mousedown', start);
+  }
+  makeDraggable('ha', a);
+  makeDraggable('hb', b);
+
+  ['pointermove', 'mousemove'].forEach(function (t) {
+    window.addEventListener(t, function (e) { if (dragging) { applyDrag(e); e.preventDefault(); } });
+  });
+  ['pointerup', 'mouseup'].forEach(function (t) {
+    window.addEventListener(t, function () { dragging = null; });
+  });
+  document.body.style.userSelect = 'none';
+
+  document.getElementById('showcomp').addEventListener('change', update);
+  document.getElementById('lockbtn').addEventListener('click', function () {
+    locked = true;
+    var ma = mag(a) || 1, mb = mag(b) || 1;
+    a.x = a.x / ma * 4; a.y = a.y / ma * 4;
+    b.x = b.x / mb * 3; b.y = b.y / mb * 3;
+    update();
+  });
+  document.getElementById('resetbtn').addEventListener('click', function () {
+    locked = false;
+    a.x = 4; a.y = 0; b.x = 0; b.y = 3;
+    update();
+  });
+
+  update();
+</script>
+
+</body>
+</html>

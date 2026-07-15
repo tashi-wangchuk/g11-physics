@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Grapher — Chapter 3</title>
+<style>
+  :root {
+    --paper: #F2E4C2;
+    --ink: #222;
+    --blue: #2E86C1;
+    --red: #C0392B;
+    --green: #1E8449;
+    --rule: #333;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: #faf6ec;
+    line-height: 1.5;
+  }
+  header {
+    background: var(--paper);
+    border-bottom: 5px solid var(--rule);
+    padding: 1.2rem 1rem 0.9rem;
+  }
+  header h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    margin: 0 auto;
+    max-width: 960px;
+  }
+  header a { color: var(--blue); font-size: 0.9rem; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 1rem; }
+  .row { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-start; }
+  .panel {
+    flex: 1 1 250px;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem 1.2rem;
+  }
+  .figure {
+    flex: 2 1 480px;
+    background: var(--paper);
+    border: 1px solid #d8c89e;
+    border-radius: 6px;
+    padding: 0.6rem;
+  }
+  h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 0.2rem;
+  }
+  button {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    padding: 0.45rem 0.7rem;
+    background: #f1f1f1;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    margin: 0.15rem 0.15rem 0 0;
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  button:hover { background: var(--paper); }
+  button.active { background: var(--rule); color: #fff; }
+  .controls button { display: inline-block; width: auto; }
+  .predict {
+    margin-top: 0.8rem;
+    padding: 0.6rem 0.8rem;
+    background: #fdf6e3;
+    border: 1px dashed #c9a94f;
+    font-size: 0.88rem;
+  }
+  canvas { display: block; width: 100%; background: transparent; }
+  .note { font-size: 0.87rem; color: #555; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Motion Grapher — position, velocity, acceleration
+    <span style="float:right; font-weight:normal"><a href="../../index.html">&larr; all simulations</a></span>
+  </h1>
+</header>
+
+<div class="wrap">
+  <div class="row">
+
+    <div class="panel">
+      <h2>Choose a motion</h2>
+      <div id="presets"></div>
+
+      <div class="predict">
+        <b>Predict first.</b> Before revealing, sketch on paper what the three
+        graphs should look like. Slopes are the whole game: the slope of
+        <i>s</i>(<i>t</i>) is <i>v</i>, the slope of <i>v</i>(<i>t</i>) is <i>a</i>.
+      </div>
+
+      <div class="controls" style="margin-top:0.7rem">
+        <button id="revealbtn">Reveal graphs</button>
+        <button id="playbtn">&#9654; Play</button>
+      </div>
+      <p class="note" id="desc"></p>
+    </div>
+
+    <div class="figure">
+      <canvas id="track" width="860" height="90"></canvas>
+      <canvas id="graphs" width="860" height="640"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Each preset defines s(t) analytically on [0, T]; v and a are its true
+  // derivatives — the graphs are exact, not numerically sloppy.
+  var PRESETS = [
+    {
+      name: 'Steady walk (uniform velocity)',
+      desc: 'Constant velocity: s climbs along a straight ramp, v is flat, a is zero. The dull graph that anchors all the others.',
+      T: 10, s: function(t){ return 2*t; }, v: function(t){ return 2; }, a: function(t){ return 0; }
+    },
+    {
+      name: 'Falling ball (the textbook example)',
+      desc: 's = 5t² from Chapter 3: the parabola whose slope steepens forever; v = 10t is a straight ramp; a = 10 is flat. ',
+      T: 5, s: function(t){ return 5*t*t; }, v: function(t){ return 10*t; }, a: function(t){ return 10; }
+    },
+    {
+      name: 'Ball thrown straight up',
+      desc: 'Watch v pass through zero at the top while a stays constant at −10 — checkpoint 3.1 in graph form.',
+      T: 6, s: function(t){ return 30*t - 5*t*t; }, v: function(t){ return 30 - 10*t; }, a: function(t){ return -10; }
+    },
+    {
+      name: 'Car braking to a stop',
+      desc: 'Positive velocity, negative (constant) acceleration until rest: s flattens out, v ramps down to zero and stays.',
+      T: 8, s: function(t){ var tb=6; return t<tb ? 24*t - 2*t*t : 24*tb - 2*tb*tb; },
+            v: function(t){ var tb=6; return t<tb ? 24 - 4*t : 0; },
+            a: function(t){ var tb=6; return t<tb ? -4 : 0; }
+    },
+    {
+      name: 'Oscillation (a taste of waves)',
+      desc: 's = 8 sin t: all three curves are sinusoids, each one the slope of the one above, shifted by a quarter cycle. We meet this again in optics.',
+      T: 12.6, s: function(t){ return 8*Math.sin(t); }, v: function(t){ return 8*Math.cos(t); }, a: function(t){ return -8*Math.sin(t); }
+    }
+  ];
+
+  var cur = 1;            // default: the textbook's falling ball
+  var revealed = false;
+  var playing = false;
+  var playT = 0;
+  var lastFrame = null;
+
+  var track = document.getElementById('track');
+  var graphs = document.getElementById('graphs');
+  var tctx = track.getContext('2d');
+  var gctx = graphs.getContext('2d');
+
+  // preset buttons
+  var pdiv = document.getElementById('presets');
+  PRESETS.forEach(function (p, i) {
+    var b = document.createElement('button');
+    b.textContent = p.name;
+    b.addEventListener('click', function () {
+      cur = i; revealed = false; playing = false; playT = 0;
+      document.querySelectorAll('#presets button').forEach(function (x, j) {
+        x.className = (j === i) ? 'active' : '';
+      });
+      document.getElementById('desc').textContent = '';
+      document.getElementById('revealbtn').textContent = 'Reveal graphs';
+      draw();
+    });
+    pdiv.appendChild(b);
+  });
+  pdiv.children[cur].className = 'active';
+
+  document.getElementById('revealbtn').addEventListener('click', function () {
+    revealed = !revealed;
+    this.textContent = revealed ? 'Hide graphs' : 'Reveal graphs';
+    document.getElementById('desc').textContent = revealed ? PRESETS[cur].desc : '';
+    draw();
+  });
+
+  document.getElementById('playbtn').addEventListener('click', function () {
+    playing = !playing;
+    this.innerHTML = playing ? '&#10074;&#10074; Pause' : '&#9654; Play';
+    if (playing) { lastFrame = null; requestAnimationFrame(tick); }
+  });
+
+  function tick(ts) {
+    if (!playing) return;
+    if (lastFrame === null) lastFrame = ts;
+    var dt = (ts - lastFrame) / 1000;
+    lastFrame = ts;
+    playT += dt * PRESETS[cur].T / 8;   // whole motion plays in ~8 s
+    if (playT > PRESETS[cur].T) playT = 0;
+    draw();
+    requestAnimationFrame(tick);
+  }
+
+  function range(f, T) {
+    var lo = Infinity, hi = -Infinity;
+    for (var i = 0; i <= 200; i++) {
+      var y = f(i * T / 200);
+      if (y < lo) lo = y;
+      if (y > hi) hi = y;
+    }
+    if (hi - lo < 1e-9) { hi += 1; lo -= 1; }
+    var pad = (hi - lo) * 0.12;
+    return [lo - pad, hi + pad];
+  }
+
+  function drawPanel(y0, h, f, T, color, label, unit) {
+    var L = 56, R = 12, W = graphs.width;
+    var rg = range(f, T);
+    function X(t) { return L + t / T * (W - L - R); }
+    function Y(s) { return y0 + h - (s - rg[0]) / (rg[1] - rg[0]) * h; }
+
+    // frame + zero line
+    gctx.strokeStyle = '#00000022';
+    gctx.lineWidth = 1;
+    gctx.strokeRect(L, y0, W - L - R, h);
+    if (rg[0] < 0 && rg[1] > 0) {
+      gctx.beginPath();
+      gctx.moveTo(L, Y(0)); gctx.lineTo(W - R, Y(0));
+      gctx.strokeStyle = '#00000033';
+      gctx.stroke();
+    }
+
+    // axis labels
+    gctx.fillStyle = '#333';
+    gctx.font = 'bold 15px Georgia';
+    gctx.fillText(label, 8, y0 + 18);
+    gctx.font = '11px Helvetica';
+    gctx.fillStyle = '#666';
+    gctx.fillText(rg[1].toFixed(0) + ' ' + unit, 8, y0 + 34);
+    gctx.fillText(rg[0].toFixed(0) + ' ' + unit, 8, y0 + h - 4);
+
+    if (!revealed) {
+      gctx.fillStyle = '#00000010';
+      gctx.fillRect(L, y0, W - L - R, h);
+      gctx.fillStyle = '#777';
+      gctx.font = 'italic 14px Georgia';
+      gctx.fillText('hidden — predict first, then reveal', L + 16, y0 + h / 2 + 4);
+      return;
+    }
+
+    // curve
+    gctx.beginPath();
+    for (var i = 0; i <= 300; i++) {
+      var t = i * T / 300;
+      var x = X(t), y = Y(f(t));
+      if (i === 0) gctx.moveTo(x, y); else gctx.lineTo(x, y);
+    }
+    gctx.strokeStyle = color;
+    gctx.lineWidth = 2.5;
+    gctx.stroke();
+
+    // moving marker
+    if (playing || playT > 0) {
+      gctx.beginPath();
+      gctx.arc(X(playT), Y(f(playT)), 5, 0, 2 * Math.PI);
+      gctx.fillStyle = color;
+      gctx.fill();
+    }
+  }
+
+  function draw() {
+    var p = PRESETS[cur];
+
+    // --- track: a dot moving along a line, position = s(t) ---
+    tctx.clearRect(0, 0, track.width, track.height);
+    var rg = range(p.s, p.T);
+    var L = 56, R = 12;
+    tctx.strokeStyle = '#555';
+    tctx.lineWidth = 2;
+    tctx.beginPath();
+    tctx.moveTo(L, 60); tctx.lineTo(track.width - R, 60);
+    tctx.stroke();
+    tctx.fillStyle = '#333';
+    tctx.font = 'bold 13px Helvetica';
+    tctx.fillText('the motion itself:', 8, 20);
+    var frac = (p.s(playT) - rg[0]) / (rg[1] - rg[0]);
+    var dx = L + frac * (track.width - L - R);
+    tctx.beginPath();
+    tctx.arc(dx, 60, 10, 0, 2 * Math.PI);
+    tctx.fillStyle = '#C0392B';
+    tctx.fill();
+    tctx.strokeStyle = '#7a2118';
+    tctx.stroke();
+    tctx.fillStyle = '#555';
+    tctx.font = '12px Helvetica';
+    tctx.fillText('t = ' + playT.toFixed(1) + ' s', track.width - 70, 20);
+
+    // --- three stacked graphs ---
+    gctx.clearRect(0, 0, graphs.width, graphs.height);
+    drawPanel(10, 190, p.s, p.T, '#C0392B', 's(t)', 'm');
+    drawPanel(225, 190, p.v, p.T, '#2E86C1', 'v(t)', 'm/s');
+    drawPanel(440, 190, p.a, p.T, '#1E8449', 'a(t)', 'm/s²');
+  }
+
+  draw();
+</script>
+
+</body>
+</html>
