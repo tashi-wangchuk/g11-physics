@@ -1,0 +1,230 @@
+\documentclass[12pt]{book}
+\usepackage[a4paper, left=3cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+\usepackage[scaled=0.90]{helvet}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, patterns}
+\usetikzlibrary{calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{titlesec}           % must come BEFORE hyperref
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=red, urlcolor=purple]{hyperref}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{chngcntr}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{makecell}
+\usepackage{mathrsfs}
+\usepackage{caption}
+
+
+%------Directory Info-------
+\graphicspath{{./figures/}}
+
+%------Continuous equation numbering (not reset per chapter)------
+\counterwithout{equation}{chapter}
+
+%------Header / Footer------
+% No headers on any page; page number centred in the footer only.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+
+\fancypagestyle{plain}{%       % chapter-opening pages use "plain" by default
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+%------Custom Box Environments------
+\tcbuselibrary{breakable, skins}
+
+% KEY DEFINITION / LAW BOX  — light grey background
+\newtcolorbox{keybox}[1][]{
+  colback  = gray!10,
+  colframe = black!55,
+  fonttitle = \bfseries,
+  title    = {#1},
+  sharp corners,
+  boxrule  = 0.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
+% WORKED EXAMPLE BOX  — white background
+\newtcolorbox{workedexample}[1][]{
+  colback  = white,
+  colframe = black!50,
+  fonttitle = \bfseries,
+  title    = {Worked Example~#1},
+  sharp corners,
+  boxrule  = 0.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
+% TRY IT YOURSELF BOX  — very light grey
+\newtcolorbox{tryit}[1][]{
+  colback  = gray!5,
+  colframe = black!40,
+  fonttitle = \bfseries,
+  title    = {Try It Yourself~#1},
+  sharp corners,
+  boxrule  = 0.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
+% FORMULA SUMMARY BOX  — same shade as keybox
+\newtcolorbox{formulabox}[1][Formula Summary]{
+  colback  = gray!10,
+  colframe = black!55,
+  fonttitle = \bfseries,
+  title    = {#1},
+  sharp corners,
+  boxrule  = 0.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
+%------Chapter Opening Page Design------
+% Matches the style in the image:
+%   • "CHAPTER" label (small bold) + large grey number — top-right corner
+%   • Chapter title — large bold, below
+%   • Thick horizontal rule — immediately below the title
+%
+% For starred chapters (\chapter*) the TikZ overlay is skipped
+% automatically (no label block) and only the title + rule appear.
+
+\newlength{\chapboxwd}
+\setlength{\chapboxwd}{3.2cm}   % width of the grey number block
+
+\titleformat{\chapter}[display]
+  {\normalfont}
+  {%
+    \begin{tikzpicture}[remember picture, overlay]
+      % "CHAPTER" label + plain number, no background box
+      \node[anchor=north east, inner sep=0pt, yshift=-42pt]
+        at ([xshift=-108pt]current page.north east)
+        {\fontsize{15}{15}\selectfont\sffamily\bfseries\MakeUppercase{\chaptertitlename}};
+      \node[anchor=north east, inner sep=0pt, yshift=-42pt]
+        at ([xshift=-69pt]current page.north east)
+        {\fontsize{69}{69}\selectfont\sffamily\bfseries\thechapter};
+    \end{tikzpicture}%
+  }
+  {0pt}
+  {%
+    \vspace{0.6cm}%   ← tune this to move title up/down
+    \Huge\bfseries\sffamily
+  }
+  [%
+    \vspace{-18pt}%
+    \noindent\rule{\textwidth}{6pt}%
+  ]
+
+\titlespacing*{\chapter}{0pt}{0pt}{12pt}
+
+
+%------Section and Subsection Headings------
+% Section: bold, with a thin underrule (as in the image)
+\titleformat{\section}
+  {\normalfont\large\sffamily\bfseries}
+  {\thesection}
+  {1em}
+  {}
+  [\vspace{-15pt}\rule{\textwidth}{1pt}]
+
+\titlespacing*{\section}{0pt}{15pt}{3pt}
+
+% --- Custom Colors ---
+\definecolor{paper}{HTML}{F2E4C2}
+\definecolor{accentblue}{HTML}{1F6FB2}
+\definecolor{accentred}{HTML}{C0392B}
+\definecolor{skintone}{HTML}{FCDCB6}
+\definecolor{skinoutline}{HTML}{D29864}
+\definecolor{myblue}{HTML}{2E86C1}
+\definecolor{myred}{HTML}{C0392B}
+\definecolor{mygreen}{HTML}{1E8449}
+\definecolor{myorange}{HTML}{D35400}
+
+
+
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\sffamily\bfseries}
+  {}      % ← empty label = no number
+  {0em}
+  {}
+
+\titlespacing*{\subsection}{0pt}{14pt}{4pt}
+
+
+%removing subsection from TOC
+\setcounter{tocdepth}{1}
+
+
+%------Formatting------
+\setlength\parindent{0pt}
+\setlength\parskip{6pt}
+\renewcommand{\arraystretch}{1.3}
+
+%------Title Page------
+\title{%
+  {\sffamily \Huge \bfseries Fundamentals of Physics}
+}
+
+\vspace{6cm}
+
+\author{%
+  \sffamily Tashi Wangchuk\\
+  \normalsize Druk Gyalpo's Institute, Pangbisa, Paro 12001, Bhutan \\[-0.5em]
+  \href{mailto:tashiwangchuk@academy.bt}{\texttt{\small tashiwangchuk@academy.bt}}%
+}
+\date{\normalsize April 2026}
+
+
+\begin{document}
+\frontmatter
+\maketitle
+
+\include{./frontmatter/acknowledgements}
+
+%%-----------Table of Contents------------------
+\renewcommand{\contentsname}{Table of Contents}
+\clearpage
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+
+%%-------------Begin Main Matter-----------------
+\clearpage
+\mainmatter
+
+\include{./chapters/chapter1}
+\include{./chapters/chapter2}
+\include{./chapters/chapter3}
+\include{./chapters/chapter4}
+\include{./chapters/chapter5}
+\include{./chapters/chapter6}
+
+%% More chapters will be added here as the course progresses.
+
+\end{document}

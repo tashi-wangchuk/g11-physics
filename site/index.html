@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fundamentals of Physics — G11 Companion</title>
+<style>
+  :root {
+    --paper: #F2E4C2;
+    --ink: #222;
+    --blue: #2E86C1;
+    --red: #C0392B;
+    --green: #1E8449;
+    --rule: #333;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: #faf6ec;
+    line-height: 1.55;
+  }
+  header {
+    background: var(--paper);
+    border-bottom: 5px solid var(--rule);
+    padding: 2.2rem 1.5rem 1.4rem;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem; }
+  h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.9rem;
+    margin: 0 0 0.3rem;
+  }
+  header p { margin: 0; color: #555; }
+  main { padding: 1.5rem 0 3rem; }
+  h2 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1.15rem;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 0.25rem;
+    margin-top: 2rem;
+  }
+  .chapter {
+    margin: 0.8rem 0;
+    padding: 0.9rem 1.1rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-left: 4px solid var(--blue);
+  }
+  .chapter.pending { border-left-color: #bbb; color: #666; }
+  .chapter b { font-family: Helvetica, Arial, sans-serif; }
+  a { color: var(--blue); }
+  .pdflink {
+    display: inline-block;
+    margin-top: 0.6rem;
+    padding: 0.5rem 1rem;
+    background: var(--rule);
+    color: #fff;
+    text-decoration: none;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+  }
+  footer { color: #777; font-size: 0.85rem; padding: 1rem 0 2rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Fundamentals of Physics</h1>
+    <p>Interactive companion to the G11 physics lecture notes &middot; Druk Gyalpo's Institute</p>
+    <a class="pdflink" href="main.pdf">Download the textbook (PDF)</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <p>
+    Each chapter of the textbook gets a small interactive companion here —
+    something you can poke at with your hands, not just read. Predict first,
+    then check.
+  </p>
+
+  <h2>Interactive simulations</h2>
+
+  <div class="chapter">
+    <b>Chapter 5 — Further Applications of Newton's Laws</b><br>
+    <a href="chapters/chapter5/elevator.html">Elevator &amp; apparent weight simulator</a>
+    — drag the acceleration slider and watch what the scale reads.
+  </div>
+
+  <div class="chapter pending">
+    <b>Chapter 1 — Vectors</b><br>
+    Vector addition sandbox — coming soon.
+  </div>
+
+  <div class="chapter pending">
+    <b>Chapter 3 — Motion</b><br>
+    Position / velocity / acceleration grapher — coming soon.
+  </div>
+
+  <footer>
+    Tashi Wangchuk &middot; Druk Gyalpo's Institute, Pangbisa, Paro
+  </footer>
+</main>
+
+</body>
+</html>

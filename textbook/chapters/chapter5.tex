@@ -1,0 +1,1000 @@
+%%-----------Chapter 5------------------------------------------
+\chapter{Further Applications of Newton's Laws}
+
+% ==============================================================
+\section{Contact Forces}
+% ==============================================================
+
+Pushing, lifting and pulling are \textbf{\textit{contact forces}} that we experience in the everyday world. Rest your hand on a table; the atoms that form the molecules that make up the table and your hand are in contact with each other. If you press harder, the atoms are also pressed closer together. The electrons in the atoms begin to repel each other and your hand is pushed in the opposite direction by the table.
+
+According to Newton's Third Law, the force of your hand on the table is equal in magnitude and opposite in direction to the force of the table on your hand. Clearly, if you push harder the force increases. If you push your hand straight down on the table, the table pushes back in a direction perpendicular (normal) to the surface. Slide your hand gently forward along the surface of the table. You barely feel the table pushing upward, but you do feel the friction acting as a resistive force to the motion of your hand. This force acts tangential to the surface and opposite to the motion of your hand. Push downward and forward. Try to estimate the magnitude of the force acting on your hand.
+
+The force of the table acting on your hand, $\vec{F}_{c} \equiv \vec{C}$, is called the \textbf{\textit{contact force}}. This force has both a normal component to the surface, $\vec{C}_{\perp} \equiv \vec{\mathscr{N}}$, called the \textbf{\textit{normal force}}, and a tangential component to the surface, $\vec{C}_{\parallel} \equiv \vec{f}$, called the \textbf{\textit{friction force}} (Figure~\ref{fig:contactforce}).
+
+
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick, scale=1.2]
+    % --- Warm paper background ---
+    \fill[paper, rounded corners=6pt] (-3.0,-0.50) rectangle (5.4,3.0);
+    
+    % Surface parallelogram
+    \fill[gray!12] (-2.5,-0.3) -- (3.5,-0.3) -- (4.5,0.7) -- (-1.5,0.7) -- cycle;
+    \draw[gray!50, thin] (-2.5,-0.3) -- (3.5,-0.3) -- (4.5,0.7) -- (-1.5,0.7) -- cycle;
+    % Block
+    \fill[gray!25] (0.65, 0.2) rectangle (1.75, 1.15);
+    \draw[thick] (0.65, 0.2) rectangle (1.75, 1.15);
+    % Contact origin
+    \coordinate (O) at (1.2, 0.2);
+    % F: red, pushing left
+    \draw[->, very thick, myred] (0.65, 0.67) -- ++(-1.5, 0)
+        node[left, font=\small] {$\vec{F}$};
+    % N: blue, up
+    \draw[->, thick, myblue] (O) -- ++(0, 2.2)
+        node[right, font=\small] {$\vec{C}_\perp \equiv \vec{\mathscr{N}}$};
+    % f: green, horizontal right
+    \draw[->, thick, mygreen] (O) -- ++(2.2, 0)
+        node[right, font=\small] {$\vec{C}_{\parallel} \equiv \vec{f}$};
+    % C: black, resultant
+    \draw[->, very thick, black] (O) -- ++(2.2, 2.2)
+        node[above right, font=\small] {$\vec{C}$};
+    % Dashed construction lines
+    \draw[dashed, gray!55, thin] (O) ++(0, 2.2) -- ++(2.2, 0);
+    \draw[dashed, gray!55, thin] (O) ++(2.2, 0) -- ++(0, 2.2);
+\end{tikzpicture}
+\caption{The block is pushed to the left by $\vec{F}$. The contact force $\vec{C}$ decomposes into a normal component $\vec{\mathscr{N}}$ and a tangential friction component $\vec{f}$ opposing the motion.}
+\label{fig:contactforce}
+\end{figure}
+
+
+
+The contact force, written in terms of its component forces, is therefore
+\begin{equation}
+    \vec{C} = \vec{C}_\perp + \vec{C}_{\parallel} \equiv \vec{\mathscr{N}} + \vec{f}\,.
+\end{equation}
+The normal component $\vec{\mathscr{N}}$ and the tangential component $\vec{f}$ are not independent forces but the vector components of the contact force, perpendicular and parallel to the surface of contact. 
+
+
+
+% ==============================================================
+\section*{Friction}
+% ==============================================================
+
+When a block slides along a horizontal surface or down an inclined plane, a lateral force resists the motion. Even when the block is at rest on an inclined plane, a lateral force prevents it from sliding. This resistive force is known as \textit{dry friction}, and
+there are two distinguishing types when surfaces are in contact with each other.
+
+When two surfaces move relative to one another, the friction is called \textbf{\textit{kinetic friction}} (or \textbf{\textit{sliding friction}}). When the surfaces are stationary relative to each other but a lateral force is present, the friction is called \textbf{\textit{static friction}}.
+
+Leonardo da Vinci was the first to record systematic measurements of kinetic friction, over a period spanning 1493 to about 1515. His results were rediscovered and published by Guillaume Amontons in 1699, and extended by Charles-Augustin Coulomb, who showed that kinetic friction is also independent of sliding speed for ordinary speeds.
+
+\subsection{Kinetic Friction}
+
+The magnitude of the kinetic friction force $\vec{f}^{\,k}$ is proportional to the normal force between the two surfaces,
+\begin{equation}
+    f_k = \mu_k \mathscr{N}\,,
+\end{equation}
+where $\mu_k$ is the \textbf{\textit{coefficient of kinetic friction}}, a dimensionless constant depending only on the two materials in contact. A notable result is that $f_k$ is independent of the apparent contact area. Two blocks of the same mass but different footprints require the same force to slide at constant speed (Figure~\ref{fig:kineticarea}). This follows from the microscopic structure of surfaces, as discussed in the next section.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick]
+    % --- Warm paper background ---
+    \fill[paper, rounded corners=6pt] (-6.5,-0.9) rectangle (6,1.7);
+    \begin{scope}[shift={(-3.6,0)}]
+        \draw[thick] (-1.55,-0.02) -- (1.55,-0.02);
+        \fill[pattern=north east lines, pattern color=gray!45]
+            (-1.55,-0.22) rectangle (1.55,-0.02);
+        \draw[fill=gray!15] (-1.2,0) rectangle (1.2,0.72);
+        \draw[->, thick] (-1.2,0.36) -- ++(-1.1,0)
+            node[left, font=\small] {$\vec{F}$};
+        \draw[->, thick] ( 1.2,0.36) -- ++( 1.1,0)
+            node[right, font=\small] {$\vec{f}_k$};
+        \node[font=\small\itshape] at (0,-0.55) {(a)};
+    \end{scope}
+    \begin{scope}[shift={(3.6,0)}]
+        \draw[thick] (-1.0,-0.02) -- (1.0,-0.02);
+        \fill[pattern=north east lines, pattern color=gray!45]
+            (-1.0,-0.22) rectangle (1.0,-0.02);
+        \draw[fill=gray!15] (-0.5,0) rectangle (0.5,1.44);
+        \draw[->, thick] (-0.5,0.72) -- ++(-1.1,0)
+            node[left, font=\small] {$\vec{F}$};
+        \draw[->, thick] ( 0.5,0.72) -- ++( 1.1,0)
+            node[right, font=\small] {$\vec{f}_k$};
+        \node[font=\small\itshape] at (0,-0.55) {(b)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Kinetic friction is independent of contact area. Block~(a) has twice the footprint of block~(b), yet both require the same force to slide at constant speed.}
+\label{fig:kineticarea}
+\end{figure}
+
+\subsection{Static Friction}
+
+Static friction does not take a fixed value; it adjusts itself to prevent relative motion. As you push a stationary block with increasing force, static friction matches your push exactly until a maximum value is reached. Beyond this threshold, the block slips and kinetic friction takes over. The magnitude of static friction therefore satisfies
+\begin{equation}
+    0 \leq f_s \leq (f_s)_{\max}\,,
+\end{equation}
+where the maximum is found experimentally to be proportional to the normal force,
+\begin{equation}
+    (f_s)_{\max} = \mu_s \mathscr{N}\,.
+\end{equation}
+Here $\mu_s$ is the \textbf{\textit{coefficient of static friction}}. Experiment consistently gives $\mu_s > \mu_k$: more force is needed to initiate sliding than to sustain it. This small difference accounts for the stick-slip behaviour of chalk on a blackboard, fingernails on glass, or a violin bow on a string.
+
+The direction of static friction always opposes the applied force, as shown in Figure~\ref{fig:staticdir}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick]
+    \fill[paper, rounded corners=6pt] (-6.0,-0.9) rectangle (6,1.2);
+    \begin{scope}[shift={(-3.3,0)}]
+        \draw[thick] (-1.4,-0.02) -- (1.4,-0.02);
+        \fill[pattern=north east lines, pattern color=gray!45]
+            (-1.4,-0.22) rectangle (1.4,-0.02);
+        \draw[fill=gray!15] (-0.85,0) rectangle (0.85,0.9);
+        \draw[->, thick] (-0.85,0.45) -- ++(-1.1,0)
+            node[left,  font=\small] {$\vec{F}$};
+        \draw[->, thick] ( 0.85,0.45) -- ++( 1.0,0)
+            node[right, font=\small] {$\vec{f}_s$};
+        \node[font=\small\itshape] at (0,-0.55) {(a)};
+    \end{scope}
+    \begin{scope}[shift={(3.3,0)}]
+        \draw[thick] (-1.4,-0.02) -- (1.4,-0.02);
+        \fill[pattern=north east lines, pattern color=gray!45]
+            (-1.4,-0.22) rectangle (1.4,-0.02);
+        \draw[fill=gray!15] (-0.85,0) rectangle (0.85,0.9);
+        \draw[->, thick] ( 0.85,0.45) -- ++( 1.1,0)
+            node[right, font=\small] {$\vec{F}$};
+        \draw[->, thick] (-0.85,0.45) -- ++(-1.0,0)
+            node[left,  font=\small] {$\vec{f}_s$};
+        \node[font=\small\itshape] at (0,-0.55) {(b)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Static friction opposes the applied force. In~(a) $\vec{F}$ acts to the left so $\vec{f}_s$ acts to the right. In~(b) the roles are reversed.}
+\label{fig:staticdir}
+\end{figure}
+
+Two important distinctions between static and kinetic friction are worth keeping in mind.
+\vspace{-0.1cm}
+\begin{enumerate}[leftmargin=2em, itemsep=2pt]
+    \item The magnitude and direction of static friction depend on the applied forces and adjust to maintain equilibrium, up to the maximum $(f_s)_{\max}$. Kinetic friction, by contrast, has a fixed magnitude $\mu_k \mathscr{N}$ for a given normal force.
+    \item When the applied force along the contact surface reaches $(f_s)_{\max}$, the surfaces begin to slip. This threshold condition is called the \textbf{\textit{just slipping}} condition, and marks the transition from static to kinetic friction.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+\begin{workedexample}[5.1: Sliding Block]
+A block of mass \(m\) slides down an incline of angle \(30^\circ\) with an acceleration \(g/4\). Find the kinetic friction coeffcient \(\mu_k\).
+
+
+\medskip
+\textit{Solution.}
+We resolve the forces into components parallel and perpendicular to the incline, taking
+the positive direction down the slope for motion and outward from the surface for the
+normal direction. 
+
+\begin{center}
+\begin{tikzpicture}[scale=1.7, line width=0.9pt, >=stealth]
+
+    \pgfmathsetmacro{\ang}{30}
+
+    % --- Warm paper background ---
+    \fill[paper, rounded corners=6pt] (-0.7,-0.55) rectangle (5.9,3.5);
+
+    % --- Incline triangle ---
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (5,0);
+    \coordinate (C) at (0, {5*tan(\ang)});
+    \draw[thick, fill=gray!12] (A) -- (B) -- (C) -- cycle;
+
+    % Ground hatch
+    \draw[thick] (-0.2,0) -- (5.25,0);
+    \foreach \x in {-0.1,0.3,0.7,1.1,1.5,1.9,2.3,2.7,3.1,3.5,3.9,4.3,4.7,5.1}
+        \draw[thin] (\x,0) -- +(-0.18,-0.14);
+
+    % Angle at B
+    \draw (4.2,0) arc (180:{180-\ang}:0.8);
+    \node at (3.9,0.28) {\small $30^\circ$};
+
+    % --- Block position on slope ---
+    \pgfmathsetmacro{\bx}{5 - 0.50*5}
+    \pgfmathsetmacro{\by}{0.50*5*tan(\ang)}
+    \pgfmathsetmacro{\bcx}{\bx + 0.275*cos(60)}
+    \pgfmathsetmacro{\bcy}{\by + 0.275*sin(60)}
+    \coordinate (O) at (\bcx,\bcy);
+
+    \begin{scope}[shift={(O)}, rotate={-\ang}]
+        \draw[fill=white, thick] (-0.35,-0.275) rectangle (0.35,0.275);
+    \end{scope}
+
+    % --- Lengths (shortened) ---
+    \pgfmathsetmacro{\L}{1.05}
+    \pgfmathsetmacro{\Lsin}{\L*sin(\ang)}
+    \pgfmathsetmacro{\Lcos}{\L*cos(\ang)}
+
+    \coordinate (mgTip)   at ($(O)+(270:\L)$);
+    \coordinate (sinTip)  at ($(O)+(-\ang:\Lsin)$);
+    \coordinate (cosTip)  at ($(O)+(240:\Lcos)$);
+
+    % --- Dashed parallelogram of components ---
+    \draw[dashed, gray!55] (sinTip) -- (mgTip);
+    \draw[dashed, gray!55] (cosTip) -- (mgTip);
+
+    % --- Weight and components ---
+    \draw[->, thick, black] (O) -- (mgTip)
+        node[below, font=\small] {$mg$};
+    \draw[->, thick, black!55] (O) -- (sinTip)
+        node[below right, font=\scriptsize, xshift=2pt, yshift=-1pt] {$mg\sin\theta$};
+    \draw[->, thick, black!55] (O) -- (cosTip)
+        node[below left, font=\scriptsize] {$mg\cos\theta$};
+
+    % --- angle theta between mg and mg cos th ---
+    \draw[line width=0.5pt, gray!70] (O)+(270:0.40) arc (270:240:0.40);
+    \node[font=\scriptsize, gray!40!black] at ($(O)+(255:0.55)$) {$\theta$};
+
+    % --- Normal force ---
+    \draw[->, thick, blue!70!black] (O) -- ($(O)+(60:\Lcos)$)
+        node[above right, font=\small, xshift=-2pt] {$\mathscr{N}$};
+
+    % --- Friction ---
+    \draw[->, thick, orange!80!black] (O) -- ($(O)+(150:\Lsin)$)
+        node[above left, font=\small, xshift=2pt] {$f_k$};
+
+    % --- Acceleration g/4 ---
+    \coordinate (aStart) at ($(O)+(60:0.43)+(-30:0.30)$);
+    \draw[->, very thick, green!39!black] (aStart) -- ++(-\ang:0.95)
+        node[above right, font=\small, xshift=-3pt] {$a=g/4$};
+
+    % --- Coordinate axes inset ---
+    \coordinate (Oax) at (4.55,2.45);
+    \draw[->, gray!55!black, line width=0.8pt]
+        (Oax) -- ($(Oax)+(-\ang:0.7)$) node[right, font=\scriptsize, gray!45!black] {$x$};
+    \draw[->, gray!55!black, line width=0.8pt]
+        (Oax) -- ($(Oax)+(60:0.7)$) node[above, font=\scriptsize, gray!45!black] {$y$};
+    \draw[gray!55!black, line width=0.5pt]
+        ($(Oax)+(-\ang:0.16)$) -- ($(Oax)+(-\ang:0.16)+(60:0.16)$) -- ($(Oax)+(60:0.16)$);
+
+\end{tikzpicture}
+\end{center}
+
+
+\vspace{0.3cm}
+Perpendicular to the incline there is no acceleration, so the normal force balances the
+perpendicular component of gravity,
+\begin{equation*}
+    \mathscr{N} - mg\cos\theta = 0 \implies \mathscr{N} = mg\cos\theta.
+\end{equation*}
+
+Along the incline, the block accelerates down the slope at $a = g/4$. The driving force is
+the parallel component of gravity, $mg\sin\theta$, opposed by kinetic friction
+$f_k = \mu_k\mathscr{N}$ acting up the slope. Newton's second law gives
+\begin{equation*}
+    mg\sin\theta - \mu_k\mathscr{N} = ma.
+\end{equation*}
+Substituting $\mathscr{N} = mg\cos\theta$ and $a = g/4$,
+\begin{equation*}
+    mg\sin\theta - \mu_k mg\cos\theta = \tfrac{1}{4}mg.
+\end{equation*}
+The mass $m$ and the acceleration $g$ cancel throughout, leaving a relation among pure
+numbers,
+\begin{equation*}
+    \sin\theta - \mu_k\cos\theta = \tfrac{1}{4}.
+\end{equation*}
+Solving for the coefficient of kinetic friction,
+\begin{equation*}
+    \mu_k = \frac{\sin\theta - \tfrac{1}{4}}{\cos\theta}.
+\end{equation*}
+With $\theta = 30^\circ$, so that $\sin\theta = \tfrac{1}{2}$ and $\cos\theta = \tfrac{\sqrt{3}}{2}$,
+\begin{equation*}
+    \mu_k = \frac{1/2 - 1/4}{\sqrt{3}/2}
+          = \frac{1}{2\sqrt{3}}.
+\end{equation*}
+
+
+
+\end{workedexample}
+
+
+\newpage
+
+
+\section*{The Normal Force}
+
+When two solid bodies are pressed together, their surfaces resist interpenetration.
+Push your hand against a wall and the wall pushes back, preventing your hand from
+passing through (Figure~\ref{fig:stickwall}). This perpendicular push is called the
+\textit{normal force}, where \textit{normal} means perpendicular to the surface of
+contact. Notice that the harder you push on the wall with a force $\vec{F}$, the harder
+the wall pushes back on your hand with the normal force $\vec{\mathscr{N}}$.
+
+The origin of this force is atomic. The atoms at the surface of your hand and the
+atoms at the surface of the wall repel one another the moment they come into contact,
+opposing any further compression. The material of the wall behaves, at the microscopic
+level, like an array of tiny springs.\footnote{The ``atomic springs'' picture is a
+useful analogy but not the complete story. The true origin of this repulsion is quantum
+mechanical: as electron clouds overlap, the Pauli exclusion principle forces electrons
+into higher energy states, giving rise to a repulsive force. Classical electrostatics
+plays a secondary role. We will encounter the Pauli exclusion principle when we study
+modern physics.} When you push against the wall, these atomic springs compress
+slightly, and the repulsive force they exert grows with the compression until it exactly
+balances your push. For a hard material such as concrete, the compression is so small
+as to be invisible, and the wall appears perfectly rigid.
+
+This is why the normal force is not a fixed quantity: it adjusts itself to match whatever
+force is pressing the surfaces together. Push harder, and the atomic springs compress
+more, increasing the normal force in response. As the figure shows, $\vec{F}$ and
+$\vec{\mathscr{N}}$ always grow together and remain equal in magnitude. The normal force is
+therefore a \textit{constraint force}, one whose magnitude is determined not by a fixed
+law but by the condition that the two surfaces do not pass through each other.
+
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[scale=1.0, line cap=round, line join=round, >=Stealth]
+
+    \tikzset{limb/.style={line width=2.2pt, black}}
+
+    % --- Warm paper background ---
+    \fill[paper, rounded corners=6pt] (-1.55,-0.45) rectangle (6.45,4.15);
+
+    % --- Ground ---
+    \draw[line width=1pt, gray!60!brown] (-0.3,0) -- (6.2,0);
+    \foreach \x in {0.2,0.7,1.2,4.8,5.3,5.8} {
+        \draw[gray!55!brown, line width=0.6pt] (\x,-0.04) -- (\x-0.18,-0.18);
+    }
+
+    % --- Wall ---
+    \fill[pattern=north east lines, pattern color=gray!45!brown]
+        (-0.35,0) rectangle (0,3.9);
+    \draw[line width=1.6pt] (0,0) -- (0,3.9);
+
+    % ===== Stick figure =====
+    \coordinate (hand)     at (0.05, 2.55);
+    \coordinate (shoulder) at (2.05, 2.20);
+    \coordinate (hip)      at (3.30, 1.05);
+    \coordinate (kneeF)    at (3.05, 0.55);
+    \coordinate (footF)    at (3.55, 0.05);
+    \coordinate (footB)    at (5.10, 0.05);
+
+    \draw[limb] (hand) -- (shoulder);
+    \draw[limb] (0.05,2.40) -- (0.05,2.72);
+    \draw[limb] (shoulder) -- (hip);
+    \draw[limb] (hip) -- (footB);
+    \draw[limb] (footB) .. controls (5.35,0.02) and (5.45,0.10) .. (5.40,0.20);
+    \draw[limb] (hip) -- (kneeF) -- (footF);
+    \draw[limb] (footF) .. controls (3.80,0.02) and (3.90,0.10) .. (3.85,0.22);
+
+    % --- Head with strained expression ---
+    \draw[limb, fill=paper] (2.55,2.62) circle (0.46);
+    \draw[line width=1.3pt] (2.30,2.84) -- (2.46,2.72);
+    \draw[line width=1.3pt] (2.78,2.80) -- (2.62,2.70);
+    \draw[line width=1.1pt] (2.34,2.64) -- (2.45,2.60);
+    \draw[line width=1.1pt] (2.74,2.61) -- (2.63,2.58);
+    \draw[line width=1.1pt, fill=paper] (2.38,2.30) rectangle (2.74,2.44);
+    \draw[line width=0.7pt] (2.50,2.30) -- (2.50,2.44);
+    \draw[line width=0.7pt] (2.62,2.30) -- (2.62,2.44);
+
+    % --- Force arrows, both anchored at the hand ---
+    \draw[->, line width=1.8pt, myred]
+        (0.05,2.6) -- ++(-1.05,0) node[above, font=\small] {$\vec{F}$};
+    \draw[->, line width=1.8pt, myblue]
+        (0.05,2.6) -- ++(1.05,0) node[above, font=\small] {$\vec{\mathscr{N}}$};
+    \fill[black] (hand) circle (1.5pt);
+
+\end{tikzpicture}
+\caption{When you push against a wall ($\vec{F}$), the wall pushes back on your hand
+with an equal and opposite normal force ($\vec{\mathscr{N}}$), perpendicular to its surface.
+Both forces act at the point of contact.}
+\label{fig:stickwall}
+\end{figure}
+
+
+
+\section*{The Normal Force and Weight}
+
+We say we are measuring our weight when we step onto a bathroom scale. But what is the scale actually measuring?
+
+Two forces act on a person standing on a scale (Figure~\ref{fig:scale}). The first is the gravitational force $\vec{F}_g = m\vec{g}$, directed downward. The second is the contact force from the scale; because the person is at rest, this contact force is purely normal and we write it as $\vec{\mathscr{N}}$, directed upward. Since the person is at rest, the vertical acceleration is zero, and Newton's Second Law gives
+\begin{equation}
+    \vec{\mathscr{N}} + \vec{F}_g = \vec{0}.
+\end{equation}
+Taking the positive direction upward, this becomes
+\begin{equation}
+    \mathscr{N} - mg = 0 \implies \mathscr{N} = mg.
+\end{equation}
+
+It is worth being precise about four quantities that are easy to confuse. The \textit{true mass} $m$ is the amount of matter in the person, an invariant property that does not change with motion or location.\footnote{Newtonian mechanics treats mass as a fixed quantity. Special relativity shows that an object's inertia grows with its speed. One common way to express this
+introduces a velocity-dependent mass $m = m_0/\sqrt{1 - v^2/c^2}$, where $m_0$ is the
+rest mass and $c$ is the speed of light; for everyday speeds $v \ll c$ this is
+indistinguishable from $m_0$. Modern physics usually prefers instead to keep mass as
+the invariant $m_0$ and describe the growing inertia through momentum and energy. Either
+way, the effect is utterly negligible at ordinary speeds. We will return to this when we
+study modern physics.} The \textit{true weight} $mg$ is the actual gravitational force the Earth exerts on the person. The scale, however, does not measure either of these directly. It measures the normal force $\mathscr{N}$ pressing on it, which we call the \textit{apparent weight}. Dividing by $g$, it displays a number in kilograms, the \textit{apparent mass} $\mathscr{N}/g$. At rest the apparent mass equals the true mass and the distinction seems academic. The elevator, discussed in the next section, will reveal the difference.
+
+The word ``weight'' is often used loosely to mean the gravitational force the Earth exerts on an object. We shall always call that force the \textit{gravitational force} rather than ``weight'', to keep it distinct from what a scale reads. When you jump into the air you feel ``weightless'' because no normal force acts on you, even though the Earth still pulls you down. You have not turned gravity off.
+
+A common misconception deserves to be addressed before we proceed. The normal force and the gravitational force are two completely different forces. They are equal in magnitude here only because the person is at rest, and this equality will fail the moment there is acceleration. More importantly, they do not form a Newton's Third Law interaction pair: both act on the same object (the person), whereas Third Law pairs always act on \textit{different} objects. The true Third Law partner of the gravitational force on the person due to the Earth, $\vec{F}^{\,g}_{E,P}$, is the gravitational force on the Earth due to the person,  $\vec{F}^{\,g}_{P,E}$, and they satisfy \(\vec{F}^{\,g}_{E,P} = -\vec{F}^{\,g}_{P,E}\). These act on different objects: one on the person, the other on the Earth. Likewise, the Third Law partner of the normal force $\vec{\mathscr{N}}$ from the scale is the force the person's feet exert downward on the scale surface.
+
+
+\section*{Experience in an Elevator}
+ 
+Consider a person of mass $m = 60\,\mathrm{kg}$ standing on a scale inside an elevator.
+In each case exactly two forces act on the person: the gravitational force $m\vec{g}$
+directed downward and the normal force $\vec{\mathscr{N}}$ directed upward.
+ 
+\vspace{0.3cm}
+\noindent\textbf{\sffamily(a)\; At Rest or Moving at Constant Velocity.}
+ 
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+When the elevator is stationary or moving at constant velocity, the acceleration is zero.
+The person's state of motion is not changing, so the floor need only support the person's
+weight, nothing more. Newton's second law in the vertical direction gives
+\begin{equation*}
+    \vec{\mathscr{N}} + \vec{F}_g = \vec{0}
+    \implies \mathscr{N} - mg = 0,
+\end{equation*}
+so that
+\begin{equation*}
+    \mathscr{N} = mg = (60)(10) = 600\;\mathrm{N}.
+\end{equation*}
+The scale displays $\mathscr{N}/g = 60.0\,\mathrm{kg}$. Here the apparent weight equals the
+true weight, which is why we never notice the distinction in ordinary standing.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.6\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[>=Stealth, scale=1.80]
+    \fill[paper, rounded corners=5pt] (-1.55,-0.18) rectangle (1.55,3.76);
+    \draw[very thick] (-1.3,0) rectangle (1.3,3.0);
+    \draw[thick] (0,3.6) -- (0,3.0);
+    \fill[gray!20] (-1.3,0) rectangle (1.3,0.10);
+    \fill[gray!30] (-0.58,0.12) rectangle (0.58,0.40);
+    \draw[thick]   (-0.58,0.12) rectangle (0.58,0.40);
+    \fill[white]   (-0.32,0.15) rectangle (0.32,0.37);
+    \node[font=\tiny] at (0,0.26) {60.0\,kg};
+    \draw[thick] (-0.16,0.40) -- (0,0.62) -- (0.16,0.40);
+    \draw[thick] (0,0.62) -- (0,1.52);
+    \draw[thick] (0,1.05) -- (-0.42,0.85);
+    \draw[thick] (0,1.05) -- ( 0.42,0.85);
+    \draw[thick,fill=paper] (0,1.75) circle (0.23);
+    \draw[very thick,-Stealth,myblue]  (-0.82,0.40) -- (-0.82,2.0);
+    \node[left,myblue,font=\small] at (-0.87,1.20) {$\vec{\mathscr{N}}$};
+    \draw[very thick,-Stealth,myred]   ( 0.80,2.00) -- ( 0.80,0.40);
+    \node[right,myred,font=\small] at (0.85,1.20) {$m\vec{g}$};
+\end{tikzpicture}
+\label{fig:scale}
+\end{minipage}
+
+ 
+\vspace{2.4cm}
+\noindent\textbf{\sffamily(b)\; Accelerating Upward.}
+ 
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+Now the elevator accelerates upward. To make the person accelerate upward too, there must
+be a net upward force on them. But the person's inertia resists this change in motion: their
+body ``wants'' to stay at rest or moving as it was. The floor must therefore push up harder than before, hard enough both to support the weight and to supply the extra upward force the acceleration
+demands. The normal force rises above $mg$. Newton's second law gives
+\begin{equation}
+    \mathscr{N} - mg = ma \implies \mathscr{N} = m(g+a).
+\end{equation}
+Suppose the scale reads $64.8\,\mathrm{kg}$, meaning $\mathscr{N} = 648\,\mathrm{N}$:
+\begin{equation*}
+    648 = 60(10+a) \implies a = 0.8\;\mathrm{m\,s^{-2}}\;\text{upward.}
+\end{equation*}
+The person feels heavier because the floor genuinely presses harder on their feet. The true
+weight is unchanged at $600\,\mathrm{N}$; only the apparent weight has risen, to
+$648\,\mathrm{N}$.
+
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.6\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[>=Stealth, scale=1.80]
+    \fill[paper, rounded corners=5pt] (-1.55,-0.18) rectangle (2.15,3.7);
+    \draw[very thick] (-1.3,0) rectangle (1.3,3.0);
+    \draw[thick] (0,3.6) -- (0,3.0);
+    \fill[gray!20] (-1.3,0) rectangle (1.3,0.10);
+    \fill[gray!30] (-0.58,0.12) rectangle (0.58,0.40);
+    \draw[thick]   (-0.58,0.12) rectangle (0.58,0.40);
+    \fill[white]   (-0.32,0.15) rectangle (0.32,0.37);
+    \node[font=\tiny] at (0,0.26) {64.8\,kg};
+    \draw[thick] (-0.16,0.40) -- (0,0.62) -- (0.16,0.40);
+    \draw[thick] (0,0.62) -- (0,1.52);
+    \draw[thick] (0,1.05) -- (-0.42,0.85);
+    \draw[thick] (0,1.05) -- ( 0.42,0.85);
+    \draw[thick,fill=paper] (0,1.75) circle (0.23);
+    \draw[very thick,-Stealth,myblue]  (-0.82,0.40) -- (-0.82,2.58);
+    \node[left,myblue,font=\small] at (-0.87,1.49) {$\vec{\mathscr{N}}$};
+    \draw[very thick,-Stealth,myred]   ( 0.80,2.00) -- ( 0.80,0.40);
+    \node[right,myred,font=\small] at (0.85,1.20) {$m\vec{g}$};
+    \draw[very thick,-Stealth,mygreen] (1.80,1.30) -- (1.80,2.90);
+    \node[right,mygreen,font=\small] at (1.85,2.10) {$\vec{a}$};
+\end{tikzpicture}
+\end{minipage}
+
+
+
+\vspace{0.3cm}
+\noindent\textbf{\sffamily(c)\; Accelerating Downward.}
+ 
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+When the elevator accelerates downward, the person's inertia resists the change: the body
+"wants" to keep moving as it was, so for a moment it does not fall away with the floor as
+readily as the floor drops beneath it. The person presses less firmly on the scale, and so
+the scale presses less firmly back. The normal force falls below $mg$, leaving a net
+downward force that produces the downward acceleration:
+\begin{equation}
+    mg - \mathscr{N} = ma \implies \mathscr{N} = m(g-a). \label{downward}
+\end{equation}
+If the scale reads $54.0\,\mathrm{kg}$, meaning $\mathscr{N} = 540\,\mathrm{N}$:
+\begin{equation*}
+    540 = 60(10-a) \implies a = 1.0\;\mathrm{m\,s^{-2}}\;\text{downward.}
+\end{equation*}
+The person feels lighter because the floor really does press less on their feet. The true
+weight is unchanged at $600\,\mathrm{N}$; only the apparent weight has fallen, to
+$540\,\mathrm{N}$.
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[>=Stealth, scale=1.8]
+    \fill[paper, rounded corners=5pt] (-1.55,-0.18) rectangle (2.15,3.7);
+    \draw[very thick] (-1.3,0) rectangle (1.3,3.0);
+    \draw[thick] (0,3.6) -- (0,3.0);
+    \fill[gray!20] (-1.3,0) rectangle (1.3,0.12);
+    \fill[gray!30] (-0.58,0.12) rectangle (0.58,0.40);
+    \draw[thick]   (-0.58,0.12) rectangle (0.58,0.40);
+    \fill[white]   (-0.32,0.15) rectangle (0.32,0.37);
+    \node[font=\tiny] at (0,0.26) {54.0\,kg};
+    \draw[thick] (-0.16,0.40) -- (0,0.62) -- (0.16,0.40);
+    \draw[thick] (0,0.62) -- (0,1.52);
+    \draw[thick] (0,1.05) -- (-0.42,0.85);
+    \draw[thick] (0,1.05) -- ( 0.42,0.85);
+    \draw[thick,fill=paper] (0,1.75) circle (0.23);
+    \draw[very thick,-Stealth,myblue]  (-0.82,0.40) -- (-0.82,1.60);
+    \node[left,myblue,font=\small] at (-0.87,1.00) {$\vec{\mathscr{N}}$};
+    \draw[very thick,-Stealth,myred]   ( 0.80,2.00) -- ( 0.80,0.40);
+    \node[right,myred,font=\small] at (0.85,1.20) {$m\vec{g}$};
+    \draw[very thick,-Stealth,mygreen] (1.80,2.90) -- (1.80,1.30);
+    \node[right,mygreen,font=\small] at (1.85,2.10) {$\vec{a}$};
+\end{tikzpicture}
+\end{minipage}
+ 
+\vspace{1.2cm}
+\noindent\textbf{\sffamily(d)\; Free Fall.}
+ 
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+Now imagine the cable snaps and the elevator falls freely. Gravity acts on everything
+inside equally, so the person, the scale, and the floor all accelerate downward together
+at the same rate $a = g$. Because the floor falls away just as fast as the person does, it
+never has to push on them at all. The normal force drops all the way to zero. Setting
+$a = g$ in equation~\eqref{downward},
+\begin{equation*}
+    \mathscr{N} = m(g - g) = 0.
+\end{equation*}
+The scale reads zero, yet gravity has certainly not switched off; the Earth still pulls the
+person down with the full force $mg$. The person simply floats inside the falling car
+because there is no longer any contact force to register. This is exactly what we mean by
+\textit{weightlessness}: not the absence of gravity, but the absence of the normal force.
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[>=Stealth, scale=1.80]
+    \fill[paper, rounded corners=5pt] (-1.55,0.22) rectangle (2.4,4.0);
+    \draw[very thick] (-1.3,0.4) rectangle (1.3,3.4);
+    \draw[thick] (0,3.4) -- (0,3.62);
+    \draw[thick] (0,3.72) -- (0,3.92);
+    \draw[thick, myred] (-0.10, 3.59) -- (0.12, 3.75);
+    \fill[gray!20] (-1.3,0.4) rectangle (1.3,0.52);
+    \fill[gray!30] (-0.58,0.68) rectangle (0.58,0.96);
+    \draw[thick]   (-0.58,0.68) rectangle (0.58,0.96);
+    \fill[white]   (-0.32,0.71) rectangle (0.32,0.93);
+    \node[font=\tiny] at (0,0.82) {0.0\,kg};
+    \draw[dashed,gray!55,thin] (-0.58,0.52) -- (-0.58,0.68);
+    \draw[dashed,gray!55,thin] ( 0.58,0.52) -- ( 0.58,0.68);
+    \draw[thick] (-0.16,1.28) -- (0,1.50) -- (0.16,1.28);
+    \draw[thick] (0,1.50) -- (0,2.40);
+    \draw[thick] (0,1.93) -- (-0.42,1.73);
+    \draw[thick] (0,1.93) -- ( 0.42,1.73);
+    \draw[thick,fill=paper] (0,2.63) circle (0.23);
+    \draw[dashed,gray!55,thin] (-0.16,0.96) -- (-0.16,1.28);
+    \draw[dashed,gray!55,thin] ( 0.16,0.96) -- ( 0.16,1.28);
+    \draw[very thick,-Stealth,myred] (0.80,2.83) -- (0.80,1.21);
+    \node[right,myred,font=\small] at (0.85,2.02) {$m\vec{g}$};
+    \draw[very thick,-Stealth,mygreen] (1.80,3.20) -- (1.80,1.60);
+    \node[right,mygreen,font=\small] at (1.85,2.40) {$\vec{a}{=}\vec{g}$};
+\end{tikzpicture}
+\end{minipage}
+ 
+
+
+\section*{A Glimpse of Something Deeper (Supplementary)}
+
+We close with a question that troubled Einstein and ultimately led him to general relativity.
+Imagine you wake up inside a sealed box with no windows. You feel a normal force pressing
+up on your feet. How could you tell whether you are sitting stationary on the surface of the
+Earth, with gravity pulling you down, or drifting in empty space far from any planet, with
+the box accelerating upward at $g=9.8\,\text{m/s}^2$?
+
+The remarkable answer is that you cannot. No mechanical experiment conducted inside the
+box will distinguish between these two situations. Drop a ball: in both cases it accelerates
+toward the floor at $10\,\text{m/s}^2$. Step on a scale: it reads $mg$ in both cases. Einstein
+elevated this to a fundamental principle: \textbf{gravity and accelerated motion are locally
+equivalent}. This is the \textbf{equivalence principle}.
+
+\textbf{a) Two Kinds of Mass.} The symbol $m$ appears in two logically distinct roles.
+In Newton's second law, $m$ appears as \textbf{inertial mass}: the resistance of an object to
+acceleration. In the gravitational force law, $m$ appears as \textbf{gravitational mass}: the
+quantity that determines how strongly gravity pulls on the object. There is no obvious reason
+these two quantities should be equal. Yet every experiment ever performed finds them equal.
+The Hungarian physicist Lor\'and E\"otv\"os demonstrated this equality to one part in $10^8$
+in the 1880s, and modern experiments push this to one part in $10^{15}$.
+
+The equality $m_\text{inertial}=m_\text{gravitational}$ is exactly what ensures that all
+objects fall at the same rate regardless of their mass.
+
+\textbf{b) Light Must Bend.} The equivalence principle has a striking consequence that
+goes beyond mechanics. Shine a horizontal beam of light across the accelerating box. While
+the light travels across, the box accelerates upward, so the beam hits the far wall slightly
+below where it was aimed --- the light beam appears to curve downward. Since an accelerating
+box is locally indistinguishable from a gravitational field, gravity must also bend light. This
+was a radical prediction: Newtonian gravity acts only on objects with mass, and light was
+thought to be massless. Einstein's prediction was confirmed experimentally in 1919 by Arthur
+Eddington, who photographed stars near the edge of the Sun during a solar eclipse and found
+that their apparent positions were shifted by exactly the amount Einstein predicted. The
+announcement made Einstein famous overnight.
+
+\textbf{c) Where This Leads.} Once you take the equivalence principle seriously and ask what
+geometry of space and time is consistent with it, you are led to \textbf{general relativity}.
+Gravity is reinterpreted not as a force but as the curvature of spacetime caused by mass and
+energy. Objects in free fall follow the straightest possible paths through this curved geometry.
+The bending of light, the slowing of clocks in gravitational fields, the existence of
+gravitational waves, and the physics of black holes all follow from the same geometric
+framework. The elevator we analysed today is the first step in that journey.
+
+
+
+
+
+
+
+\newpage
+\section{Circular Motion}
+
+We shall now investigate a special class of motions: motion in a plane about a central point, which we refer to as \textit{central motion}. The most important special case is circular motion. There are many instances of circular motion: a bicycle rider on a circular track, a ball spun around on a string, and the rotation of a spinning wheel are just a few examples. The motion of the Moon around the Earth is nearly circular. The motions of the planets around the Sun are nearly circular. Our Sun moves in a nearly circular orbit about the centre of our galaxy.
+
+We begin by describing the kinematics of circular motion -- the position, velocity, and acceleration -- as a special case of two-dimensional motion. Unlike linear motion, where velocity and acceleration are directed along the line of motion, in circular motion the velocity is always tangent to the circle. This means that as the object moves in a circle, the direction of the velocity is always changing. Examining this change reveals that the direction of the acceleration is towards the centre of the circle. This inward component of acceleration is called the \textit{centripetal acceleration}. If the object is also changing speed, there is an additional non-zero tangential acceleration in the direction of motion. For uniform circular motion (constant speed), only the centripetal acceleration is non-zero.
+
+Newton recognised that the Moon is always ``falling'' towards the Earth; otherwise, by the First Law, it would continue in a straight line rather than follow a circular orbit. There must therefore exist a centripetal force, a radial force pointing inward, producing the centripetal acceleration. Because Newton's Second Law is a vector equation, the radial component gives
+\begin{equation}
+    F_r = m a_r.
+\end{equation}
+
+% ==============================================================
+\subsection{Circular Motion: Velocity and Angular Velocity}
+% ==============================================================
+
+We describe circular motion using polar coordinates. The position vector $\vec{r}(t)$ of an object moving in a circular orbit of radius $r$ is written as
+\begin{equation}
+    \vec{r}(t) = r\,\hat{r}(t),
+\end{equation}
+where $\hat{r}(t)$ is the radial unit vector pointing from the origin to the object. At any point $P$ with coordinates $(r, \theta(t))$, we define two sets of unit vectors: the polar basis $(\hat{r}(t),\, \hat{\theta}(t))$ and the Cartesian basis $(\hat{\imath},\, \hat{\jmath})$, as shown in Figure~\ref{fig:circleunitvec}. Their relationship is
+\begin{align}
+    \hat{r}(t)      &= \cos\theta(t)\,\hat{\imath} + \sin\theta(t)\,\hat{\jmath}, \label{eq:rhat}\\
+    \hat{\theta}(t) &= -\sin\theta(t)\,\hat{\imath} + \cos\theta(t)\,\hat{\jmath}. \label{eq:thetahat}
+\end{align}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick, scale=1.15]
+    % Axes
+    \draw[->, thin, gray!70] (-2.6,0) -- (2.8,0) node[right, black, font=\small] {$+x$};
+    \draw[->, thin, gray!70] (0,-2.6) -- (0,2.8) node[above, black, font=\small] {$+y$};
+    % Cartesian unit vector labels
+    \node[font=\scriptsize, gray!60!black] at (0.55, 0.18) {$\hat{\imath}$};
+    \node[font=\scriptsize, gray!60!black] at (0.18, 0.55) {$\hat{\jmath}$};
+    % Circle
+    \draw[dashed, gray!55] (0,0) circle (2);
+    % Origin
+    \fill (0,0) circle (1.5pt);
+    \node[below left, font=\small] at (0,0) {$O$};
+    % Point P
+    \coordinate (P) at (52:2);
+    \fill[black] (P) circle (2pt);
+    \node[above right, font=\small] at (P) {$P$};
+    % Position vector
+    \draw[->, very thick] (0,0) -- (P) node[midway, left, font=\small] {$\vec{r}(t)$};
+    % Angle arc and label
+    \draw[thin] (0.65,0) arc (0:52:0.65);
+    \node[font=\scriptsize] at (26:0.92) {$\theta(t)$};
+    % Radius label
+    \node[font=\scriptsize, gray!50!black] at (74:2.22) {$r$};
+    % r-hat unit vector
+    \draw[->, thick] (P) -- ++(52:0.80) node[above right, font=\small] {$\hat{r}(t)$};
+    % theta-hat unit vector (CCW tangent)
+    \draw[->, thick] (P) -- ++(142:0.80) node[above left, font=\small] {$\hat{\theta}(t)$};
+\end{tikzpicture}
+\caption{A circular orbit of radius $r$ with the polar unit vectors $\hat{r}(t)$ and $\hat{\theta}(t)$ at the point $P$.}
+\label{fig:circleunitvec}
+\end{figure}
+
+Before computing the velocity, we calculate the time derivatives of the unit vectors. Using the chain rule on Eq.~(\ref{eq:rhat}),
+\begin{equation}
+    \frac{d\hat{r}(t)}{dt} = \left(-\sin\theta(t)\,\hat{\imath} + \cos\theta(t)\,\hat{\jmath}\right)\frac{d\theta}{dt} = \frac{d\theta}{dt}\,\hat{\theta}(t).
+\end{equation}
+Similarly, differentiating Eq.~(\ref{eq:thetahat}),
+\begin{equation}
+    \frac{d\hat{\theta}(t)}{dt} = \left(-\cos\theta(t)\,\hat{\imath} - \sin\theta(t)\,\hat{\jmath}\right)\frac{d\theta}{dt} = -\frac{d\theta}{dt}\,\hat{r}(t).
+\end{equation}
+The velocity vector is then
+\begin{equation}
+    \vec{v}(t) = \frac{d\vec{r}}{dt} = r\frac{d\hat{r}}{dt} = r\frac{d\theta}{dt}\,\hat{\theta}(t) = v_\theta\,\hat{\theta}(t),
+\end{equation}
+where the tangential component of the velocity is
+\begin{equation}
+    v_\theta = r\frac{d\theta}{dt}.
+\end{equation}
+The \textit{angular speed} is defined as the magnitude of the rate of change of angle,
+\begin{equation}
+    \omega \equiv \left|\frac{d\theta}{dt}\right|,
+\end{equation}
+so that the speed is $v = |\vec{v}| = r\omega$.
+
+% --------------------------------------------------------------
+\subsection{Geometric Derivation of the Velocity}
+% --------------------------------------------------------------
+
+Consider a particle undergoing circular motion. During a time interval $\Delta t$, the particle moves from position $\vec{r}(t)$ to $\vec{r}(t+\Delta t)$, sweeping an angle $\Delta\theta$, as shown in Figure~\ref{fig:displacement}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick, scale=1.2]
+    % Arc
+    \draw[dashed, gray!55] (0,0) circle (2);
+    \fill (0,0) circle (1.5pt) node[below left, font=\small] {$O$};
+    % Two position vectors
+    \coordinate (A) at (20:2);
+    \coordinate (B) at (65:2);
+    \draw[->, thick] (0,0) -- (A) node[right, font=\small] {$\vec{r}(t)$};
+    \draw[->, thick] (0,0) -- (B) node[above right, font=\small] {$\vec{r}(t{+}\Delta t)$};
+    \fill (A) circle (1.5pt);
+    \fill (B) circle (1.5pt);
+    % Displacement chord
+    \draw[->, thick, red] (A) -- (B) node[midway, right, font=\small] {$\Delta\vec{r}$};
+    % Angle arc
+    \draw[thin] (0.7,0) arc (0:20:0.7);
+    \draw[thin] (0.55,0) arc (0:65:0.55);
+    \node[font=\scriptsize] at (42:0.82) {$\Delta\theta$};
+\end{tikzpicture}
+\caption{Displacement vector $\Delta\vec{r}$ for circular motion over an interval $\Delta t$.}
+\label{fig:displacement}
+\end{figure}
+
+The magnitude of the displacement is $|\Delta\vec{r}| = 2r\sin(\Delta\theta/2)$. For small angles, $\sin(\Delta\theta/2) \approx \Delta\theta/2$, so
+\begin{equation}
+    |\Delta\vec{r}| \approx r\,\Delta\theta.
+\end{equation}
+This is consistent with the limit $\Delta\theta \to 0$, where the chord approaches the arc length $r\,\Delta\theta$. The magnitude of the velocity then follows as
+\begin{equation}
+    v \equiv |\vec{v}(t)| = \lim_{\Delta t\to 0}\frac{|\Delta\vec{r}|}{\Delta t} = r\lim_{\Delta t\to 0}\frac{\Delta\theta}{\Delta t} = r\frac{d\theta}{dt} = r\omega.
+\end{equation}
+As $\Delta t\to 0$, the direction of $\Delta\vec{r}$ approaches the tangent to the circle, perpendicular to $\vec{r}(t)$ and in the $+\hat{\theta}$-direction for counterclockwise motion. This confirms that the velocity is always tangent to the circle.
+
+% ==============================================================
+\subsection{Tangential and Radial Acceleration}
+% ==============================================================
+
+In polar coordinates, the acceleration has two components: a tangential component $a_\theta$ and a radial component $a_r$,
+\begin{equation}
+    \vec{a}(t) = a_r\,\hat{r}(t) + a_\theta\,\hat{\theta}(t).
+\end{equation}
+The unit vectors $\hat{r}(t)$ and $\hat{\theta}(t)$ change direction with time and are therefore not constant. To compute the acceleration, we differentiate the velocity $\vec{v}(t) = r(d\theta/dt)\,\hat{\theta}(t)$ using the product rule,
+\begin{equation}
+    \vec{a}(t) = r\frac{d^2\theta}{dt^2}\,\hat{\theta}(t) + r\frac{d\theta}{dt}\frac{d\hat{\theta}}{dt}.
+\end{equation}
+Substituting $d\hat{\theta}/dt = -(d\theta/dt)\hat{r}(t)$,
+\begin{equation}
+    \vec{a}(t) = r\frac{d^2\theta}{dt^2}\,\hat{\theta}(t) - r\left(\frac{d\theta}{dt}\right)^2\hat{r}(t).
+\end{equation}
+The two components are therefore
+\begin{align}
+    a_\theta &= r\frac{d^2\theta}{dt^2}, \label{eq:atangential}\\
+    a_r      &= -r\left(\frac{d\theta}{dt}\right)^2 = -r\omega^2 < 0. \label{eq:aradial}
+\end{align}
+Because $a_r < 0$, the radial component $a_r(t) = -r\omega^2\,\hat{r}(t)$ is always directed towards the centre of the circular orbit. This is the centripetal acceleration.
+
+\begin{workedexample}[5.2: Circular Motion Kinematics]
+A particle moves in a circle of radius $R$. At $t = 0$ it is on the $x$-axis. The angle with the positive $x$-axis is $\theta(t) = At^3 - Bt$, where $A$ and $B$ are positive constants. Find (a) the velocity vector and (b) the acceleration vector in polar coordinates. At what time is the centripetal acceleration zero?
+
+\noindent\textbf{Solution.}
+The derivatives are $d\theta/dt = 3At^2 - B$ and $d^2\theta/dt^2 = 6At$. The velocity vector is
+\[
+    \vec{v}(t) = R\frac{d\theta}{dt}\,\hat{\theta}(t) = R(3At^2 - B)\,\hat{\theta}(t).
+\]
+The acceleration vector is
+\[
+    \vec{a}(t) = R\frac{d^2\theta}{dt^2}\,\hat{\theta}(t) - R\left(\frac{d\theta}{dt}\right)^2\hat{r}(t) = 6RAt\,\hat{\theta}(t) - R(3At^2 - B)^2\hat{r}(t).
+\]
+The centripetal acceleration is zero when $d\theta/dt = 0$, that is, when
+\[
+    3At_1^2 - B = 0 \implies t_1 = \sqrt{\frac{B}{3A}}.
+\]
+\end{workedexample}
+
+% ==============================================================
+\subsection{Period and Frequency for Uniform Circular Motion}
+% ==============================================================
+
+If the total tangential force on the object is zero, the tangential acceleration vanishes,
+\begin{equation}
+    a_\theta = 0,
+\end{equation}
+and the speed remains constant. This is \textit{uniform circular motion}. The acceleration reduces to
+\begin{equation}
+    \vec{a}_r(t) = -r\omega^2\,\hat{r}(t) \qquad \text{(uniform circular motion)}.
+\end{equation}
+Because the speed $v = r\omega$ is constant, the time to complete one full revolution, the \textit{period} $T$, is constant. In one period the object travels the circumference $2\pi r$, so
+\begin{equation}
+    2\pi r = vT \implies T = \frac{2\pi r}{v} = \frac{2\pi r}{r\omega} = \frac{2\pi}{\omega}.
+\end{equation}
+The \textit{frequency} $f$ is the reciprocal of the period,
+\begin{equation}
+    f = \frac{1}{T} = \frac{\omega}{2\pi}.
+\end{equation}
+The SI unit of frequency is the hertz: $[\mathrm{Hz}] = [\mathrm{s}^{-1}]$. The magnitude of the centripetal acceleration can be written in several equivalent forms. Using $v = r\omega$,
+\begin{align}
+    |a_r| &= r\omega^2, \label{eq:ar1}\\
+    |a_r| &= \frac{v^2}{r}, \label{eq:ar2}\\
+    |a_r| &= 4\pi^2 r f^2, \label{eq:ar3}\\
+    |a_r| &= \frac{4\pi^2 r}{T^2}. \label{eq:ar4}
+\end{align}
+Which form to use depends on what information is given about the orbit.
+
+% --------------------------------------------------------------
+\subsection{Geometric Interpretation of the Radial Acceleration}
+% --------------------------------------------------------------
+
+An object in circular orbit is always accelerating towards the centre. The velocity is always tangent to the circle, so its direction is continuously changing as the object moves. Because the velocity changes direction, the acceleration is non-zero even when the speed is constant.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick, scale=1.1]
+    % Left: circle with two velocity vectors
+    \begin{scope}[shift={(-3.5,0)}]
+        \draw[dashed, gray!55] (0,0) circle (1.8);
+        \fill (0,0) circle (1.5pt);
+        % Point at angle 30
+        \coordinate (A) at (30:1.8);
+        \coordinate (B) at (80:1.8);
+        \fill (A) circle (2pt);
+        \fill (B) circle (2pt);
+        % Position vectors
+        \draw[->, thin, gray!60] (0,0) -- (A);
+        \draw[->, thin, gray!60] (0,0) -- (B);
+        % Velocity at A (tangent, 90 deg CCW)
+        \draw[->, thick] (A) -- ++(120:1.0) node[right, font=\scriptsize] {$\vec{v}(t)$};
+        % Velocity at B
+        \draw[->, thick] (B) -- ++(170:1.0) node[left, font=\scriptsize] {$\vec{v}(t{+}\Delta t)$};
+        % Angle label
+        \draw[thin] (0.55,0) arc (0:30:0.55);
+        \draw[thin] (0.42,0) arc (0:80:0.42);
+        \node[font=\scriptsize] at (55:0.75) {$\Delta\theta$};
+        % Labels for position vectors
+        \node[right, font=\scriptsize] at ($(0,0)!0.55!(A)$) {$\vec{r}(t)$};
+        \node[above left, font=\scriptsize] at ($(0,0)!0.55!(B)$) {$\vec{r}(t{+}\Delta t)$};
+    \end{scope}
+    % Right: velocity triangle
+    \begin{scope}[shift={(3.0,0)}]
+        % v(t) pointing up
+        \coordinate (O2) at (0,0);
+        \draw[->, thick] (O2) -- ++(90:1.6) node[right, font=\scriptsize] {$\vec{v}(t)$};
+        % v(t+dt) at angle Delta theta from v(t): pointing up-left
+        \draw[->, thick] (O2) -- ++(140:1.6) node[left, font=\scriptsize] {$\vec{v}(t{+}\Delta t)$};
+        % Delta v (from tip of v(t+dt) to tip of v(t))
+        \coordinate (Vtip) at ($(O2)+(90:1.6)$);
+        \coordinate (Vdttip) at ($(O2)+(140:1.6)$);
+        \draw[->, thick, red] (Vdttip) -- (Vtip) node[right, font=\scriptsize] {$\Delta\vec{v}$};
+        % Angle label
+        \draw[thin] (0,0.55) arc (90:140:0.55);
+        \node[font=\scriptsize] at (115:0.75) {$\Delta\theta$};
+    \end{scope}
+\end{tikzpicture}
+\caption{Left: velocity vectors at two nearby points on a circular orbit. Right: the change in velocity $\Delta\vec{v}$, which points inward as $\Delta\theta\to 0$.}
+\label{fig:velchange}
+\end{figure}
+
+The magnitude of the change in velocity is $|\Delta\vec{v}| = 2v\sin(\Delta\theta/2) \approx v\,\Delta\theta$ for small $\Delta\theta$ (Figure~\ref{fig:velchange}). The magnitude of the radial acceleration is therefore
+\begin{equation}
+    |a_r| = \lim_{\Delta t\to 0}\frac{|\Delta\vec{v}|}{\Delta t} = v\lim_{\Delta t\to 0}\frac{\Delta\theta}{\Delta t} = v\frac{d\theta}{dt} = v\omega = \frac{v^2}{r}.
+\end{equation}
+As $\Delta\theta\to 0$, the direction of $\Delta\vec{v}$ is perpendicular to $\vec{v}$ and directed inward, in the $-\hat{r}$-direction, confirming the centripetal character of the acceleration.
+
+% ==============================================================
+\subsection{Angular Velocity and Angular Acceleration}
+% ==============================================================
+
+% --------------------------------------------------------------
+\subsection{Angular Velocity}
+% --------------------------------------------------------------
+
+We always choose a right-handed cylindrical coordinate system. With the positive $z$-axis pointing up, the angle $\theta$ increases counterclockwise as viewed from above. The \textit{angular velocity vector} for a point object undergoing circular motion about the $z$-axis is directed along the $z$-axis,
+\begin{equation}
+    \vec{\omega} = \frac{d\theta}{dt}\,\hat{k} = \omega_z\,\hat{k}.
+\end{equation}
+The angular speed is the magnitude of the $z$-component, $\omega \equiv |\omega_z| = |d\theta/dt|$. If the object rotates counterclockwise, $\omega_z = d\theta/dt > 0$ and $\vec{\omega}$ points in the $+\hat{k}$-direction. If the object rotates clockwise, $\omega_z < 0$ and $\vec{\omega}$ points in the $-\hat{k}$-direction.
+
+The velocity and angular velocity are related by the cross product,
+\begin{equation}
+    \vec{v} = \vec{\omega}\times\vec{r} = \frac{d\theta}{dt}\,\hat{k}\times r\hat{r} = r\frac{d\theta}{dt}\,\hat{\theta}.
+\end{equation}
+
+\begin{workedexample}[5.3: Angular Velocity]
+A particle moves in a circle of radius $R$. At $t = 0$ it is on the $x$-axis. The angle with the positive $x$-axis is $\theta(t) = At - Bt^3$, where $A$ and $B$ are positive constants. Find (a) the angular velocity vector, (b) the velocity vector, (c) the time $t_1$ when the angular velocity is zero, and (d) the direction of $\vec{\omega}$ for $t < t_1$ and $t > t_1$.
+
+\noindent\textbf{Solution.} The derivative of $\theta(t)$ is
+\[
+    \frac{d\theta}{dt} = A - 3Bt^2.
+\]
+(a) The angular velocity vector is
+\[
+    \vec{\omega}(t) = (A - 3Bt^2)\,\hat{k}.
+\]
+(b) The velocity is
+\[
+    \vec{v}(t) = R(A - 3Bt^2)\,\hat{\theta}(t).
+\]
+(c) The angular velocity is zero when
+\[
+    A - 3Bt_1^2 = 0 \implies t_1 = \sqrt{\frac{A}{3B}}.
+\]
+(d) For $t < t_1$, $d\theta/dt > 0$ so $\vec{\omega}$ points in the $+\hat{k}$-direction (counterclockwise). For $t > t_1$, $d\theta/dt < 0$ so $\vec{\omega}$ points in the $-\hat{k}$-direction (clockwise).
+\end{workedexample}
+
+% --------------------------------------------------------------
+\subsection{Angular Acceleration}
+% --------------------------------------------------------------
+
+The \textit{angular acceleration vector} for circular motion about the $z$-axis is
+\begin{equation}
+    \vec{\alpha} = \frac{d^2\theta}{dt^2}\,\hat{k} = \alpha_z\,\hat{k}.
+\end{equation}
+The SI units of angular acceleration are $[\mathrm{rad\cdot s^{-2}}]$. There are four combinations of the signs of $\omega_z$ and $\alpha_z$ to consider.
+
+When $\vec{\alpha}$ points in the $+\hat{k}$-direction ($\alpha_z > 0$): (i) if $\omega_z > 0$ (counterclockwise), the object is speeding up counterclockwise; (ii) if $\omega_z < 0$ (clockwise), the object is slowing down.
+
+When $\vec{\alpha}$ points in the $-\hat{k}$-direction ($\alpha_z < 0$): (iii) if $\omega_z > 0$ (counterclockwise), the object is slowing down; (iv) if $\omega_z < 0$ (clockwise), the object is speeding up clockwise.
+
+The tangential and radial components of the acceleration (Eqs.~(\ref{eq:atangential}) and (\ref{eq:aradial})) can be written compactly as $a_\theta = r\alpha_z$ and $a_r = -r\omega_z^2$.
+
+\begin{workedexample}[5.4: Integration and Circular Motion Kinematics]
+A point object is constrained to travel in a circle. The $z$-component of the angular acceleration is
+\[
+    \alpha_z(t) = \begin{cases} b\!\left(1 - \dfrac{t}{t_1}\right), & 0 \leq t \leq t_1, \\[4pt] 0, & t > t_1, \end{cases}
+\]
+where $b > 0$ has units $\mathrm{rad\cdot s^{-2}}$. (a) Find the angular velocity at $t = t_1$. (b) Through what angle has the object rotated at $t = t_1$?
+
+\noindent\textbf{Solution.} (a) Starting from rest ($\omega_z(0) = 0$), we integrate:
+\[
+    \omega_z(t_1) = \int_0^{t_1} b\!\left(1 - \frac{t'}{t_1}\right)dt' = b\!\left[t_1 - \frac{t_1}{2}\right] = \frac{bt_1}{2}.
+\]
+
+(b) First find $\omega_z(t)$ for $0 \leq t \leq t_1$:
+\[
+    \omega_z(t) = \int_0^t b\!\left(1 - \frac{t'}{t_1}\right)dt' = b\!\left(t - \frac{t^2}{2t_1}\right).
+\]
+Then integrate again to find the angle:
+\[
+    \theta(t_1) - \theta(0) = \int_0^{t_1}\omega_z(t')\,dt' = \int_0^{t_1} b\!\left(t' - \frac{t'^2}{2t_1}\right)dt' = b\!\left[\frac{t_1^2}{2} - \frac{t_1^2}{6}\right] = \frac{bt_1^2}{3}.
+\]
+\end{workedexample}

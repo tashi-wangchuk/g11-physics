@@ -1,0 +1,575 @@
+%%-----------Chapter 3------------------------------------------
+\chapter{Motion}
+
+\section{What is Motion?}
+
+\begin{keybox}[Motion and Rest]
+The apparent change in a body's (or object's) position with time is called \textbf{motion}.
+If the body does not change its position as time passes, it is said to be at \textbf{rest}.
+\end{keybox}
+
+\subsection{The relative nature of motion}
+
+But when do we say that a body is not changing its position? A cup on the table remains on
+the table --- we say the cup is at rest. However, if we station ourselves on Mars, the whole
+Earth is found to be changing its position, and so the room, the table, and the cup are all
+continuously changing their positions.
+\begin{itemize}
+  \item The cup is \emph{at rest} if viewed from the room.
+  \item The cup is \emph{moving} if viewed from Mars.
+\end{itemize}
+Motion is therefore a combined property of the object under study and the observer. There
+is no meaning of rest or motion without the viewer.
+
+\begin{keybox}[Key Principle]
+\centering
+Nothing is in absolute rest or in absolute motion.\\
+Mars is moving with respect to the cup; the cup moves with respect to Mars.
+\end{keybox}
+
+\begin{workedexample}[3.1: Frames and relative motion]
+A passenger sits still inside a moving train.
+
+(a) From the passenger's own frame: the passenger is \emph{at rest}.
+
+(b) From a bystander on the platform: the passenger is \emph{moving} at the speed of the train.
+
+(c) From an observer on the Moon: both the passenger and the bystander are moving (the
+Earth rotates and orbits the Sun).
+
+All three descriptions are equally valid --- rest and motion depend entirely on the reference
+frame of the observer.
+\end{workedexample}
+
+\subsection{Frame of reference}
+
+To locate the position of a particle we need a \textbf{frame of reference} --- a choice of a
+spatial origin and coordinate axes to label position. We choose Cartesian coordinates, so the
+coordinates $(x,y,z)$ of the particle $P$ specify its position relative to that frame. A clock is
+added to the frame to measure time.
+
+\begin{keybox}[Rest and motion in terms of coordinates]
+\textbf{Rest:} If all three coordinates $x,y,z$ of the particle remain unchanged as time passes,
+the particle is at rest with respect to this frame.
+
+\textbf{Motion:} If any one or more coordinates change with time, the body is moving with
+respect to this frame.
+\end{keybox}
+
+\begin{keybox}[One-dimensional motion first]
+For our first look at this subject we will forget about the three dimensions of the world
+and concentrate on moving in one direction --- like a car on a single straight road. We
+will return to three dimensions after we see how to describe motion in one dimension.
+\end{keybox}
+
+
+\section{Velocities and the Derivative}
+
+\subsection{Position function}
+
+Suppose an object moves along a straight line. We describe its motion by an \textbf{equation of motion}
+\[
+  s = f(t),
+\]
+where $s$ is the displacement (direct distance from the origin along the line) of the object
+at time $t$. The function $f$ that describes the motion is called the \textbf{position function}
+of the object.
+
+\subsection{Average velocity}
+
+In the time interval from $t$ to $t+\Delta t$, the change in position (displacement) is
+$f(t+\Delta t)-f(t)$.
+
+\begin{keybox}[Average velocity]
+The average velocity over the time interval $[t,\,t+\Delta t]$ is
+\[
+  v_\text{av} = \frac{\text{displacement}}{\text{time}} = \frac{f(t+\Delta t)-f(t)}{\Delta t}.
+\]
+Geometrically, this is the slope of the secant line $PQ$ on the position-time graph.
+\end{keybox}
+
+\begin{workedexample}[3.2: Computing average velocity]
+A car moves along a straight road with position function $f(t)=3t^2+2t$ metres (where
+$t$ is in seconds).
+
+(a) Displacement from $t=1\,\text{s}$ to $t=3\,\text{s}$:
+\[
+  f(1)=3(1)^2+2(1)=5\;\text{m}, \qquad f(3)=3(3)^2+2(3)=33\;\text{m}, \qquad \Delta s=28\;\text{m}.
+\]
+
+(b) Average velocity over $[1,3]$:
+\[
+  v_\text{av} = \frac{f(3)-f(1)}{3-1} = \frac{28}{2} = 14\;\text{m/s}.
+\]
+\end{workedexample}
+
+\begin{tryit}[3.1: Average velocity from a table]
+A cyclist's position at various times is recorded below. Find the average velocity over
+the full 15\,s interval.
+\begin{center}
+\begin{tabular}{ccccc}
+  \toprule
+  $t$ (s) & 0 & 5 & 10 & 15 \\
+  \midrule
+  $s$ (m) & 0 & 12 & 20 & 24 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+\textit{(Answer: $v_\text{av}=24/15=1.6\;\text{m/s}$.)}
+\end{tryit}
+
+\subsection{Instantaneous velocity}
+
+Now suppose we compute the average velocities over shorter and shorter time intervals
+$[t,t+\Delta t]$ --- in other words, we let $\Delta t$ approach zero.
+
+\begin{keybox}[Instantaneous velocity]
+The instantaneous velocity $v(t)$ at time $t$ is defined as the limit of these average velocities:
+\[
+  v(t) = \lim_{\Delta t\to 0}\frac{f(t+\Delta t)-f(t)}{\Delta t} = \frac{df}{dt},
+\]
+provided that this limit exists. Geometrically, $v(t)$ equals the slope of the tangent line
+$\ell$ to the position-time curve at the point $P$.
+\end{keybox}
+
+\begin{workedexample}[3.3: Instantaneous velocity from the limit definition]
+Find the instantaneous velocity $v(t)$ of the car $f(t)=3t^2+2t$ from the limit definition.
+Hence find $v(1)$ and $v(3)$.
+
+\medskip\textit{Solution.} Expand $f(t+\Delta t)$:
+\[
+  f(t+\Delta t)=3(t+\Delta t)^2+2(t+\Delta t)=3t^2+6t\,\Delta t+3(\Delta t)^2+2t+2\,\Delta t.
+\]
+Subtract $f(t)=3t^2+2t$:
+\[
+  f(t+\Delta t)-f(t) = 6t\,\Delta t+3(\Delta t)^2+2\,\Delta t = \Delta t\,(6t+3\,\Delta t+2).
+\]
+Divide by $\Delta t$ and take $\Delta t\to 0$:
+\[
+  v(t) = \lim_{\Delta t\to 0}(6t+3\,\Delta t+2) = 6t+2\;\text{m/s}.
+\]
+At $t=1\,\text{s}$: $v(1)=6(1)+2=8\;\text{m/s}$. At $t=3\,\text{s}$: $v(3)=6(3)+2=20\;\text{m/s}$.
+
+Note: the average velocity over $[1,3]$ was 14\,m/s, which lies between 8 and 20\,m/s --- exactly as expected!
+\end{workedexample}
+
+\begin{tryit}[3.2: Limit definition for $f(t)=t^2$]
+Use the limit definition to show that for $f(t)=t^2$, the instantaneous velocity is
+$v(t)=2t\;\text{m/s}$. Hence find the velocity at $t=3\,\text{s}$.
+
+\textit{Hint:} $(t+\Delta t)^2-t^2=2t\,\Delta t+(\Delta t)^2$. \textit{Answer:} $v(3)=6\;\text{m/s}$.
+\end{tryit}
+
+\subsection{The derivative}
+
+The quantity $df/dt$ found above is called the \textbf{derivative} of $f$ with respect to $t$.
+The process of finding it is called \textbf{differentiating}.
+
+\begin{keybox}[Tangent line]
+The tangent line to $y=f(t)$ at the point $(t,f(t))$ is the unique line through $(t,f(t))$
+whose slope equals $\dfrac{df(t)}{dt}$, the derivative of $f$ at $t$.
+\end{keybox}
+
+\subsection{Other notations for the derivative}
+
+Let $y=f(x)$. All of the following mean the same thing:
+\[
+  \frac{dy}{dx} = \frac{df}{dx} = \frac{d}{dx}f(x) = f'(x) = y'.
+\]
+For derivatives with respect to time $t$, Newton used an overdot:
+\[
+  \dot{f} = \frac{df}{dt}, \qquad \dot{y} = \frac{dy}{dt}.
+\]
+
+\begin{center}
+\begin{tabular}{ll}
+  \toprule
+  \textbf{Notation} & \textbf{Name / origin} \\
+  \midrule
+  $\dfrac{dy}{dx},\ \dfrac{df}{dx},\ \dfrac{d}{dx}f(x)$ & Leibniz notation \\[8pt]
+  $f'(x),\ y'$ & Lagrange (prime) notation \\[4pt]
+  $\dot{y},\ \dot{f}$ & Newton (dot) notation --- time derivatives \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+All notations are in common use. In physics, $\dot{s}=v$ for velocity is popular for time
+derivatives. You should be comfortable reading all of them.
+
+
+\section*{Formula Summary: Motion}
+\addcontentsline{toc}{section}{Formula Summary: Motion}
+
+\begin{formulabox}[Formula Summary: Motion]
+\begin{tabular}{ll}
+  \toprule
+  \textbf{Quantity} & \textbf{Formula} \\
+  \midrule
+  Position function & $s=f(t)$ \\[4pt]
+  Displacement over $[t,\,t+\Delta t]$ & $\Delta s = f(t+\Delta t)-f(t)$ \\[4pt]
+  Average velocity & $v_\text{av} = \dfrac{f(t+\Delta t)-f(t)}{\Delta t}$ \\[8pt]
+  Instantaneous velocity & $v(t) = \displaystyle\lim_{\Delta t\to 0}\frac{f(t+\Delta t)-f(t)}{\Delta t} = \dfrac{df}{dt}$ \\[8pt]
+  Slope of tangent & $\dfrac{df}{dt}$ at that point \\
+  \bottomrule
+\end{tabular}
+\end{formulabox}
+
+\medskip
+\textbf{An important note on vectors:} Because we are currently studying motion along a
+single straight line (1D), the direction of our vectors is indicated simply by a positive or
+negative sign. To keep the focus on the calculus, we will temporarily drop the vector notation
+($\vec{v}$) and use scalars ($v$) to represent these 1D quantities.
+
+
+\section{Velocity as a Derivative and Graphing}
+
+\textbf{Ex 1. A falling ball ($s=f(t)=5t^2$).}
+
+\begin{center}
+\begin{tabular}{cc}
+  \toprule
+  $t$ (s) & $s$ (m) \\
+  \midrule
+  0 & 0 \\
+  1 & 5 \\
+  2 & 20 \\
+  3 & 45 \\
+  4 & 80 \\
+  5 & 125 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+The formula for this curve can be written as $s = f(t) = 5t^2$, which enables us to calculate
+the distance at any time.
+
+If we want to know how fast a ball is falling at exactly $t=4\,\text{s}$, we cannot simply
+use a wide interval. Between 3 and 4 seconds, the ball averages 35\,m/s
+($v_\text{av}=\frac{80-45}{4-3}$). However, it is constantly accelerating during that time.
+That average does not reflect the true velocity at the exact 4-second mark.
+
+To get closer to the truth, we look at a very small interval immediately following $t=4\,\text{s}$:
+\begin{itemize}
+  \item At 4.1\,s: total displacement $s=5(4.1)^2=84.05\,\text{m}$.
+  \item At 4\,s: total displacement was 80\,m.
+  \item Average velocity for this tiny window: $4.05/0.1=40.5\,\text{m/s}$.
+\end{itemize}
+
+Taking the general approach, if at time $t_0=4\,\text{s}$ the position is $s_0=5t_0^2$, then at
+$t_0+\Delta t$ the new position is
+\[
+  s_0+\Delta s = 5(t_0+\Delta t)^2 = 5t_0^2+10t_0\,\Delta t+5\,\Delta t^2.
+\]
+So the extra displacement is $\Delta s = 10t_0\,\Delta t+5\,\Delta t^2$, and the average velocity is
+\begin{equation}
+  v_\text{av} = \frac{\Delta s}{\Delta t} = 10t_0+5\,\Delta t.
+\end{equation}
+Taking $\Delta t\to 0$:
+\[
+  v(\text{at time }t_0) = 10t_0.
+\]
+At $t_0=4\,\text{s}$: $v(4)=10\times4=40\,\text{m/s}$.
+
+The procedure we have just carried out is performed so often in mathematics that special notation
+has been assigned. The velocity is
+\begin{equation}
+  v = \lim_{\Delta t\to 0}\frac{\Delta s}{\Delta t} = \frac{ds}{dt}.
+\end{equation}
+The quantity $ds/dt$ is called the ``derivative of $s$ with respect to $t$''. For our example:
+\[
+  \frac{d}{dt}(5t^2) = 10t.
+\]
+
+\textbf{A Short Table of Derivatives.}
+
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  \multicolumn{2}{l}{\textit{$u$, $v$, $w$ are arbitrary functions of $t$; $c$ and $n$ are arbitrary constants.}} \\
+  \midrule
+  \textbf{Function, $f(t)$} & \textbf{Derivative, $\dfrac{df}{dt}$} \\
+  \midrule
+  $c$ (constant) & $0$ \\[4pt]
+  $t^n$ & $n\,t^{n-1}$ \\[4pt]
+  $cu$ & $c\,\dfrac{du}{dt}$ \\[4pt]
+  $\sin(t)$ & $\cos(t)$ \\[4pt]
+  $\cos(t)$ & $-\sin(t)$ \\[4pt]
+  $e^t$ & $e^t$ \\[4pt]
+  $\ln(t)$ & $\dfrac{1}{t}$ \\[4pt]
+  $u+v+w+\cdots$ & $\dfrac{du}{dt}+\dfrac{dv}{dt}+\dfrac{dw}{dt}+\cdots$ \\[4pt]
+  $uv$ & $u\dfrac{dv}{dt}+v\dfrac{du}{dt}$ \\[4pt]
+  $\dfrac{u}{v}$ & $\dfrac{v\,(du/dt)-u\,(dv/dt)}{v^2}$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Exercise.} Find the derivative of the following functions.
+\begin{enumerate}[label=\alph*.]
+  \item $f(t) = 3t - 8$
+  \item $f(x) = mx + b$
+  \item $f(t) = 2.5t^2 + 6t$
+  \item $f(x) = 4 + 8x - 5x^2$
+  \item $A(p) = 4p^3 + \ln(p)$
+  \item $F(t) = e^t(t^2-1)$
+  \item $f(x) = \dfrac{1}{x^2-4}$
+  \item $F(v) = \dfrac{v}{v+2}$
+  \item $g(u) = \dfrac{u+1}{4u-1}$
+  \item $f(x) = x^4 + \sin(x)$
+  \item $g(x) = \dfrac{1}{1+\sqrt{x}}$
+\end{enumerate}
+
+\textit{Example solutions:}
+\[
+  \text{(a)}\quad f'(t) = 3, \qquad
+  \text{(d)}\quad f'(x) = 8 - 10x.
+\]
+
+
+\section{Distance as an Integral}
+
+Now we discuss the inverse problem. Suppose that instead of a table of distances, we have a
+table of speeds at different times, starting from zero. From our earlier result, $s=5t^2$ and
+$v=10t$.
+
+The distance travelled is equal to the area under the velocity--time curve. In general, when
+the velocity--time graph is not a simple geometric shape, we break the motion into small
+intervals $\Delta t$ and approximate the distance in each interval as $\Delta s\approx v\,\Delta t$.
+
+In general, suppose an object moves with velocity $v=v(t)$, where $a\le t\le b$. We take
+velocity readings at times $t_0(=a),t_1,t_2,\ldots,t_n(=b)$ so that the velocity is
+approximately constant on each sub-interval with $\Delta t=(b-a)/n$. The total distance
+is approximately
+\[
+  v(t_0)\Delta t + v(t_1)\Delta t + \cdots + v(t_{n-1})\Delta t = \sum_{i=0}^{n-1}v(t_i)\,\Delta t.
+\]
+The true distance is the limit as $\Delta t\to 0$ (equivalently, $n\to\infty$):
+\begin{equation}
+  s = \lim_{\Delta t\to 0}\sum_{i=0}^{n-1}v(t_i)\,\Delta t = \lim_{n\to\infty}\sum_{i=0}^{n-1}v(t_i)\,\Delta t.
+\end{equation}
+The mathematicians have invented a symbol for this limit. The $\Delta$ turns into a $d$, the
+addition is written with a great ``S'' (from the Latin \emph{summa}), distorted into the integral sign:
+\begin{equation}
+  s = \int v(t)\,dt.
+\end{equation}
+This process of adding all these terms together is called \textbf{integration}, and it is the
+opposite process to differentiation.
+
+\textbf{A Short Table of Derivatives and Integrals.}
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+  \multicolumn{3}{l}{\textit{$u$, $v$, $w$ are arbitrary functions of $t$; $c$, $k$, $n$ are arbitrary constants.}} \\
+  \midrule
+  \textbf{Function, $f(t)$} & \textbf{Derivative, $\dfrac{df}{dt}$} & \textbf{Integral, $\displaystyle\int f(t)\,dt$} \\
+  \midrule
+  $c$ & $0$ & $ct+k$ \\[6pt]
+  $t^n$ & $n\,t^{n-1}$ & $\dfrac{t^{n+1}}{n+1}+k \quad (n\ne -1)$ \\[6pt]
+  $cu$ & $c\,\dfrac{du}{dt}$ & $c\displaystyle\int u\,dt$ \\[6pt]
+  $\sin(t)$ & $\cos(t)$ & $-\cos(t)+k$ \\[4pt]
+  $\cos(t)$ & $-\sin(t)$ & $\sin(t)+k$ \\[4pt]
+  $e^t$ & $e^t$ & $e^t+k$ \\[4pt]
+  $u+v+w+\cdots$ & $\dfrac{du}{dt}+\dfrac{dv}{dt}+\cdots$ &
+    $\displaystyle\int u\,dt+\int v\,dt+\cdots$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+Returning to our falling ball example, $v(t)=10t$:
+\[
+  s = \int v(t)\,dt = \int 10t\,dt = 5t^2 + C.
+\]
+The distance travelled between $t=0$ and $t=5\,\text{s}$:
+\[
+  s = \int_0^5 v(t)\,dt = \int_0^5 10t\,dt = \bigl[5t^2\bigr]_0^5
+    = 5(5)^2 - 5(0)^2 = 125\;\text{m},
+\]
+which agrees with the area under the velocity--time graph over $[0,5]$.
+
+\textbf{Exercise.} Evaluate the integral.
+\begin{enumerate}[label=\alph*.]
+  \item $\displaystyle\int(3t-8)\,dt$
+  \item $\displaystyle\int(mx+b)\,dx$
+  \item $\displaystyle\int_0^3(5t^2+6t)\,dt$
+  \item $\displaystyle\int_\pi^4(4+8x-5x^2)\,dx$
+  \item $\displaystyle\int_1^2\bigl(3e^t+(t^2-1)\bigr)\,dt$
+  \item $\displaystyle\int_0^\pi(x^4+\sin x)\,dx$
+\end{enumerate}
+
+\textit{Example solutions:}
+\[
+  \text{(a)}\;\int(3t-8)\,dt = \tfrac{3}{2}t^2 - 8t + k, \qquad
+  \text{(c)}\;\int_0^3(5t^2+6t)\,dt = \frac{5}{3}(3^3-0^3)+3(3^2-0^2) = 45+27 = 72.
+\]
+
+
+\section{Acceleration}
+
+If the velocity of a particle remains constant as time passes, we say that it is moving with
+\textbf{uniform velocity}. If the velocity changes with time, the particle is said to be
+\textbf{accelerating}.
+
+The \textbf{average acceleration} over $[t_1,t_2]$ is
+\begin{equation}
+  a_\text{av} = \frac{v_2-v_1}{t_2-t_1} = \frac{\Delta v}{\Delta t}.
+\end{equation}
+The \textbf{instantaneous acceleration} is
+\begin{equation}
+  a(t) = \lim_{\Delta t\to 0}\frac{\Delta v}{\Delta t} = \frac{dv}{dt}.
+\end{equation}
+Since velocity is $ds/dt$, and acceleration is the time derivative of velocity:
+\begin{equation}
+  a(t) = \frac{dv}{dt} = \frac{d}{dt}\!\left(\frac{ds}{dt}\right) = \frac{d^2s}{dt^2},
+\end{equation}
+which is the \textbf{second derivative} of position with respect to time.
+
+For the falling ball $s(t)=5t^2$:
+\[
+  v(t) = \frac{ds}{dt} = 10t, \qquad a(t) = \frac{dv}{dt} = 10\;\text{m/s}^2.
+\]
+The acceleration is constant because the gravitational force on the falling body is constant,
+and by Newton's second law, acceleration is proportional to the net force.
+
+
+\section{Motion with Constant Acceleration}
+
+Suppose a particle moves along a straight line (taken as the $x$-axis) with constant
+acceleration $a$. Let the velocity at $t=0$ be $v_0$ and at time $t$ be $v$. Then:
+\[
+  \frac{dv}{dt} = a \implies dv = a\,dt.
+\]
+Integrating from 0 to $t$ (velocity from $v_0$ to $v$):
+\[
+  \int_{v_0}^v dv = \int_0^t a\,dt \implies v - v_0 = at,
+\]
+\begin{equation}
+  \boxed{v = v_0 + at.}
+\end{equation}
+Writing $dx/dt=v_0+at$ and integrating from $x_0$ to $x$ (time from 0 to $t$):
+\[
+  x - x_0 = v_0 t + \frac{1}{2}at^2,
+\]
+\begin{equation}
+  \boxed{\Delta x = v_0 t + \tfrac{1}{2}at^2.}
+\end{equation}
+Squaring equation (10): $v^2=(v_0+at)^2=v_0^2+2av_0 t+a^2t^2=v_0^2+2a\bigl(v_0 t+\frac{1}{2}at^2\bigr)$, so
+\begin{equation}
+  \boxed{v^2 = v_0^2 + 2a\,\Delta x.}
+\end{equation}
+
+\begin{keybox}[Equations of Kinematics]
+\[
+  v = v_0 + at, \qquad
+  \Delta x = v_0 t + \tfrac{1}{2}at^2, \qquad
+  v^2 = v_0^2 + 2a\,\Delta x.
+\]
+\end{keybox}
+
+The three equations above are called the \textbf{kinematic equations}. Remember that $x$
+represents the position (or displacement) at time $t$ and not necessarily the total distance
+travelled. The quantities $v_0$, $v$, and $a$ may take positive or negative values depending
+on their direction.
+
+
+\section{Freely Falling Bodies}
+
+A common example of motion in a straight line with constant acceleration is the \textbf{free fall}
+of a body near the earth's surface. If air resistance is neglected and a body is dropped, it
+falls along a vertical straight line. The acceleration in the vertically downward direction has
+magnitude approximately $9.8\,\text{m/s}^2$ and is known as the \textbf{acceleration due to
+gravity}, denoted by $g$.
+
+The sign of $g$ depends on the chosen positive direction. Taking vertically upward as
+positive gives $a=-g$; taking downward as positive gives $a=+g$. Substituting into the
+kinematic equations accordingly:
+\[
+  v = v_0 \pm g\,t, \qquad \Delta y = v_0 t \pm \tfrac{1}{2}g\,t^2, \qquad v^2 = v_0^2 \pm 2g\,\Delta y,
+\]
+where the upper sign ($+$) applies when downward is taken as positive, and the lower sign
+($-$) when upward is taken as positive.
+
+\textbf{Motion in a Plane (2D) and in Space (3D).}
+In three dimensions the position vector is
+\[
+  \vec{s} = x\hat{x} + y\hat{y} + z\hat{z}.
+\]
+Differentiating with respect to time gives the velocity vector:
+\[
+  \vec{v} = \frac{d\vec{s}}{dt} = \frac{dx}{dt}\hat{x} + \frac{dy}{dt}\hat{y} + \frac{dz}{dt}\hat{z}
+           = v_x\hat{x} + v_y\hat{y} + v_z\hat{z},
+\]
+with magnitude (speed)
+\[
+  v = |\vec{v}| = \sqrt{v_x^2+v_y^2+v_z^2}.
+\]
+Differentiating once more gives the acceleration vector:
+\[
+  \vec{a} = \frac{d\vec{v}}{dt} = a_x\hat{x} + a_y\hat{y} + a_z\hat{z}, \qquad
+  a = \sqrt{a_x^2+a_y^2+a_z^2}.
+\]
+
+
+\section{Projectile Motion}
+
+An important example of motion in a plane with constant acceleration is \textbf{projectile
+motion}. When a particle is thrown obliquely near the earth's surface, it moves along a
+curved path. Such a particle is called a \textbf{projectile}. We assume the particle remains
+close to the surface and air resistance is negligible, so acceleration is constant in the
+vertically downward direction with magnitude $g\approx9.8\,\text{m/s}^2$.
+
+A particle is projected from point $O$ with initial speed $v_0$ at angle $\theta$ with the horizontal.
+The initial conditions are:
+\begin{equation}
+  x_0=0, \quad v_{0,x}=v_0\cos\theta, \quad a_x=0,
+\end{equation}
+\begin{equation}
+  y_0=0, \quad v_{0,y}=v_0\sin\theta, \quad a_y=-g.
+\end{equation}
+
+\textbf{Horizontal Motion} ($a_x=0$):
+\begin{equation}
+  v_x = v_0\cos\theta \qquad \text{(constant)},
+\end{equation}
+\begin{equation}
+  x = v_0 t\cos\theta.
+\end{equation}
+
+\textbf{Vertical Motion:}
+\begin{equation}
+  v_y = v_0\sin\theta - g\,t,
+\end{equation}
+\begin{equation}
+  y = v_0 t\sin\theta - \tfrac{1}{2}g\,t^2,
+\end{equation}
+\begin{equation}
+  v_y^2 = (v_0\sin\theta)^2 - 2g\,y.
+\end{equation}
+
+\textbf{Time of Flight.} At point $B$ (landing), $y=0$:
+\[
+  0 = v_0 t\sin\theta - \tfrac{1}{2}g\,t^2 = t\bigl(v_0\sin\theta - \tfrac{1}{2}g\,t\bigr).
+\]
+The non-trivial solution gives the time of flight:
+\begin{equation}
+  T = \frac{2v_0\sin\theta}{g}.
+\end{equation}
+
+\textbf{Range.} The horizontal range $OB$ is the distance travelled during time $T$:
+\begin{equation}
+  OB = v_0\,T\cos\theta = \frac{2v_0^2\sin\theta\cos\theta}{g} = \frac{v_0^2\sin2\theta}{g}.
+\end{equation}
+Notice that the greatest range is achieved if the projectile is thrown at $45^\circ$ to the
+horizontal.
+
+\textbf{Maximum Height Reached.} At the peak, $v_y=0$. From (18): $t=v_0\sin\theta/g$. Substituting into (19):
+\begin{equation}
+  H = \frac{v_0^2\sin^2\theta}{2g}.
+\end{equation}
+The time to reach maximum height is exactly half the total time of flight.
+
+\textbf{Equation of Trajectory.} Eliminating $t$ between (16) and (19):
+\begin{equation}
+  y = x\tan\theta - \frac{g\,x^2}{2v_0^2\cos^2\theta}.
+\end{equation}
+This is the equation of the trajectory --- a \textbf{parabola}.

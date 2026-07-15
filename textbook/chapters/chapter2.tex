@@ -1,0 +1,130 @@
+%%-----------Chapter 2------------------------------------------
+\chapter{Dimensional Analysis}
+
+\section{Dimension}
+
+In physics, we measure many different things, but they are all built from a small set of seven
+fundamental base quantities (see Table~\ref{tab:base_quantities}).
+
+\begin{table}[H]
+  \centering
+  \caption{The seven fundamental base quantities, their dimensions, and sample units.}
+  \label{tab:base_quantities}
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Base Quantity} & \textbf{Dimension} & \textbf{Sample Units} \\
+    \midrule
+    Mass                          & $[M]$     & kg, g, lbs \\
+    Length                        & $[L]$     & m, cm, feet, miles \\
+    Time                          & $[T]$     & s, minutes, hours, years \\
+    Electric Current              & $[I]$     & A, mA \\
+    Thermodynamic Temperature     & $[\Theta]$& K, $^\circ$C, $^\circ$F \\
+    Amount of Substance           & $[N]$     & mol \\
+    Luminous Intensity            & $[J]$     & cd \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The \textbf{dimension} of any physical quantity represents the powers to which these base
+quantities must be raised to express that quantity. Example:
+\[
+  [\text{Force}] = [\text{mass}]\times\frac{[\text{velocity}]}{[\text{time}]}
+                 = [\text{mass}]\times\frac{[\text{length/time}]}{[\text{time}]}
+                 = MLT^{-2}.
+\]
+Such an expression for a physical quantity in terms of the base quantities is called the
+\textbf{dimensional formula}. Thus, the dimensional formula of force is $MLT^{-2}$. In other
+words, we say the dimensions of force are 1 in mass, 1 in length, and $-2$ in time. The
+dimensions in all other base quantities are zero.
+
+Note that in this type of calculation the magnitudes are not considered. It is equality of the
+\emph{type} of quantity that enters. Thus, change in velocity, initial velocity, average velocity,
+and final velocity are all equivalent in this discussion --- each one is $LT^{-1}$.
+
+The physical quantity that is expressed in terms of the base quantities is enclosed in square
+brackets to remind us that the equation is among the dimensions and not among the magnitudes.
+
+
+\section{The Principle of Homogeneity}
+
+You cannot add apples to oranges, and in physics, you cannot add velocity to force.
+
+\begin{keybox}[The Principle of Homogeneity]
+The dimensions of all separated terms in a physical equation must be identical.
+\end{keybox}
+
+Let us check the kinematic equation $x = ut + \tfrac{1}{2}at^2$:
+\begin{itemize}
+  \item $[x] = L$
+  \item $[ut] = (LT^{-1})(T) = L$
+  \item $[\tfrac{1}{2}at^2] = (LT^{-2})(T^2) = L$
+\end{itemize}
+Since every term evaluates to length $[L]$, the equation is dimensionally correct. Note: the
+constant $\tfrac{1}{2}$ has no dimension and is ignored in this check.
+
+
+\section{Uses of Dimensional Analysis}
+
+\subsection{Checking the Correctness of an Equation}
+
+As shown above, if an equation is not dimensionally homogeneous, it is physically impossible
+and strictly wrong.
+
+\textbf{Limitation:} A dimensionally correct equation might still be wrong if numerical constants
+are missing.
+
+\subsection{Conversion of Units}
+
+Dimensions help us find conversion factors between different unit systems (like SI and CGS).
+For example, to convert 1 Pascal (SI unit of pressure) to CGS pressure:
+\[
+  [\text{Pressure}] = \frac{[\text{Force}]}{[\text{Area}]} = \frac{MLT^{-2}}{L^2} = ML^{-1}T^{-2}.
+\]
+\[
+  1\;\text{Pascal} = (1\;\text{kg})(1\;\text{m})^{-1}(1\;\text{s})^{-2}, \qquad
+  1\;\text{CGS pressure} = (1\;\text{g})(1\;\text{cm})^{-1}(1\;\text{s})^{-2}.
+\]
+\[
+  \frac{1\;\text{Pascal}}{1\;\text{CGS pressure}}
+  = \left(\frac{1\;\text{kg}}{1\;\text{g}}\right)
+    \left(\frac{1\;\text{m}}{1\;\text{cm}}\right)^{-1}
+    \left(\frac{1\;\text{s}}{1\;\text{s}}\right)^{-2}
+  = (10^3)(10^2)^{-1} = 10.
+\]
+So $1\;\text{Pascal} = 10\;\text{CGS pressure}$.
+
+\subsection{Deducing Relations Among Physical Quantities}
+
+If we know which variables affect a physical quantity, we can sometimes deduce its form
+using dimensional analysis. For example, suppose the time period $t$ of a simple pendulum
+depends on its length $l$, the mass of the bob $m$, and the acceleration due to gravity $g$.
+We assume a product relation of the form
+\begin{equation}
+  t = k\,l^a\,m^b\,g^c,
+\end{equation}
+where $k$ is a dimensionless constant and $a$, $b$, $c$ are exponents we want to evaluate.
+Taking dimensions on both sides:
+\[
+  T = L^a\,M^b\,(LT^{-2})^c = L^{a+c}\,M^b\,T^{-2c}.
+\]
+Equating powers on both sides:
+\begin{itemize}
+  \item For $M$: $b=0$
+  \item For $T$: $-2c=1 \implies c=-\tfrac{1}{2}$
+  \item For $L$: $a+c=0 \implies a=\tfrac{1}{2}$
+\end{itemize}
+Substituting these values gives
+\begin{equation}
+  t = k\sqrt{\frac{l}{g}}.
+\end{equation}
+In the actual formula $k=2\pi$, which is determined from the full physical analysis, not from
+dimensional analysis alone.
+
+\textbf{Limitations:}
+\begin{enumerate}
+  \item It only works for \emph{product-type} dependencies. It cannot deduce equations where
+        terms are added or subtracted (like $x = ut + \tfrac{1}{2}at^2$).
+  \item It cannot find numerical constants. The dimensional method left us with an
+        unknown constant $k$ in the pendulum equation. We need actual experiments (or deeper
+        theory) to find that $k=2\pi$.
+\end{enumerate}

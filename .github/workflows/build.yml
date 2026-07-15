@@ -1,0 +1,83 @@
+# Builds the textbook PDF and deploys the companion site on every push to main.
+#
+# - The PDF is compiled with latexmk inside the xu-cheng/latex-action container
+#   (full TeX Live, so mathrsfs, tcolorbox, pgfplots etc. are all available).
+# - The PDF is uploaded as a build artifact AND attached to a rolling
+#   "latest" release, so there is always one stable download link.
+# - The site/ folder is deployed to GitHub Pages, with the fresh PDF copied
+#   in so students can download the textbook from the site itself.
+#
+# One-time setup on GitHub: Settings -> Pages -> Source: "GitHub Actions".
+
+name: Build textbook and deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to update the "latest" release
+  pages: write      # needed to deploy to GitHub Pages
+  id-token: write   # needed by deploy-pages
+
+concurrency:
+  group: build-and-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Compile the textbook with latexmk
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: textbook
+
+      - name: Upload the PDF as a build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: textbook-pdf
+          path: textbook/main.pdf
+
+      - name: Attach the PDF to the rolling "latest" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest textbook build
+          body: >
+            Automatically built from the most recent push to main.
+            This release is overwritten on every build.
+          files: textbook/main.pdf
+
+  deploy-site:
+    needs: build-pdf
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Put the fresh PDF inside the site
+        uses: actions/download-artifact@v4
+        with:
+          name: textbook-pdf
+          path: site
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the site folder
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

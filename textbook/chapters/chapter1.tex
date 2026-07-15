@@ -1,0 +1,410 @@
+%%-----------Chapter 1------------------------------------------
+\chapter{Vectors}
+
+\section{Introduction to Scalars and Vectors}
+
+Imagine you walk from corner A to corner C (a distance of 4\,m), then turn and walk from
+C to B (a distance of 3\,m).
+\begin{itemize}
+  \item The total \emph{distance} you walked is $4+3=7$\,m. Distance only cares about how much, not which way.
+  \item Your \emph{displacement} --- the straight-line shortcut from start to finish --- is only 5\,m, pointing from A to B. Displacement cares about how much \emph{and} which way.
+\end{itemize}
+
+\begin{keybox}[Scalars and Vectors]
+A \textbf{scalar} is a quantity that has magnitude only (no direction): distance, mass, time, temperature, speed, energy.
+
+A \textbf{vector} is a quantity that has magnitude and direction: displacement, velocity, acceleration, force.
+\end{keybox}
+
+\begin{center}
+\begin{tabular}{lcc}
+  \toprule
+               & \textbf{Scalar} & \textbf{Vector} \\
+  \midrule
+  Has magnitude & yes & yes \\
+  Has direction & no  & yes \\
+  Examples & distance, speed, mass, time & displacement, velocity, force \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Notation}
+\begin{itemize}
+  \item Vectors are written with a small arrow above the symbol, e.g.\ a force $\vec{F}$ or a velocity $\vec{v}$.
+  \item The magnitude (size) of a vector $\vec{A}$ is written $|\vec{A}|$, or simply $A$.
+  \item In diagrams a vector is drawn as an arrow: the length of the arrow is proportional to the magnitude, and the arrowhead shows the direction.
+\end{itemize}
+
+\begin{keybox}[Vectors have magnitude and direction, but not location]
+A displacement of 1\,m due east from Paro is represented by the \emph{same} vector as a
+displacement of 1\,m due east from Thimphu. Sliding a vector to a new position (without
+rotating or resizing it) does not change the vector at all.
+\end{keybox}
+
+\subsection{The negative of a vector}
+$-\vec{A}$ is a vector with the same magnitude as $\vec{A}$ but pointing in the opposite direction.
+
+
+\section{Vector Operations}
+
+\subsection{Addition of vectors (head-to-tail / triangle rule)}
+To add two vectors, place the tail of $\vec{B}$ at the head of $\vec{A}$. The sum $\vec{A}+\vec{B}$ is
+the vector drawn from the tail of $\vec{A}$ to the head of $\vec{B}$. This sum is called the
+\textbf{resultant vector}.
+
+Addition is \textbf{commutative}: $\vec{A}+\vec{B} = \vec{B}+\vec{A}$.
+
+Addition is \textbf{associative}: $(\vec{A}+\vec{B})+\vec{C} = \vec{A}+(\vec{B}+\vec{C})$.
+
+Subtraction means adding the opposite: $\vec{A}-\vec{B} = \vec{A}+(-\vec{B})$.
+
+\subsection{Parallelogram law of vector addition}
+Draw $\vec{a}$ and $\vec{b}$ with both tails together. Treat them as two adjacent sides and
+complete the parallelogram. The diagonal through the common tails is the sum $\vec{a}+\vec{b}=\vec{R}$.
+
+\textbf{Deriving the magnitude and direction of the resultant.}
+Let $a=|\vec{a}|$, $b=|\vec{b}|$, and let $\theta$ be the angle between them. By the law of cosines
+applied to the triangle formed:
+\begin{align}
+  R^2 &= a^2 + 2ab\cos\theta + b^2, \notag
+\end{align}
+so
+
+\begin{keybox}[Magnitude and direction of the resultant]
+\[
+  R = |\vec{a}+\vec{b}| = \sqrt{a^2 + 2ab\cos\theta + b^2}
+\]
+\[
+  \alpha = \tan^{-1}\!\left(\frac{b\sin\theta}{a+b\cos\theta}\right)
+  \qquad \text{(angle that $\vec{R}$ makes with $\vec{a}$)}
+\]
+\end{keybox}
+
+\begin{workedexample}[1.1: Resultant of two forces]
+Two forces of $a=3$\,N and $b=4$\,N act at a point with an angle of $\theta=60^\circ$ between
+them. Find the magnitude and direction of the resultant.
+
+\medskip
+\textit{Solution.}
+\[
+  R = \sqrt{3^2 + 2(3)(4)\cos60^\circ + 4^2} = \sqrt{9+12+16} = \sqrt{37} \approx 6.1\;\text{N}.
+\]
+\[
+  \alpha = \tan^{-1}\!\left(\frac{4\sin60^\circ}{3+4\cos60^\circ}\right)
+         = \tan^{-1}\!\left(\frac{3.46}{5}\right) \approx 34.7^\circ
+\]
+measured from the 3\,N force.
+\end{workedexample}
+
+\begin{tryit}[1.1: Two velocities]
+A boat heads north at $a=6$\,m/s while a current pushes it at $b=8$\,m/s at $\theta=90^\circ$
+to the boat's heading. Show that the resultant speed is 10\,m/s and find its direction
+relative to north.
+\end{tryit}
+
+\subsection{Multiplication by a scalar}
+Multiplying a vector by a positive scalar $n$ multiplies its magnitude but leaves the direction
+unchanged. If $n$ is negative, the direction is reversed. Scalar multiplication is distributive:
+\[
+  n(\vec{A}+\vec{B}) = n\vec{A}+n\vec{B}.
+\]
+
+\subsection{The dot (scalar) product}
+
+\begin{keybox}[Dot product]
+\[
+  \vec{A}\cdot\vec{B} \equiv AB\cos\theta,
+\]
+where $\theta$ is the angle between the vectors when placed tail to tail. The result is a
+scalar --- hence the alternative name \emph{scalar product}.
+\end{keybox}
+
+Geometrically, $\vec{A}\cdot\vec{B}$ is the magnitude of $\vec{A}$ times the projection of $\vec{B}$
+along $\vec{A}$ (which is $B\cos\theta$), or equivalently $B$ times the projection of $\vec{A}$ along $\vec{B}$.
+
+\textbf{Properties.}
+\begin{itemize}
+  \item Commutative: $\vec{A}\cdot\vec{B}=\vec{B}\cdot\vec{A}$.
+  \item Distributive: $\vec{A}\cdot(\vec{B}+\vec{C})=\vec{A}\cdot\vec{B}+\vec{A}\cdot\vec{C}$.
+  \item A vector dotted with itself gives its magnitude squared: $\vec{A}\cdot\vec{A}=A^2$.
+  \item If $\vec{A}\perp\vec{B}$, then $\vec{A}\cdot\vec{B}=AB\cos90^\circ=0$.
+\end{itemize}
+
+\begin{workedexample}[1.2: Work done by a force]
+A force $\vec{F}$ of magnitude 10\,N acts at $30^\circ$ to a displacement $\vec{d}$ of magnitude 5\,m.
+The work done is $W=\vec{F}\cdot\vec{d}$:
+\[
+  W = Fd\cos\theta = (10)(5)\cos30^\circ \approx 43.3\;\text{J}.
+\]
+\end{workedexample}
+
+\begin{workedexample}[1.3: Class exercise --- the Law of Cosines]
+Let $\vec{C}=\vec{A}-\vec{B}$. Calculate the dot product of $\vec{C}$ with itself.
+
+\medskip
+\textit{Solution.}
+\begin{align*}
+  \vec{C}\cdot\vec{C} &= (\vec{A}-\vec{B})\cdot(\vec{A}-\vec{B})
+  = \vec{A}\cdot\vec{A} - \vec{A}\cdot\vec{B} - \vec{B}\cdot\vec{A} + \vec{B}\cdot\vec{B}\\
+  &= A^2 - AB\cos\theta - BA\cos\theta + B^2.
+\end{align*}
+\[
+  \boxed{C^2 = A^2 + B^2 - 2AB\cos\theta} \qquad\text{(the Law of Cosines).}
+\]
+\end{workedexample}
+
+\subsection{The cross (vector) product}
+
+\begin{keybox}[Cross product]
+\[
+  \vec{A}\times\vec{B} \equiv AB\sin\theta\;\hat{n},
+\]
+where $\hat{n}$ is a unit vector pointing perpendicular to the plane containing $\vec{A}$ and
+$\vec{B}$. The result is itself a vector --- hence the name \emph{vector product}.
+\end{keybox}
+
+The magnitude is $|\vec{A}\times\vec{B}|=AB\sin\theta$.
+
+\begin{keybox}[Right-hand rule]
+Point the fingers of your right hand along the first vector, curl them through the smaller
+angle toward the second vector --- your thumb then points along $\hat{n}$.
+\end{keybox}
+
+\textbf{Properties.}
+\begin{itemize}
+  \item Distributive: $\vec{A}\times(\vec{B}+\vec{C})=\vec{A}\times\vec{B}+\vec{A}\times\vec{C}$.
+  \item \textbf{Not commutative} --- order matters: $\vec{B}\times\vec{A}=-(\vec{A}\times\vec{B})$.
+  \item Geometrically, $|\vec{A}\times\vec{B}|$ equals the area of the parallelogram with sides $\vec{A}$ and $\vec{B}$.
+  \item Parallel vectors give zero: $\vec{A}\times\vec{A}=A^2\sin0^\circ\,\hat{n}=\vec{0}$.
+\end{itemize}
+
+\begin{workedexample}[1.4: Torque]
+A spanner is turned by a force $F=20$\,N applied at the end of a handle of length $r=0.30$\,m,
+at $90^\circ$ to the handle. The torque magnitude is
+\[
+  |\vec{\tau}| = |\vec{r}\times\vec{F}| = rF\sin90^\circ = (0.30)(20)(1) = 6\;\text{N\,m}.
+\]
+\end{workedexample}
+
+
+\section{Components of a Vector}
+
+It is often useful to describe a vector in terms of its components. If a vector $\vec{A}$ is split
+into two mutually perpendicular vectors, these are called the \textbf{rectangular components}
+of $\vec{A}$.
+
+The vector $\vec{A}$ has magnitude $A$ and makes angle $\theta$ with the positive $x$-axis.
+
+\begin{keybox}[Finding the components from magnitude and angle]
+\[
+  A_x = A\cos\theta, \qquad A_y = A\sin\theta.
+\]
+\end{keybox}
+
+We can reverse the process to recover the magnitude and direction:
+\[
+  A_x^2 + A_y^2 = A^2(\cos^2\theta+\sin^2\theta) = A^2, \qquad
+  \frac{A_y}{A_x} = \tan\theta.
+\]
+
+\begin{keybox}[Finding magnitude and angle from the components]
+\[
+  A = \sqrt{A_x^2+A_y^2}, \qquad \theta = \tan^{-1}\!\left(\frac{A_y}{A_x}\right).
+\]
+\end{keybox}
+
+\begin{workedexample}[1.5: Resolving a force]
+A force of $A=100$\,N acts at $\theta=30^\circ$ above the horizontal. Its components are
+\[
+  A_x = 100\cos30^\circ \approx 86.6\;\text{N}, \qquad A_y = 100\sin30^\circ = 50\;\text{N}.
+\]
+\end{workedexample}
+
+\begin{workedexample}[1.6: Adding vectors using components]
+Add $\vec{A}$ (5\,m at $37^\circ$) and $\vec{B}$ (8\,m at $0^\circ$, i.e.\ along $x$).
+
+\medskip
+\textit{Solution.} Resolve each, add like components, then recombine.
+\begin{align*}
+  A_x &= 5\cos37^\circ \approx 4.0, & A_y &= 5\sin37^\circ \approx 3.0,\\
+  B_x &= 8,                          & B_y &= 0.
+\end{align*}
+\[
+  R_x = 4.0+8 = 12.0, \qquad R_y = 3.0+0 = 3.0.
+\]
+\[
+  R = \sqrt{12.0^2+3.0^2} \approx 12.4\;\text{m}, \qquad
+  \theta = \tan^{-1}\!\!\left(\frac{3.0}{12.0}\right) \approx 14^\circ.
+\]
+\end{workedexample}
+
+\begin{tryit}[1.2: Components of velocity]
+A projectile is launched at 20\,m/s, $60^\circ$ above the horizontal. Find the horizontal and
+vertical components of the launch velocity.
+
+\textit{(Answer: $v_x=10$\,m/s, $v_y\approx17.3$\,m/s.)}
+\end{tryit}
+
+
+\section{Vector Algebra in Components}
+
+In practice it is often easiest to set up Cartesian coordinates $x,y,z$ and work with
+components.
+
+\subsection{Basis vectors and unit vectors}
+Let $\hat{x},\hat{y},\hat{z}$ (sometimes written $\hat{\imath},\hat{\jmath},\hat{k}$) be unit vectors
+pointing along the $x$-, $y$-, and $z$-axes. These are the \textbf{basis vectors}.
+
+\begin{keybox}[Unit vector]
+A unit vector has magnitude exactly 1; its only job is to indicate direction. Any vector
+$\vec{A}$ can be turned into a unit vector (written $\hat{A}$) by dividing by its own magnitude:
+\[
+  \hat{A} = \frac{\vec{A}}{|\vec{A}|}.
+\]
+\end{keybox}
+
+\subsection{Component form of a vector}
+Any vector can be written in terms of the basis vectors:
+\[
+  \vec{A} = A_x\hat{x} + A_y\hat{y} + A_z\hat{z}.
+\]
+The coefficients $A_x,A_y,A_z$ are the \emph{components} of $\vec{A}$ --- geometrically, the
+projections of $\vec{A}$ onto the three axes. A component can be extracted by dotting with
+the matching basis vector:
+\[
+  \vec{A}\cdot\hat{x} = A_x, \qquad \vec{A}\cdot\hat{y} = A_y, \qquad \vec{A}\cdot\hat{z} = A_z.
+\]
+
+\subsection{The four operations in component form}
+
+\begin{keybox}[Rule 1 --- Addition: add like components]
+\[
+  \vec{A}+\vec{B} = (A_x+B_x)\hat{x} + (A_y+B_y)\hat{y} + (A_z+B_z)\hat{z}
+\]
+\end{keybox}
+
+\begin{keybox}[Rule 2 --- Scalar multiplication: scale every component]
+\[
+  a\vec{A} = (aA_x)\hat{x} + (aA_y)\hat{y} + (aA_z)\hat{z}
+\]
+\end{keybox}
+
+\begin{keybox}[Rule 3 --- Dot product: multiply like components and add]
+\[
+  \vec{A}\cdot\vec{B} = A_xB_x + A_yB_y + A_zB_z
+\]
+\end{keybox}
+
+This works because the basis vectors are mutually perpendicular unit vectors:
+\[
+  \hat{x}\cdot\hat{x}=\hat{y}\cdot\hat{y}=\hat{z}\cdot\hat{z}=1, \qquad
+  \hat{x}\cdot\hat{y}=\hat{x}\cdot\hat{z}=\hat{y}\cdot\hat{z}=0.
+\]
+In particular $\vec{A}\cdot\vec{A}=A_x^2+A_y^2+A_z^2$, so
+
+\begin{keybox}[Magnitude (3-D Pythagoras)]
+\[
+  |\vec{A}| = \sqrt{A_x^2+A_y^2+A_z^2}
+\]
+\end{keybox}
+
+\begin{keybox}[Bonus --- Rule 4: the cross product as a determinant]
+\[
+  \vec{A}\times\vec{B} = \begin{vmatrix}\hat{x}&\hat{y}&\hat{z}\\A_x&A_y&A_z\\B_x&B_y&B_z\end{vmatrix}
+  = (A_yB_z-A_zB_y)\hat{x} - (A_xB_z-A_zB_x)\hat{y} + (A_xB_y-A_yB_x)\hat{z}
+\]
+\end{keybox}
+
+\begin{workedexample}[1.7: Putting the rules together]
+Let $\vec{A}=2\hat{x}+3\hat{y}+\hat{z}$ and $\vec{B}=\hat{x}-\hat{y}+4\hat{z}$.
+
+\medskip
+(a) \textit{Sum.} $\vec{A}+\vec{B}=(2+1)\hat{x}+(3-1)\hat{y}+(1+4)\hat{z}=3\hat{x}+2\hat{y}+5\hat{z}$.
+
+(b) \textit{Dot product.} $\vec{A}\cdot\vec{B}=(2)(1)+(3)(-1)+(1)(4)=2-3+4=3$.
+
+(c) \textit{Magnitude of $\vec{A}$.} $|\vec{A}|=\sqrt{2^2+3^2+1^2}=\sqrt{14}\approx3.74$.
+
+(d) \textit{Angle between them.} Using $\vec{A}\cdot\vec{B}=AB\cos\theta$ with $|\vec{B}|=\sqrt{1+1+16}=\sqrt{18}$:
+\[
+  \cos\theta = \frac{3}{\sqrt{14}\,\sqrt{18}} \approx 0.189 \implies \theta \approx 79^\circ.
+\]
+\end{workedexample}
+
+
+\section{Position, Displacement, and Separation Vectors}
+
+\subsection{Position vector}
+A point in space is described by its Cartesian coordinates: $(x,y)$ in 2-D or $(x,y,z)$ in
+3-D. The vector from the origin $O$ to that point is the \textbf{position vector}:
+\[
+  \vec{r} \equiv x\hat{x}+y\hat{y}+z\hat{z}.
+\]
+Its magnitude is the distance from the origin, $r=\sqrt{x^2+y^2+z^2}$, and the unit vector
+pointing radially outward is
+\[
+  \hat{r} = \frac{\vec{r}}{r} = \frac{x\hat{x}+y\hat{y}+z\hat{z}}{\sqrt{x^2+y^2+z^2}}.
+\]
+
+\subsection{Separation vector}
+
+\begin{keybox}[Separation vector $\vec{\Delta}$]
+The separation vector is the displacement from a source point $\vec{r}\,'$ (where something
+is located, e.g.\ an electric charge) to a field point $\vec{r}$ (where you are observing):
+\[
+  \vec{\Delta} \equiv \vec{r}-\vec{r}\,'.
+\]
+\end{keybox}
+
+Its magnitude is $\Delta=|\vec{r}-\vec{r}\,'|$, and the unit vector pointing from the source to the
+field point is
+\[
+  \hat{\Delta} = \frac{\vec{\Delta}}{\Delta} = \frac{\vec{r}-\vec{r}\,'}{|\vec{r}-\vec{r}\,'|}.
+\]
+In Cartesian coordinates,
+\begin{align*}
+  \vec{\Delta} &= (x-x')\hat{x}+(y-y')\hat{y}+(z-z')\hat{z},\\
+  \Delta &= \sqrt{(x-x')^2+(y-y')^2+(z-z')^2},\\
+  \hat{\Delta} &= \frac{(x-x')\hat{x}+(y-y')\hat{y}+(z-z')\hat{z}}{\sqrt{(x-x')^2+(y-y')^2+(z-z')^2}}.
+\end{align*}
+
+\begin{workedexample}[1.8: A separation vector]
+A charge sits at the source point $\vec{r}\,'=(1,0,2)$ and we observe at the field point
+$\vec{r}=(4,4,2)$ (coordinates in metres). Then
+\[
+  \vec{\Delta} = (4-1)\hat{x}+(4-0)\hat{y}+(2-2)\hat{z} = 3\hat{x}+4\hat{y},
+\]
+\[
+  \Delta = \sqrt{3^2+4^2+0^2} = 5\;\text{m}, \qquad
+  \hat{\Delta} = \tfrac{3}{5}\hat{x}+\tfrac{4}{5}\hat{y}.
+\]
+\end{workedexample}
+
+\begin{keybox}[When are two vectors equal?]
+Two vectors are equal only if their corresponding components are equal --- equivalently,
+if they have the same magnitude and the same direction. Sliding a vector to a new position
+(a parallel translation) does not change it.
+\end{keybox}
+
+
+\section*{Formula Summary: Vectors}
+\addcontentsline{toc}{section}{Formula Summary: Vectors}
+
+\begin{formulabox}[Formula Summary: Vectors]
+\begin{tabular}{ll}
+  \toprule
+  \textbf{Quantity} & \textbf{Formula} \\
+  \midrule
+  Resultant (parallelogram law) & $R=\sqrt{a^2+2ab\cos\theta+b^2}$ \\[4pt]
+  Direction of resultant & $\alpha=\tan^{-1}\!\bigl(\tfrac{b\sin\theta}{a+b\cos\theta}\bigr)$ \\[4pt]
+  Dot product & $\vec{A}\cdot\vec{B}=AB\cos\theta=A_xB_x+A_yB_y+A_zB_z$ \\[4pt]
+  Cross-product magnitude & $|\vec{A}\times\vec{B}|=AB\sin\theta$ \\[4pt]
+  Components (2-D) & $A_x=A\cos\theta$,\quad $A_y=A\sin\theta$ \\[4pt]
+  Magnitude (2-D) & $A=\sqrt{A_x^2+A_y^2}$ \\[4pt]
+  Magnitude (3-D) & $A=\sqrt{A_x^2+A_y^2+A_z^2}$ \\[4pt]
+  Unit vector & $\hat{A}=\vec{A}/|\vec{A}|$ \\[4pt]
+  Position vector & $\vec{r}=x\hat{x}+y\hat{y}+z\hat{z}$ \\[4pt]
+  Separation vector & $\vec{\Delta}=\vec{r}-\vec{r}\,'$ \\
+  \bottomrule
+\end{tabular}
+\end{formulabox}
