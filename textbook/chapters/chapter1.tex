@@ -3,12 +3,31 @@
 
 \section{Introduction to Scalars and Vectors}
 
-Imagine you walk from corner A to corner C (a distance of 4\,m), then turn and walk from
-C to B (a distance of 3\,m).
+Let us begin with a piece of arithmetic that looks broken. In this chapter,
+$4+3$ will sometimes equal $7$. It will sometimes equal $5$. It can equal $1$,
+and with the right setup it can equal anything in between. By the end of the
+chapter you will not only see why, you will be able to compute exactly what
+$4+3$ equals in any given situation --- and you will have met the single most
+important mathematical tool of this whole course.
+
+Here is the puzzle in concrete form. Walk 4\,m, stop, then walk 3\,m more. How
+far are you from where you started?
+
+You cannot answer --- and that is the point. It depends on which \emph{direction}
+the second walk took. Walk 4\,m east then 3\,m east: you are 7\,m from the start.
+Walk 4\,m east then 3\,m \emph{west}: you are 1\,m from the start. And if you walk
+4\,m east, turn a corner, and walk 3\,m north:
 \begin{itemize}
   \item The total \emph{distance} you walked is $4+3=7$\,m. Distance only cares about how much, not which way.
-  \item Your \emph{displacement} --- the straight-line shortcut from start to finish --- is only 5\,m, pointing from A to B. Displacement cares about how much \emph{and} which way.
+  \item Your \emph{displacement} --- the straight-line shortcut from start to finish --- is only 5\,m (a 3-4-5 right triangle), pointing diagonally. Displacement cares about how much \emph{and} which way.
 \end{itemize}
+
+So there are two kinds of quantities in physics. Some, like distance, mass,
+and temperature, are single numbers and obey ordinary arithmetic. Others,
+like displacement, carry a direction with them, and adding them requires new
+rules --- rules in which $4+3$ can come out anywhere from 1 to 7. Quantities of
+the first kind are called \emph{scalars}; quantities of the second kind,
+\emph{vectors}.
 
 \begin{keybox}[Scalars and Vectors]
 A \textbf{scalar} is a quantity that has magnitude only (no direction): distance, mass, time, temperature, speed, energy.
@@ -47,6 +66,27 @@ $-\vec{A}$ is a vector with the same magnitude as $\vec{A}$ but pointing in the 
 
 \section{Vector Operations}
 
+\subsection*{How do forces add? Nobody knew for two thousand years}
+
+It is tempting to think the rules below were always obvious. They were not.
+That two forces acting on the same object combine like two walks --- direction
+and all --- is a \emph{discovery about nature}, and it took until 1586. That year
+a Flemish engineer named Simon Stevin published \emph{De Beghinselen der
+Weeghconst} (``The Principles of the Art of Weighing''), in which he worked
+out how weights pull on objects resting on inclined planes. His famous
+argument used an endless chain of balls draped over a triangular wedge: since
+the chain cannot spin around the wedge forever on its own (that would be a
+perpetual motion machine, which Stevin refused to believe in), the pulls on
+the two slopes must exactly balance --- and from this he could deduce how a
+force splits along and across a slope. Stevin was so proud of the argument
+that he printed the picture on the title page of his book with the motto
+\emph{``Wonder en is gheen wonder''} --- ``what seems a wonder is no wonder.''
+That motto could be the slogan for this entire course.
+
+Out of this line of work --- Stevin, then Galileo, then Newton --- came the rule
+that forces, velocities, and displacements all combine the same way: like
+arrows. Here is that rule.
+
 \subsection{Addition of vectors (head-to-tail / triangle rule)}
 To add two vectors, place the tail of $\vec{B}$ at the head of $\vec{A}$. The sum $\vec{A}+\vec{B}$ is
 the vector drawn from the tail of $\vec{A}$ to the head of $\vec{B}$. This sum is called the
@@ -58,9 +98,27 @@ Addition is \textbf{associative}: $(\vec{A}+\vec{B})+\vec{C} = \vec{A}+(\vec{B}+
 
 Subtraction means adding the opposite: $\vec{A}-\vec{B} = \vec{A}+(-\vec{B})$.
 
+\medskip
+\noindent\textit{On the companion site:} open the \textbf{vector sandbox}
+(\texttt{Chapter 1} on the course website) and drag two arrows around. Watch
+the head-to-tail sum update live --- then try to make $4+3$ equal exactly $5$.
+
 \subsection{Parallelogram law of vector addition}
 Draw $\vec{a}$ and $\vec{b}$ with both tails together. Treat them as two adjacent sides and
 complete the parallelogram. The diagonal through the common tails is the sum $\vec{a}+\vec{b}=\vec{R}$.
+
+\begin{predictbox}[1.1: Taming $4+3$]
+Two tug ropes pull on the same hook: one with 4\,N, one with 3\,N. Before any
+formula, write down your answers:
+\begin{enumerate}[leftmargin=2em, itemsep=1pt]
+  \item What is the \emph{largest} the combined pull could possibly be, and how
+        must the ropes be arranged to get it?
+  \item What is the \emph{smallest}, and how?
+  \item At what angle (roughly) between the ropes would the combined pull be
+        exactly 5\,N?
+\end{enumerate}
+Keep your three guesses --- the formula we are about to derive will grade them.
+\end{predictbox}
 
 \textbf{Deriving the magnitude and direction of the resultant.}
 Let $a=|\vec{a}|$, $b=|\vec{b}|$, and let $\theta$ be the angle between them. By the law of cosines
@@ -95,6 +153,30 @@ them. Find the magnitude and direction of the resultant.
 \]
 measured from the 3\,N force.
 \end{workedexample}
+
+Now grade your predictions from Stop and Predict 1.1. Setting $\theta=0^\circ$
+(ropes parallel) gives $R=\sqrt{9+24+16}=7$\,N --- the largest possible. Setting
+$\theta=180^\circ$ (ropes opposite) gives $R=\sqrt{9-24+16}=1$\,N --- the
+smallest. And $R=5$\,N requires $25 = 25 + 24\cos\theta$, i.e.\
+$\cos\theta=0$: the ropes must be exactly \emph{perpendicular}. Our broken
+arithmetic is fixed: $4+3$ equals anything from 1 to 7, and the angle decides.
+
+\begin{checkpoint}[1.1: Two equal pulls]
+Two students pull on a ring, each with a force of 100\,N, with an angle of
+$120^\circ$ between their ropes. The resultant force on the ring has magnitude
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0pt]
+  \item 200\,N
+  \item 173\,N
+  \item 141\,N
+  \item 100\,N
+\end{enumerate}
+Commit to an answer before checking --- and try to feel why the popular wrong
+answers are tempting.
+\checkanswer{Answer: (d). With $a=b=100$ and $\theta=120^\circ$,
+$R=\sqrt{100^2+2(100)(100)(-\tfrac12)+100^2}=100$\,N. The two pulls and the
+resultant form an equilateral triangle --- each pull ``wastes'' half of itself
+fighting the other.}
+\end{checkpoint}
 
 \begin{tryit}[1.1: Two velocities]
 A boat heads north at $a=6$\,m/s while a current pushes it at $b=8$\,m/s at $\theta=90^\circ$
@@ -347,6 +429,11 @@ pointing radially outward is
 \]
 
 \subsection{Separation vector}
+
+Why bother with one more definition? Because next term, in electricity, the
+force a charge feels depends on where it is \emph{relative to another charge} ---
+not relative to the origin. The vector that does that bookkeeping is worth
+naming now, while the geometry is fresh.
 
 \begin{keybox}[Separation vector $\vec{\Delta}$]
 The separation vector is the displacement from a source point $\vec{r}\,'$ (where something

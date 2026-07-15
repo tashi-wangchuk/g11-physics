@@ -1,6 +1,33 @@
 %%-----------Chapter 2------------------------------------------
 \chapter{Dimensional Analysis}
 
+Here is a challenge that sounds impossible. Take a pendulum --- a stone on a
+string. Its period (the time for one full swing) surely depends on things like
+the length of the string, the mass of the stone, how hard gravity pulls. Now
+the challenge: \emph{predict the formula for the period without using any law
+of motion at all}. No forces, no Newton, no experiment. Just bookkeeping.
+
+By the end of this short chapter you will do exactly that --- and you will
+discover along the way that the mass of the stone \emph{cannot appear in the
+answer}, a fact you can then walk outside and test with two stones and a
+shoelace. The trick is called \textbf{dimensional analysis}, and physicists
+reach for it constantly: to catch algebra mistakes, to guess formulas before
+deriving them, and sometimes (as the supplementary box at the end of the
+chapter shows) to uncover military secrets from a published photograph.
+
+\begin{predictbox}[2.1: The pendulum, before any theory]
+A pendulum of length $l$ carries a bob of mass $m$, swinging under gravity
+$g$. Before reading on, write down your instincts:
+\begin{enumerate}[leftmargin=2em, itemsep=1pt]
+  \item If you double the mass of the bob, does the period get longer,
+        shorter, or stay the same?
+  \item If you double the length of the string, what happens to the period ---
+        doubles? quadruples? something else?
+\end{enumerate}
+Keep your answers. The chapter will grade them --- twice: once by bookkeeping,
+once (if your class has a shoelace) by experiment.
+\end{predictbox}
+
 \section{Dimension}
 
 In physics, we measure many different things, but they are all built from a small set of seven
@@ -62,6 +89,23 @@ Let us check the kinematic equation $x = ut + \tfrac{1}{2}at^2$:
 Since every term evaluates to length $[L]$, the equation is dimensionally correct. Note: the
 constant $\tfrac{1}{2}$ has no dimension and is ignored in this check.
 
+\begin{checkpoint}[2.1: Spot the impostor]
+A student solving a problem about a falling stone produces four candidate
+formulas, where $v$ is a speed, $g$ an acceleration, $h$ a height, and $t$ a
+time. Exactly one of them \emph{could} be right. Which one?
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0pt]
+  \item $v = 2gh$
+  \item $v = \sqrt{2gh}$
+  \item $h = \tfrac12 g t$
+  \item $t = \sqrt{2h g}$
+\end{enumerate}
+\checkanswer{Answer: (b). Check each: $[gh]=(LT^{-2})(L)=L^2T^{-2}$, which is
+speed \emph{squared} --- so (a) fails but its square root (b) has dimension
+$LT^{-1}$, a speed. In (c), $[gt]=LT^{-1}$ is a speed, not a height. In (d),
+$[\sqrt{hg}]=\sqrt{L^2T^{-2}}=LT^{-1}$, again a speed, not a time. Note what
+the check cannot do: it cannot tell you whether the 2 in (b) is right.}
+\end{checkpoint}
+
 
 \section{Uses of Dimensional Analysis}
 
@@ -95,8 +139,17 @@ So $1\;\text{Pascal} = 10\;\text{CGS pressure}$.
 
 \subsection{Deducing Relations Among Physical Quantities}
 
-If we know which variables affect a physical quantity, we can sometimes deduce its form
-using dimensional analysis. For example, suppose the time period $t$ of a simple pendulum
+This is the payoff promised at the start of the chapter, and it has a
+history. Lord Rayleigh --- the physicist who explained why the sky is blue ---
+used this ``method of dimensions'' so often and so effectively in the late
+1800s that it became a standard weapon in every physicist's toolkit; he was
+still writing notes to \emph{Nature} in 1915 urging that the method could
+save ``much labour'' by anticipating results before any hard analysis. The
+idea: if we know \emph{which} variables affect a physical quantity, the
+requirement that the dimensions balance often pins down \emph{how} they can
+combine, up to a dimensionless constant.
+
+Time to grade your pendulum predictions. Suppose the time period $t$ of a simple pendulum
 depends on its length $l$, the mass of the bob $m$, and the acceleration due to gravity $g$.
 We assume a product relation of the form
 \begin{equation}
@@ -120,6 +173,17 @@ Substituting these values gives
 In the actual formula $k=2\pi$, which is determined from the full physical analysis, not from
 dimensional analysis alone.
 
+Look at what the bookkeeping just told us. The mass exponent came out
+$b=0$: \emph{the mass of the bob cannot appear in the formula}. A heavy stone
+and a light stone on equal strings must swing in step --- not because we
+measured it, but because no other answer can balance dimensionally. (If your
+first instinct in Stop and Predict 2.1 was ``heavier swings slower,'' you are
+in good company --- most people guess that. Now tie two different stones to
+equal shoelaces and watch.) And doubling the length does not double the
+period; it multiplies it by $\sqrt{2}\approx 1.4$, because the length enters
+under a square root. This ``predict by bookkeeping, then test'' cycle is
+exactly how you will verify the formula in the lab later this year.
+
 \textbf{Limitations:}
 \begin{enumerate}
   \item It only works for \emph{product-type} dependencies. It cannot deduce equations where
@@ -128,3 +192,31 @@ dimensional analysis alone.
         unknown constant $k$ in the pendulum equation. We need actual experiments (or deeper
         theory) to find that $k=2\pi$.
 \end{enumerate}
+
+\begin{supplementary}{How dimensional analysis leaked an atomic secret}
+In 1945 the United States exploded the first atomic bomb in the New Mexico
+desert. The energy released --- the ``yield'' --- was one of the most closely
+guarded secrets in the world. Two years later, the government declassified
+something that seemed harmless: a filmstrip of photographs of the growing
+fireball, each frame stamped with the time after detonation and a distance
+scale.
+
+The British physicist G.\,I.\ Taylor looked at those photographs and reasoned
+like this. Once the blast is underway, the radius $R$ of the fireball can
+plausibly depend on only three things: the energy $E$ released, the density
+$\rho$ of the surrounding air, and the time $t$ since detonation. There is
+exactly one way to combine $[E]=ML^2T^{-2}$, $[\rho]=ML^{-3}$, and $[T]$ into
+a length (try it --- it is the same game we played with the pendulum):
+\[
+  R \sim \left(\frac{E\,t^2}{\rho}\right)^{\!1/5}
+  \qquad\Longleftrightarrow\qquad
+  E \sim \frac{\rho\,R^5}{t^2}.
+\]
+Taylor read $R$ and $t$ off the published frames (about 140\,m at
+$t=25$\,ms), put in $\rho\approx1.2\;\mathrm{kg/m^3}$ for air, and out came
+$E\sim10^{14}$\,J --- the equivalent of roughly twenty thousand tonnes of TNT.
+When he published the estimate in 1950 it was embarrassingly close to the
+still-classified value. The American military was reportedly not amused; no
+law had been broken, only bookkeeping applied. \emph{Wonder en is gheen
+wonder.}
+\end{supplementary}

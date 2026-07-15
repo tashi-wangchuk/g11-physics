@@ -106,6 +106,72 @@
   breakable,
 }
 
+% STOP AND PREDICT BOX — ISLE-style: an observation or question posed BEFORE
+% the physics is revealed. The student should commit to a prediction (write it
+% down!) before reading past the box.
+\newtcolorbox{predictbox}[1][]{
+  colback  = gray!5,
+  colframe = black!40,
+  fonttitle = \bfseries,
+  title    = {Stop and Predict~#1},
+  sharp corners,
+  boxrule  = 0.5pt,
+  leftrule = 3pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
+% CHECKPOINT BOX — a Mazur-style concept question (ConcepTest). Multiple
+% choice, distractors chosen from real student misconceptions. The answer is
+% printed upside down via \checkanswer so the eye doesn't grab it first.
+\newtcolorbox{checkpoint}[1][]{
+  colback  = white,
+  colframe = black!55,
+  fonttitle = \bfseries,
+  title    = {Checkpoint~#1},
+  sharp corners,
+  boxrule  = 0.5pt,
+  toprule  = 2.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+% Upside-down answer line for checkpoint boxes.
+\newcommand{\checkanswer}[1]{%
+  \par\smallskip\noindent
+  \rotatebox[origin=c]{180}{\parbox{0.93\linewidth}{\scriptsize\itshape #1}}%
+}
+
+% SUPPLEMENTARY BOX — enriching but optional. A student in a hurry can skip
+% every one of these and still have the full core of the course.
+\newtcolorbox{supplementary}[1][]{
+  colback  = gray!8,
+  colframe = black!40,
+  fonttitle = \bfseries,
+  title    = {Supplementary --- #1\hfill{\normalfont\footnotesize\itshape optional}},
+  sharp corners,
+  boxrule  = 0.5pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
+% WHITEBOARD CHALLENGE BOX — a thinking-classroom group task (after Peter
+% Liljedahl's "Building Thinking Classrooms"): done standing at a whiteboard
+% or window, in random groups of three, before any solution is shown.
+\newtcolorbox{whiteboard}[1][]{
+  colback  = white,
+  colframe = black!55,
+  fonttitle = \bfseries,
+  title    = {Whiteboard Challenge~#1\hfill{\normalfont\footnotesize\itshape stand up, groups of three, marker each}},
+  sharp corners,
+  boxrule  = 1pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  before upper={\setlength{\parskip}{4pt}},
+  breakable,
+}
+
 %------Chapter Opening Page Design------
 % Matches the style in the image:
 %   • "CHAPTER" label (small bold) + large grey number — top-right corner

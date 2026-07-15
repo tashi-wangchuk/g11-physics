@@ -1,6 +1,25 @@
 %%-----------Chapter 3------------------------------------------
 \chapter{Motion}
 
+Twenty-four centuries ago the Greek philosopher Zeno fired an arrow --- in an
+argument --- and claimed it could not possibly be moving. His reasoning:
+freeze the arrow at any single instant, and it occupies exactly one place,
+just like an arrow at rest. If it is indistinguishable from a resting arrow
+at \emph{every} instant, when exactly does it do its moving?
+
+You know the arrow moves. But Zeno's question is sharper than it looks, and
+it survived for two thousand years because answering it properly requires an
+idea nobody had: a precise meaning for \emph{how fast something is moving at a
+single instant}. Speed is distance divided by time --- but at one instant, no
+distance is covered and no time passes. $0/0$. What then does the number on a
+car's speedometer actually \emph{mean}?
+
+This chapter builds that missing idea. It is called the derivative, it was
+invented for exactly this problem (by Newton and Leibniz, independently, in
+the 1660s--70s), and it is the tool that finally lets us answer Zeno: motion
+is not a property of one frozen instant, but of how neighbouring instants
+compare --- and there is a precise way to take that comparison to the limit.
+
 \section{What is Motion?}
 
 \begin{keybox}[Motion and Rest]
@@ -120,8 +139,20 @@ the full 15\,s interval.
 
 \subsection{Instantaneous velocity}
 
-Now suppose we compute the average velocities over shorter and shorter time intervals
-$[t,t+\Delta t]$ --- in other words, we let $\Delta t$ approach zero.
+Average velocity is honest but blunt. A traffic officer stops a driver:
+``You were doing ninety kilometres per hour.'' The driver protests: ``That's
+impossible --- I've only been driving for ten minutes, nowhere near an hour!''
+The driver is joking (we hope), but hiding in the joke is Zeno's question
+from the start of the chapter: ``90 km/h \emph{at this moment}'' cannot mean
+that any hour, or any minute, was actually timed. It must mean something
+like: \emph{if} the car kept doing what it is doing right now, it \emph{would}
+cover 90\,km in an hour. To make that precise, we shrink the stopwatch
+window.
+
+So we compute average velocities over shorter and shorter time intervals
+$[t,t+\Delta t]$ --- in other words, we let $\Delta t$ approach zero. The
+averages settle toward a definite number, and \emph{that number} is what the
+speedometer reports.
 
 \begin{keybox}[Instantaneous velocity]
 The instantaneous velocity $v(t)$ at time $t$ is defined as the limit of these average velocities:
@@ -431,6 +462,30 @@ For the falling ball $s(t)=5t^2$:
 The acceleration is constant because the gravitational force on the falling body is constant,
 and by Newton's second law, acceleration is proportional to the net force.
 
+\medskip
+\noindent\textit{On the companion site:} the \textbf{motion grapher}
+(\texttt{Chapter 3} on the course website) draws $s(t)$, $v(t)$, and $a(t)$
+one above the other for motions you choose, with a dot moving along the
+track. Before revealing each graph, sketch your guess --- slope-reading is a
+skill, and it is trained by being wrong in private.
+
+\begin{checkpoint}[3.1: The top of the flight]
+You toss a ball straight up. At the very highest point of its flight, its
+velocity is zero. What is its acceleration there?
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0pt]
+  \item Zero --- the ball is momentarily at rest.
+  \item $9.8\;\text{m/s}^2$ downward, same as everywhere else in the flight.
+  \item $9.8\;\text{m/s}^2$ upward, since the ball is still rising until that moment.
+  \item Cannot be determined without knowing the ball's mass.
+\end{enumerate}
+\checkanswer{Answer: (b). Velocity and acceleration are different questions:
+``how fast is it moving?'' versus ``how fast is its velocity changing?''
+At the top, $v=0$ for one instant, but $v$ is changing at the same steady rate
+as always --- from small-upward, through zero, to small-downward. If the
+acceleration were really zero there, the velocity would stop changing, and
+the ball would hang in the air forever.}
+\end{checkpoint}
+
 
 \section{Motion with Constant Acceleration}
 
@@ -517,6 +572,21 @@ motion}. When a particle is thrown obliquely near the earth's surface, it moves 
 curved path. Such a particle is called a \textbf{projectile}. We assume the particle remains
 close to the surface and air resistance is negligible, so acceleration is constant in the
 vertically downward direction with magnitude $g\approx9.8\,\text{m/s}^2$.
+
+\begin{predictbox}[3.1: Two coins]
+Put two identical coins at the edge of a table. At the same moment, let one
+simply \emph{drop} off the edge, and \emph{flick} the other horizontally so it
+flies off with some sideways speed. Which coin hits the floor first? Commit
+to a prediction --- then actually do it (listen for one click or two).
+
+The result surprises almost everyone the first time: they land
+\emph{together}. The flicked coin travels metres sideways, yet loses height
+at exactly the same rate as the dropped one. Gravity does not care about
+horizontal motion. That single observation is the key to everything in this
+section: projectile motion is just two \emph{independent} motions happening at
+once --- constant velocity horizontally, free fall vertically --- and we may
+solve each with the one-dimensional tools we already own.
+\end{predictbox}
 
 A particle is projected from point $O$ with initial speed $v_0$ at angle $\theta$ with the horizontal.
 The initial conditions are:

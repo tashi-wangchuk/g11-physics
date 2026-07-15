@@ -13,6 +13,58 @@ other opposing force), the ball would continue rolling forever. This is the cont
 Newton's first law, but it took from Aristotle to Galileo to articulate it clearly, and from
 Galileo to Newton to place it in its proper setting.
 
+How did Galileo see past two thousand years of common sense? Not by removing
+friction --- he could not --- but by a thought experiment so clean you can run
+it in your head right now. Release a ball on one incline and let it roll down
+and up a facing incline (Figure~\ref{fig:galileoinclines}). Galileo observed
+that the ball climbs back to very nearly its starting height, and reasoned
+that it would reach \emph{exactly} that height if friction could be removed.
+Now make the second incline shallower: the ball must roll \emph{farther} to
+regain its height. Shallower still: farther still. Finally, lay the second
+incline perfectly flat. The ball still ``tries'' to regain its height --- but
+now it never can. So it must roll on, at constant speed, \emph{forever}.
+Nothing is pushing it. Motion needs no push to continue; it only needs
+nothing to stop it.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth, thick, scale=0.9]
+    % --- Warm paper background ---
+    \fill[paper, rounded corners=6pt] (-0.4,-0.65) rectangle (13.6,2.6);
+    % (a) two inclines, equal height
+    \begin{scope}
+        \draw[thick] (0,2) -- (1.8,0) -- (3.6,2);
+        \draw[dashed, gray!60] (0,2) -- (3.6,2);
+        \fill[gray!30] (0.28,2.05) circle (0.13);
+        \draw[gray!60, ->] (0.5,1.6) -- (1.3,0.75);
+        \fill[black!70] (3.32,2.05) circle (0.13);
+        \node[font=\small\itshape] at (1.8,-0.4) {(a)};
+    \end{scope}
+    % (b) shallower second incline
+    \begin{scope}[shift={(4.6,0)}]
+        \draw[thick] (0,2) -- (1.8,0) -- (5.0,1.35);
+        \draw[dashed, gray!60] (0,2) -- (5.0,2);
+        \fill[gray!30] (0.28,2.05) circle (0.13);
+        \fill[black!70] (4.62,1.35) circle (0.13);
+        \node[font=\small\itshape] at (2.5,-0.4) {(b)};
+    \end{scope}
+    % (c) flat: never regains height
+    \begin{scope}[shift={(10.2,0)}]
+        \draw[thick] (0,2) -- (1.8,0) -- (3.2,0);
+        \draw[dashed, gray!60] (0,2) -- (3.2,2);
+        \fill[gray!30] (0.28,2.05) circle (0.13);
+        \fill[black!70] (2.6,0.13) circle (0.13);
+        \draw[->, thick] (2.85,0.13) -- ++(0.45,0) node[right, font=\small] {$v$};
+        \node[font=\small\itshape] at (1.6,-0.4) {(c)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Galileo's thought experiment. (a) A ball released on one incline
+climbs the facing incline back to its starting height. (b) On a shallower
+incline it rolls farther to regain the same height. (c) On a flat track it
+can never regain its height --- so it rolls forever at constant speed.}
+\label{fig:galileoinclines}
+\end{figure}
+
 \section{The First Law (the Law of Inertia)}
 
 \begin{keybox}[The First Law]
@@ -48,6 +100,22 @@ and a centripetal acceleration
 Compared to $g=9.8\,\text{m/s}^2$, this is smaller by a factor of roughly 1600. Newton's
 first law therefore holds as an extraordinarily good approximation, and we will use it as if
 it were exact.
+
+\begin{checkpoint}[4.1: What pushes the ball?]
+You toss a ball straight up. While the ball is on its way up, in mid-air,
+which forces act on it? (Ignore air resistance.)
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0pt]
+  \item Gravity, plus the steadily weakening upward force of your hand.
+  \item Gravity, plus an upward force stored in the ball's motion.
+  \item Gravity only.
+  \item No force at all until the top --- then gravity takes over.
+\end{enumerate}
+\checkanswer{Answer: (c). Once the ball leaves your hand, your hand cannot
+push it --- there is no contact. Nothing needs to push the ball upward to keep
+it moving upward: motion continues by itself (the first law). The one force
+acting is gravity, which is why the upward motion is steadily eaten away.
+Aristotle would have picked (a) or (b); most people do, the first time.}
+\end{checkpoint}
 
 
 \section{The Second Law}
@@ -154,9 +222,36 @@ motion we must look at all forces on the horse, which includes not only the back
 from the cart but also the forward friction from the ground on its hooves. Both the horse
 and cart accelerate together. No paradox, only careful bookkeeping.
 
+\begin{checkpoint}[4.2: The truck and the mosquito]
+A speeding truck collides head-on with a mosquito. During the collision,
+how does the force the truck exerts on the mosquito compare with the force
+the mosquito exerts on the truck?
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=0pt]
+  \item The truck exerts an enormously larger force --- just look at the outcome.
+  \item The truck exerts a somewhat larger force, in proportion to its mass.
+  \item The two forces are exactly equal in magnitude.
+  \item The mosquito exerts no force on the truck at all.
+\end{enumerate}
+\checkanswer{Answer: (c). The third law allows no exceptions: the forces in
+an interaction pair are always equal and opposite. What is wildly unequal is
+the \emph{effect}: the same force, by the second law, gives the mosquito an
+acceleration billions of times larger than the truck's. Equal forces, unequal
+consequences --- do not confuse the force with what the force does.}
+\end{checkpoint}
+
 
 \section*{Class Exercise: The Atwood Machine}
 \addcontentsline{toc}{section}{Class Exercise: The Atwood Machine}
+
+In 1784, the Cambridge mathematician George Atwood had a problem: free fall
+is simply too \emph{fast} to study. A stone dropped from shoulder height is
+down in half a second --- hopeless with an eighteenth-century clock. His
+solution was beautifully sly: hang two nearly equal masses over a pulley.
+Gravity still drives the motion, but only the small \emph{difference} between
+the weights does the driving, while the whole combined mass gets accelerated
+--- so the motion is uniform acceleration in slow motion, gentle enough to time
+with a pendulum clock. With his machine, Atwood measured $g$ to within about
+one percent. The apparatus below is the same idea.
 
 Two blocks are connected by a light, inextensible string passing over a small frictionless
 pulley fixed to the ceiling. Block 1 has mass $m_1=6\,\text{kg}$ and Block 2 has mass
@@ -188,11 +283,25 @@ $m_2=4\,\text{kg}$. The system is released from rest. Take $g=10\,\text{m/s}^2$.
   \caption{The Atwood Machine. Block 1 ($m_1=6\,\text{kg}$) descends while Block 2 ($m_2=4\,\text{kg}$) ascends.}
 \end{figure}
 
-\begin{enumerate}[label=(\alph*)]
+\begin{whiteboard}[4.1: The Atwood Machine]
+Before any algebra, as a group, commit to three predictions in one corner of
+your board:
+\begin{enumerate}[label=(P\arabic*), leftmargin=2.8em, itemsep=1pt]
+  \item Will the acceleration be bigger than, smaller than, or equal to $g$? Why?
+  \item Will the tension be bigger than, smaller than, or between the two
+        weights $m_1g=60$\,N and $m_2g=40$\,N? Why?
+  \item If the two masses were \emph{equal}, what would the tension be?
+\end{enumerate}
+Then earn your answers:
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=1pt]
   \item Draw a free body diagram for each block and write down Newton's second law for each.
   \item Hence find the acceleration $a$ of the system and the tension $T$ in the string.
   \item What is the tension in the string if both masses were equal? Comment on your answer physically.
+  \item Check your result against your predictions --- and against Atwood's
+        design goal: show that with $m_1=6$\,kg and $m_2=4$\,kg the
+        acceleration is only $g/5$. Free fall, slowed five-fold.
 \end{enumerate}
+\end{whiteboard}
 
 
 
