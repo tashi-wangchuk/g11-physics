@@ -32,11 +32,18 @@
 
   <!-- ==================== HERO SECTION ==================== -->
   <header id="home" class="relative h-screen overflow-hidden">
-    <!-- Spacetime fabric background: a grid curved by mass, rippled by your cursor -->
-    <canvas id="fabric" class="absolute inset-0 w-full h-full z-0"></canvas>
-
-    <!-- Gradient overlay for text readability -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black z-0 pointer-events-none"></div>
+    <!-- Video Background -->
+    <video 
+      id="bgVideo"
+      class="absolute inset-0 w-full h-full object-cover z-0"
+      muted 
+      playsinline
+      preload="auto"
+      src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_091828_e240eb17-6edc-4129-ad9d-98678e3fd238.mp4">
+    </video>
+    
+    <!-- Premium Gradient Overlay for Readability -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black z-0 pointer-events-none"></div>
 
     <!-- Content Wrapper -->
     <div class="relative z-10 h-full flex flex-col justify-between">
@@ -270,225 +277,52 @@
 
     document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 
-    // ================= Spacetime fabric =================
-    // A perspective-projected grid ("the fabric of spacetime") curved by a
-    // central star and an orbiting planet, with ripples that spread from the
-    // cursor. Pure canvas, no assets, retina-sharp.
-    (function () {
-      const cv = document.getElementById('fabric');
-      const cx = cv.getContext('2d');
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Video Scrubbing with Seeking Guard
+    const video = document.getElementById('bgVideo');
+    let targetTime = 0;
+    let currentTime = 0;
+    let duration = 0;
 
-      let W = 0, H = 0, DPR = 1;
-      function resize() {
-        DPR = Math.min(window.devicePixelRatio || 1, 2);
-        W = cv.clientWidth; H = cv.clientHeight;
-        cv.width = Math.round(W * DPR);
-        cv.height = Math.round(H * DPR);
-        cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
+    video.addEventListener('loadedmetadata', () => {
+      duration = video.duration;
+      updateTargetTime();
+    });
 
-      // ---- camera / projection ----
-      // World: the fabric is the plane y = 0; x is left-right, z is depth.
-      const CAM_H = 7.5;          // camera height above the plane
-      const Z0 = 3.2;             // distance from camera to nearest row
-      const FOV = 780;            // focal length in px (scaled with width below)
-      function horizon() { return H * 0.30; }
-      function focal() { return FOV * Math.max(W / 1440, 0.62); }
-      // project world (x, y, z) -> screen; y is depth *into* the fabric (down)
-      function project(x, y, z) {
-        const zz = z + Z0;
-        const f = focal();
-        return {
-          x: W / 2 + (x * f) / zz,
-          y: horizon() + ((CAM_H * 0.42 + y) * f) / zz,
-          zz: zz
-        };
-      }
-      // invert: screen point -> world point on the undeformed plane (y = 0)
-      function unproject(px, py) {
-        const f = focal();
-        const zz = (CAM_H * 0.42 * f) / Math.max(py - horizon(), 8);
-        return { x: (px - W / 2) * zz / f, z: zz - Z0 };
+    if (video.readyState >= 1) {
+      duration = video.duration;
+      updateTargetTime();
+    }
+
+    function updateTargetTime() {
+      if (!duration) return;
+      let scrollFraction = window.scrollY / window.innerHeight;
+      scrollFraction = Math.max(0, Math.min(1, scrollFraction));
+      targetTime = scrollFraction * duration;
+    }
+
+    window.addEventListener('scroll', updateTargetTime);
+    window.addEventListener('resize', updateTargetTime);
+
+    function scrubLoop() {
+      if (!duration && video.duration) {
+        duration = video.duration;
+        updateTargetTime();
       }
 
-      // ---- the masses ----
-      const star = { x: 0, z: 9.5, A: 3.1, s2: 7.5 };        // central star
-      const planet = { r: 6.4, w: 0.22, A: 0.85, s2: 1.4 };  // orbiting body
-      function planetPos(t) {
-        return {
-          x: star.x + planet.r * Math.cos(planet.w * t),
-          z: star.z + planet.r * 0.62 * Math.sin(planet.w * t)
-        };
-      }
+      if (duration) {
+        // Smooth interpolation
+        currentTime += (targetTime - currentTime) * 0.08;
 
-      // ---- ripples from the cursor ----
-      const ripples = [];   // {x, z, t0}
-      let lastSpawn = 0;
-      function spawn(px, py, big) {
-        const wpt = unproject(px, py);
-        if (wpt.z < -1 || wpt.z > 30 || Math.abs(wpt.x) > 30) return;
-        ripples.push({ x: wpt.x, z: wpt.z, t0: tNow, big: !!big });
-        if (ripples.length > 14) ripples.shift();
-      }
-      // listen on the whole hero (content sits above the canvas)
-      const hero = document.getElementById('home');
-      hero.addEventListener('pointermove', (e) => {
-        const r = cv.getBoundingClientRect();
-        if (tNow - lastSpawn > 0.12) {
-          lastSpawn = tNow;
-          spawn(e.clientX - r.left, e.clientY - r.top, false);
+        // Seeking guard
+        if (!video.seeking && Math.abs(video.currentTime - currentTime) > 0.01) {
+          video.currentTime = currentTime;
         }
-      });
-      hero.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('a, button')) return;   // don't ripple on nav clicks
-        const r = cv.getBoundingClientRect();
-        spawn(e.clientX - r.left, e.clientY - r.top, true);
-      });
-
-      // ---- fabric depth at a world point ----
-      function depth(x, z, t, pp) {
-        // star well (Plummer-softened so it never spikes)
-        let dx = x - star.x, dz = z - star.z;
-        let d2 = dx * dx + dz * dz;
-        let y = star.A * star.s2 / (d2 + star.s2);
-        // planet well
-        dx = x - pp.x; dz = z - pp.z;
-        d2 = dx * dx + dz * dz;
-        y += planet.A * planet.s2 / (d2 + planet.s2);
-        // cursor ripples: an expanding ring pulse that decays
-        for (let i = 0; i < ripples.length; i++) {
-          const rp = ripples[i];
-          const age = t - rp.t0;
-          if (age > 3.2) continue;
-          dx = x - rp.x; dz = z - rp.z;
-          const d = Math.sqrt(dx * dx + dz * dz);
-          const front = 3.4 * age;               // ring speed
-          const g = (d - front) / 0.9;           // ring thickness
-          y += (rp.big ? 0.55 : 0.22) * Math.exp(-g * g) *
-               Math.sin(6.0 * (d - front)) * Math.exp(-age * 1.1);
-        }
-        return y;
       }
 
-      // ---- render ----
-      const COLS = 46, ROWS = 30, XSPAN = 30, ZSPAN = 26;
-      let tNow = 0;
-      function frame(t) {
-        tNow = t;
-        cx.clearRect(0, 0, W, H);
-        const pp = planetPos(t);
+      requestAnimationFrame(scrubLoop);
+    }
 
-        // starfield above the horizon (fixed pseudo-random)
-        cx.fillStyle = 'rgba(255,255,255,0.5)';
-        for (let i = 0; i < 70; i++) {
-          const sx = ((i * 127.3) % 1) * 0 + ((Math.sin(i * 78.233) * 43758.5453) % 1);
-          const px = Math.abs(sx) * W;
-          const py = Math.abs((Math.sin(i * 12.9898) * 24634.6345) % 1) * horizon() * 0.92;
-          const tw = 0.25 + 0.3 * Math.abs(Math.sin(t * 0.7 + i));
-          cx.globalAlpha = tw;
-          cx.fillRect(px, py, 1.3, 1.3);
-        }
-        cx.globalAlpha = 1;
-
-        // compute the grid points
-        const pts = [];
-        for (let r = 0; r <= ROWS; r++) {
-          const z = (r / ROWS) * ZSPAN;
-          const row = [];
-          for (let c = 0; c <= COLS; c++) {
-            const x = (c / COLS - 0.5) * XSPAN;
-            row.push(project(x, depth(x, z, t, pp), z));
-          }
-          pts.push(row);
-        }
-
-        // grid lines — nearer lines brighter, like light falling off with distance
-        cx.lineWidth = 1;
-        for (let r = 0; r <= ROWS; r++) {
-          const a = 0.05 + 0.35 * (r / ROWS);
-          // Neon Cyan grid for horizontal lines
-          cx.strokeStyle = 'rgba(34, 211, 238,' + a.toFixed(3) + ')';
-          cx.beginPath();
-          for (let c = 0; c <= COLS; c++) {
-            const p = pts[r][c];
-            if (c === 0) cx.moveTo(p.x, p.y); else cx.lineTo(p.x, p.y);
-          }
-          cx.stroke();
-        }
-        for (let c = 0; c <= COLS; c++) {
-          for (let r = 0; r <= ROWS; r++) {
-            const a = 0.02 + 0.15 * (r / ROWS);
-            // Neon Indigo grid for vertical lines (fading into the depth)
-            cx.strokeStyle = 'rgba(99, 102, 241,' + a.toFixed(3) + ')';
-            const p = pts[r][c];
-            if (r === 0) {
-              cx.beginPath();
-              cx.moveTo(p.x, p.y);
-            } else {
-              cx.lineTo(p.x, p.y);
-            }
-            if (r === ROWS) cx.stroke();
-          }
-        }
-
-        // --- Schwarzschild Black Hole Lensing ---
-        const sp = project(star.x, depth(star.x, star.z, t, pp) - 0.55, star.z);
-        const sr = 900 / sp.zz;
-
-        // Accretion disk background glow
-        let gGlow = cx.createRadialGradient(sp.x, sp.y, sr * 0.15, sp.x, sp.y, sr * 0.85);
-        gGlow.addColorStop(0, 'rgba(251, 146, 60, 0.45)');  // neon orange
-        gGlow.addColorStop(0.25, 'rgba(249, 115, 22, 0.15)');
-        gGlow.addColorStop(1, 'rgba(249, 115, 22, 0)');
-        cx.fillStyle = gGlow;
-        cx.beginPath(); cx.arc(sp.x, sp.y, sr * 0.85, 0, Math.PI * 2); cx.fill();
-
-        // Einstein Gravitational Lensing Ring (Tilted, slowly rotating)
-        cx.strokeStyle = 'rgba(251, 146, 60, 0.75)';
-        cx.lineWidth = 3;
-        cx.beginPath();
-        cx.ellipse(sp.x, sp.y, sr * 0.42, sr * 0.14, Math.PI / 10 + Math.sin(t * 0.2) * 0.05, 0, Math.PI * 2);
-        cx.stroke();
-
-        // The Event Horizon: Pure Black core shadow
-        cx.fillStyle = '#000000';
-        cx.beginPath();
-        cx.arc(sp.x, sp.y, sr * 0.24, 0, Math.PI * 2);
-        cx.fill();
-
-        // Inner glowing ring right at the edge of the event horizon
-        cx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
-        cx.lineWidth = 1.2;
-        cx.beginPath();
-        cx.arc(sp.x, sp.y, sr * 0.25, 0, Math.PI * 2);
-        cx.stroke();
-
-        // --- The orbiting planet (Neutron Star / Indigo Giant) ---
-        const plp = project(pp.x, depth(pp.x, pp.z, t, pp) - 0.3, pp.z);
-        const pr = 260 / plp.zz;
-        let gPlan = cx.createRadialGradient(plp.x, plp.y, 0, plp.x, plp.y, pr);
-        gPlan.addColorStop(0, 'rgba(129, 140, 248, 0.95)');  // Indigo core
-        gPlan.addColorStop(0.3, 'rgba(99, 102, 241, 0.3)');
-        gPlan.addColorStop(1, 'rgba(99, 102, 241, 0)');
-        cx.fillStyle = gPlan;
-        cx.beginPath(); cx.arc(plp.x, plp.y, pr, 0, Math.PI * 2); cx.fill();
-      }
-
-      if (reduced) {
-        frame(0);                       // one static, already-curved frame
-        window.addEventListener('resize', () => frame(0));
-      } else {
-        let start = null;
-        (function loop(ts) {
-          if (start === null) start = ts;
-          frame((ts - start) / 1000);
-          requestAnimationFrame(loop);
-        })(performance.now());
-      }
-    })();
+    requestAnimationFrame(scrubLoop);
   </script>
 </body>
 </html>
