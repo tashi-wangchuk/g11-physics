@@ -52,7 +52,7 @@
     <!-- ============ section 1 ============ -->
     <section class="idea" id="photoelectric">
       <h2>1 &nbsp;The Photoelectric Effect</h2>
-      <p>When light hits metal, it knocks out electrons. If light were a classical wave, any color could eject electrons if it were bright enough. But Einstein showed that light consists of packets called <b>photons</b>. An electron absorbs one photon: if the photon's energy ($E = hf$) is less than the metal's work function ($\Phi$), no electron escapes, no matter how bright the beam. If $E > \Phi$, electrons fly out instantly.</p>
+      <p>When light hits metal, it knocks out electrons. If light were a classical wave, any color could eject electrons if it were bright enough. But Einstein showed that light consists of packets called <b>photons</b>. An electron absorbs one photon: if the photon's energy (<i>E</i> = <i>hf</i>) is less than the metal's work function (Φ), no electron escapes, no matter how bright the beam. If <i>E</i> &gt; Φ, electrons fly out instantly.</p>
 
       <div class="viz">
         <div class="vhead">Photoelectric Chamber and Energy Plot</div>
@@ -65,7 +65,7 @@
           <label>Wavelength (&lambda;) <input type="range" id="photoLambda" min="200" max="800" step="5" value="400"> <span class="big" id="lambdaNum">400</span> nm</label>
           <label>Intensity <input type="range" id="photoIntensity" min="0" max="100" step="5" value="50"> <span class="big" id="intensityNum">50</span>%</label>
         </div>
-        <div class="note" style="margin-top:0.4rem">Adjust the sliders. Violet/UV light has high energy and knocks out electrons (yellow dots). Red/Infrared light has low energy and ejects nothing, even at 100% intensity! The plot shows kinetic energy $K_{\text{max}}$ versus light frequency $f$.</div>
+        <div class="note" style="margin-top:0.4rem">Adjust the sliders. Violet/UV light has high energy and knocks out electrons (yellow dots). Red/Infrared light has low energy and ejects nothing, even at 100% intensity! The plot shows kinetic energy <i>K</i><sub>max</sub> versus light frequency <i>f</i>.</div>
       </div>
     </section>
 
@@ -82,7 +82,7 @@
           <button id="fireBtn">Fire Single Electron</button>
           <button id="runBtn">Run Continuous</button>
           <button id="clearDiffBtn">Clear Screen</button>
-          <span style="font-family:Helvetica; font-size:0.85rem">Total Electrons: <span class="big" id="electronCount">0</span></span>
+          <span style="font-family:Inter, sans-serif; font-size:0.85rem">Total Electrons: <span class="big" id="electronCount">0</span></span>
         </div>
         <div class="note" style="margin-top:0.4rem">Click "Fire Single Electron" to see individual hits. Click "Run Continuous" to watch thousands of electrons build up. Notice how an ordered wave interference pattern emerges from completely random individual particle hits!</div>
       </div>
@@ -96,13 +96,14 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
 /* ---------- SECTION 1: PHOTOELECTRIC EFFECT ---------- */
 (function() {
   const chCanvas = document.getElementById('photochamberCv');
-  const chCtx = chCanvas.getContext('2d');
+  const chCtx = hiDPI(chCanvas);
   const plCanvas = document.getElementById('energyplotCv');
-  const plCtx = plCanvas.getContext('2d');
+  const plCtx = hiDPI(plCanvas);
 
   const lambdaSlider = document.getElementById('photoLambda');
   const intensitySlider = document.getElementById('photoIntensity');
@@ -163,7 +164,7 @@
   }
 
   function drawChamber(p) {
-    chCtx.clearRect(0, 0, chCanvas.width, chCanvas.height);
+    chCtx.clearRect(0, 0, chCanvas.lw, chCanvas.lh);
 
     // Draw plates
     chCtx.fillStyle = '#7f8c8d';
@@ -173,7 +174,7 @@
 
     // Labels
     chCtx.fillStyle = '#fff';
-    chCtx.font = '9px Helvetica';
+    chCtx.font = '9px Inter';
     chCtx.fillText('Emitter (Cesium)', 45, 205);
     chCtx.fillText('Collector', 245, 205);
 
@@ -206,7 +207,7 @@
   }
 
   function drawPlot(p) {
-    plCtx.clearRect(0, 0, plCanvas.width, plCanvas.height);
+    plCtx.clearRect(0, 0, plCanvas.lw, plCanvas.lh);
 
     let ox = 40, oy = 180;
     let graphW = 220, graphH = 140;
@@ -221,7 +222,7 @@
 
     // Axis labels
     plCtx.fillStyle = '#fff';
-    plCtx.font = '9px Helvetica';
+    plCtx.font = '9px Inter';
     plCtx.fillText('f (10¹⁴ Hz)', ox + graphW - 50, oy + 18);
     plCtx.fillText('K_max (eV)', ox - 32, oy - graphH + 10);
 
@@ -273,7 +274,7 @@
     plCtx.fill();
 
     plCtx.fillStyle = '#fff';
-    plCtx.font = '10px Helvetica';
+    plCtx.font = '10px Inter';
     plCtx.fillText(`hf = ${p.photonEnergy.toFixed(2)} eV`, ox + 15, oy - graphH + 30);
     plCtx.fillText(`K = ${currentKE.toFixed(2)} eV`, ox + 15, oy - graphH + 45);
   }
@@ -284,7 +285,7 @@
 /* ---------- SECTION 2: ELECTRON DOUBLE-SLIT ---------- */
 (function() {
   const canvas = document.getElementById('diffractionCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const fireBtn = document.getElementById('fireBtn');
   const runBtn = document.getElementById('runBtn');
   const clearBtn = document.getElementById('clearDiffBtn');
@@ -296,24 +297,24 @@
   let animationId = null;
 
   let sx = 160;
-  let sy1 = canvas.height / 2 - 25;
-  let sy2 = canvas.height / 2 + 25;
-  let screenX = canvas.width - 60;
+  let sy1 = canvas.lh / 2 - 25;
+  let sy2 = canvas.lh / 2 + 25;
+  let screenX = canvas.lw - 60;
 
   function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Draw slit barrier
     ctx.fillStyle = '#18181b';
     ctx.fillRect(sx - 4, 0, 8, sy1 - 4);
     ctx.fillRect(sx - 4, sy1 + 4, 8, sy2 - sy1 - 8);
-    ctx.fillRect(sx - 4, sy2 + 4, 8, canvas.height - sy2 - 4);
+    ctx.fillRect(sx - 4, sy2 + 4, 8, canvas.lh - sy2 - 4);
 
     // Draw detector screen
     ctx.strokeStyle = '#fff';
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.moveTo(screenX, 0); ctx.lineTo(screenX, canvas.height);
+    ctx.moveTo(screenX, 0); ctx.lineTo(screenX, canvas.lh);
     ctx.stroke();
 
     // Move current firing electrons
@@ -361,7 +362,7 @@
     let targetY = 0;
 
     while (true) {
-      let yTry = Math.random() * canvas.height;
+      let yTry = Math.random() * canvas.lh;
       let r1 = Math.hypot(L, yTry - sy1);
       let r2 = Math.hypot(L, yTry - sy2);
       let diff = Math.abs(r1 - r2);
@@ -375,7 +376,7 @@
     }
 
     // Launch trajectory starting at gun x=20, aiming through one of the slits randomly
-    let startY = canvas.height / 2;
+    let startY = canvas.lh / 2;
     let chosenSlitY = Math.random() < 0.5 ? sy1 : sy2;
     
     // We animate a straight path from gun through slit to target

@@ -52,7 +52,7 @@
     <!-- ============ section 1 ============ -->
     <section class="idea" id="fermat">
       <h2>1 &nbsp;Fermat's Principle of Least Time</h2>
-      <p>How does light know to bend at a boundary? Pierre de Fermat solved this in 1662: light takes the path that takes the <b>least time</b>. Since light travels faster in air ($n_1=1$) than in water ($n_2=1.5$), it spends more distance in the fast medium and less in the slow one. The path that minimizes total time is bent, and the math yields Snell's Law ($n_1\sin\theta_1 = n_2\sin\theta_2$) exactly.</p>
+      <p>How does light know to bend at a boundary? Pierre de Fermat solved this in 1662: light takes the path that takes the <b>least time</b>. Since light travels faster in air (<i>n</i>₁ = 1) than in water (<i>n</i>₂ = 1.5), it spends more distance in the fast medium and less in the slow one. The path that minimizes total time is bent, and the math yields Snell's Law (<i>n</i>₁ sin θ₁ = <i>n</i>₂ sin θ₂) exactly.</p>
 
       <div class="viz">
         <div class="vhead">Fermat Refraction Sandbox (Drag entry point x)</div>
@@ -60,15 +60,15 @@
         
         <div class="controls">
           <label>Entry Point (x) <input type="range" id="xSlider" min="100" max="580" step="1" value="250"></label>
-          <span style="font-family:Helvetica; font-size:0.85rem">Total Time: <span class="big" id="timeVal" style="color:var(--red)">0.00</span> &mu;s</span>
+          <span style="font-family:Inter, sans-serif; font-size:0.85rem">Total Time: <span class="big" id="timeVal" style="color:var(--red)">0.00</span> &mu;s</span>
         </div>
 
         <div class="controls" style="justify-content:space-around; font-size:0.82rem">
-          <span style="color:#D35400">n<sub>1</sub> sin &theta;<sub>1</sub> = <span class="big" id="nSin1">0.00</span></span>
+          <span style="color:#f97316">n<sub>1</sub> sin &theta;<sub>1</sub> = <span class="big" id="nSin1">0.00</span></span>
           <span style="color:var(--blue)">n<sub>2</sub> sin &theta;<sub>2</sub> = <span class="big" id="nSin2">0.00</span></span>
           <span id="opticsVerdict" style="font-weight:bold;"></span>
         </div>
-        <div class="note" style="margin-top:0.4rem">Point A is a lifeguard on the sand; Point B is a swimmer in water. Drag the entry slider to change the path. Notice that the travel time is minimized exactly when the two values of $n\sin\theta$ align!</div>
+        <div class="note" style="margin-top:0.4rem">Point A is a lifeguard on the sand; Point B is a swimmer in water. Drag the entry slider to change the path. Notice that the travel time is minimized exactly when the two values of <i>n</i> sin θ align!</div>
       </div>
     </section>
 
@@ -97,11 +97,12 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
 /* ---------- SECTION 1: FERMAT REFRACTION ---------- */
 (function() {
   const canvas = document.getElementById('fermatCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const xSlider = document.getElementById('xSlider');
   const timeVal = document.getElementById('timeVal');
   const nSin1El = document.getElementById('nSin1');
@@ -121,18 +122,18 @@
   xSlider.addEventListener('input', draw);
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Sand (top half)
     ctx.fillStyle = 'rgba(244, 208, 63, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, midY);
+    ctx.fillRect(0, 0, canvas.lw, midY);
     ctx.fillStyle = '#a1a1aa';
-    ctx.font = '10px Helvetica';
+    ctx.font = '10px Inter';
     ctx.fillText('Sand (Air, n₁ = 1.0)', 15, 20);
 
     // Water (bottom half)
     ctx.fillStyle = 'rgba(52, 152, 219, 0.15)';
-    ctx.fillRect(0, midY, canvas.width, canvas.height - midY);
+    ctx.fillRect(0, midY, canvas.lw, canvas.lh - midY);
     ctx.fillStyle = '#a1a1aa';
     ctx.fillText('Water (n₂ = 1.5)', 15, midY + 20);
 
@@ -141,7 +142,7 @@
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, midY);
-    ctx.lineTo(canvas.width, midY);
+    ctx.lineTo(canvas.lw, midY);
     ctx.stroke();
 
     // Current Entry point x
@@ -180,7 +181,7 @@
 
     // Text labels
     ctx.fillStyle = 'var(--ink)';
-    ctx.font = 'bold 12px Helvetica';
+    ctx.font = 'bold 12px Inter';
     ctx.fillText('A', A.x - 14, A.y - 4);
     ctx.fillText('B', B.x + 10, B.y + 4);
 
@@ -218,7 +219,7 @@
 /* ---------- SECTION 2: WAVE INTERFERENCE ---------- */
 (function() {
   const canvas = document.getElementById('waveCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const lambdaSlider = document.getElementById('waveLambda');
   const spacingSlider = document.getElementById('waveSpacing');
 
@@ -230,17 +231,17 @@
     let lambda = parseFloat(lambdaSlider.value);
     let d = parseFloat(spacingSlider.value);
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Slit coordinates
-    let sy1 = canvas.height / 2 - d / 2;
-    let sy2 = canvas.height / 2 + d / 2;
+    let sy1 = canvas.lh / 2 - d / 2;
+    let sy2 = canvas.lh / 2 + d / 2;
     let sx = 140;
 
     // Draw wave field on canvas
     // Because full pixel-by-pixel wave shading is extremely expensive, we draw wave crest lines!
     // A crest occurs where distance from source is an integer multiple of wavelength + time offset
-    let maxDist = canvas.width - sx - 50;
+    let maxDist = canvas.lw - sx - 50;
 
     ctx.strokeStyle = '#ffffff22';
     ctx.lineWidth = 1;
@@ -249,11 +250,11 @@
     ctx.fillStyle = '#18181b';
     ctx.fillRect(sx - 8, 0, 8, sy1 - 4);
     ctx.fillRect(sx - 8, sy1 + 4, 8, sy2 - sy1 - 8);
-    ctx.fillRect(sx - 8, sy2 + 4, 8, canvas.height - sy2 - 4);
+    ctx.fillRect(sx - 8, sy2 + 4, 8, canvas.lh - sy2 - 4);
 
     // Draw wave rings expanding from slits
     ctx.lineWidth = 2.5;
-    let screenX = canvas.width - 50;
+    let screenX = canvas.lw - 50;
 
     // We draw circles representing wave crests
     for (let r = (time * 2) % lambda; r < maxDist; r += lambda) {
@@ -272,12 +273,12 @@
     // Draw interference lines on screen (right side)
     // The screen is a vertical bar at x = screenX
     ctx.fillStyle = '#fff';
-    ctx.fillRect(screenX, 0, 15, canvas.height);
-    ctx.strokeRect(screenX, 0, 15, canvas.height);
+    ctx.fillRect(screenX, 0, 15, canvas.lh);
+    ctx.strokeRect(screenX, 0, 15, canvas.lh);
 
     // Render bright/dark gradient on screen
     let stripeH = 2;
-    for (let y = 0; y < canvas.height; y += stripeH) {
+    for (let y = 0; y < canvas.lh; y += stripeH) {
       // distance from y to slits
       let r1 = Math.hypot(screenX - sx, y - sy1);
       let r2 = Math.hypot(screenX - sx, y - sy2);
@@ -299,7 +300,7 @@
 
     // Screen labels
     ctx.fillStyle = 'var(--muted)';
-    ctx.font = '10px Helvetica';
+    ctx.font = '10px Inter';
     ctx.fillText('Screen', screenX - 5, 20);
 
     requestAnimationFrame(tick);

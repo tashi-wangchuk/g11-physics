@@ -57,13 +57,13 @@
     <!-- ============ section 1 ============ -->
     <section class="idea" id="uncertainty">
       <h2>1 &nbsp;Reaction Time &amp; Normal Distribution</h2>
-      <p>Every measurement has uncertainty. If you time a pendulum, your reaction time adds random fluctuations. By repeating the measurement, we see a bell curve (normal distribution) form. The average (mean) is our best estimate. The standard deviation ($\sigma$) measures clicking precision, and the standard error of the mean ($\sigma_m = \sigma / \sqrt{N}$) measures how certain we are of that average.</p>
+      <p>Every measurement has uncertainty. If you time a pendulum, your reaction time adds random fluctuations. By repeating the measurement, we see a bell curve (normal distribution) form. The average (mean) is our best estimate. The standard deviation (σ) measures clicking precision, and the standard error of the mean (σ<sub>m</sub> = σ/√N) measures how certain we are of that average.</p>
 
       <div class="viz">
         <div class="vhead">Time the Pendulum (Click at the right-most peak)</div>
         <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:1rem">
           <canvas id="pendulumCv" width="220" height="190" style="border: 1px solid var(--paper-line); background:#fbf9f0; border-radius:4px;"></canvas>
-          <div style="flex:1; min-width:200px; display:flex; flex-direction:column; gap:0.5rem; font-family:Helvetica; font-size:0.85rem">
+          <div style="flex:1; min-width:200px; display:flex; flex-direction:column; gap:0.5rem; font-family:Inter, sans-serif; font-size:0.85rem">
             <button id="timerBtn" style="padding:0.7rem; font-weight:bold; font-size:0.95rem; background:var(--blue); color:white; border:none; border-radius:4px;">CLICK AT BOTTOM</button>
             <button id="clearTimerBtn">Reset Measurements</button>
             <span>Trials (N): <span class="big" id="nVal">0</span></span>
@@ -113,11 +113,12 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
 /* ---------- SECTION 1: PENDULUM CLICK TIMER ---------- */
 (function() {
   const canvas = document.getElementById('pendulumCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const timerBtn = document.getElementById('timerBtn');
   const clearBtn = document.getElementById('clearTimerBtn');
 
@@ -142,7 +143,7 @@
 
     theta = 0.5 * Math.sin(omega * (timestamp / 1000));
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     ctx.strokeStyle = '#fff';
     ctx.lineWidth = 3;
@@ -252,12 +253,12 @@
     for (let tickVal = 1.4; tickVal <= 2.6; tickVal += 0.2) {
       let tx = scaleX(tickVal);
       s += `<line x1="${tx}" y1="${H - margin.bottom}" x2="${tx}" y2="${H - margin.bottom + 5}" stroke="#fff"/>`;
-      s += `<text x="${tx}" y="${H - margin.bottom + 18}" font-size="10" font-family="Helvetica" text-anchor="middle" fill="#fff">${tickVal.toFixed(1)}s</text>`;
+      s += `<text x="${tx}" y="${H - margin.bottom + 18}" font-size="10" font-family="Inter" text-anchor="middle" fill="#fff">${tickVal.toFixed(1)}s</text>`;
     }
     if (measurements.length > 0) {
       let mx = scaleX(mean);
       s += `<line x1="${mx}" y1="${margin.top - 10}" x2="${mx}" y2="${H - margin.bottom}" stroke="var(--red)" stroke-width="2"/>`;
-      s += `<text x="${mx}" y="${margin.top - 14}" font-size="11" font-family="Helvetica" font-weight="bold" fill="var(--red)" text-anchor="middle">mean: ${mean.toFixed(2)}s</text>`;
+      s += `<text x="${mx}" y="${margin.top - 14}" font-size="11" font-family="Inter" font-weight="bold" fill="var(--red)" text-anchor="middle">mean: ${mean.toFixed(2)}s</text>`;
     }
 
     histSvg.innerHTML = s;
@@ -267,7 +268,7 @@
 /* ---------- SECTION 2: LINE FITTER ---------- */
 (function() {
   const canvas = document.getElementById('fitCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const slopeSlider = document.getElementById('fitSlope');
   const interceptSlider = document.getElementById('fitIntercept');
   const autoBtn = document.getElementById('autoFitBtn');
@@ -278,8 +279,8 @@
   const eqInterceptEl = document.getElementById('eqIntercept');
 
   let points = [];
-  const cx0 = canvas.width / 2;
-  const cy0 = canvas.height / 2;
+  const cx0 = canvas.lw / 2;
+  const cy0 = canvas.lh / 2;
 
   // Add initial points to start with
   points = [
@@ -293,8 +294,8 @@
     // Avoid double trigger from click if dragging sliders
     if (e.target !== canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
     // Coordinate system centered on canvas
     let px = mx - cx0;
@@ -359,24 +360,24 @@
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Draw axes
     ctx.strokeStyle = '#ffffff30';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(0, cy0); ctx.lineTo(canvas.width, cy0);
-    ctx.moveTo(cx0, 0); ctx.lineTo(cx0, canvas.height);
+    ctx.moveTo(0, cy0); ctx.lineTo(canvas.lw, cy0);
+    ctx.moveTo(cx0, 0); ctx.lineTo(cx0, canvas.lh);
     ctx.stroke();
 
     // Draw grid
     ctx.strokeStyle = '#ffffff08';
     ctx.lineWidth = 1;
-    for(let x=0; x<canvas.width; x+=30) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    for(let x=0; x<canvas.lw; x+=30) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.lh); ctx.stroke();
     }
-    for(let y=0; y<canvas.height; y+=30) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    for(let y=0; y<canvas.lh; y+=30) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.lw, y); ctx.stroke();
     }
 
     let m = parseFloat(slopeSlider.value);

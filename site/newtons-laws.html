@@ -147,10 +147,11 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
   /* ---------- section 1: Galileo's ramps ---------- */
   (function () {
-    var cv = document.getElementById('rampcv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('rampcv'), cx = hiDPI(cv);
     var sl = document.getElementById('rang');
     var G = 10, H = 0.8;                     // start height, m
     var U = 80;                              // px per m
@@ -168,18 +169,18 @@
     }
 
     function draw() {
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       document.getElementById('rangv').textContent = sl.value;
       var a = ang();
       // dashed start-height line
       cx.strokeStyle = 'var(--muted)'; cx.setLineDash([6, 6]); cx.lineWidth = 1.2;
-      cx.beginPath(); cx.moveTo(0, vy0 - H * U); cx.lineTo(cv.width, vy0 - H * U); cx.stroke();
+      cx.beginPath(); cx.moveTo(0, vy0 - H * U); cx.lineTo(cv.lw, vy0 - H * U); cx.stroke();
       cx.setLineDash([]);
-      cx.font = '12px Helvetica'; cx.fillStyle = '#6a5f45';
+      cx.font = '12px Inter'; cx.fillStyle = '#a1a1aa';
       cx.fillText('starting height', 8, vy0 - H * U - 6);
       // left incline
       var top = posOf('L', LA);
-      cx.strokeStyle = '#333'; cx.lineWidth = 3;
+      cx.strokeStyle = '#e4e4e7'; cx.lineWidth = 3;
       cx.beginPath(); cx.moveTo(top.x, top.y); cx.lineTo(vx0, vy0);
       // right incline / flat
       var rlen = a > 0.001 ? (H / Math.sin(a)) * 1.15 : 6.2;
@@ -188,12 +189,12 @@
       // ball, lifted perpendicular off the track
       var p = posOf(seg, s);
       var lift = seg === 'L' ? Math.cos(LEFT_ANG) : Math.cos(ang());
-      cx.fillStyle = '#C0392B';
+      cx.fillStyle = '#ef4444';
       cx.beginPath();
       cx.arc(p.x, p.y - 11 * lift - 1, 10, 0, 7);
       cx.fill();
       if (stoppedAtTop) {
-        cx.font = 'bold 13px Helvetica'; cx.fillStyle = '#1E8449';
+        cx.font = 'bold 13px Inter'; cx.fillStyle = '#10b981';
         cx.fillText('same height!', p.x - 30, p.y - 24);
       }
     }
@@ -226,7 +227,7 @@
               'stopped at its starting height, after rolling ' + s.toFixed(1) + ' m along the ramp';
           } else {
             s = v0 * tau - 0.5 * a2 * tau * tau;
-            if (posOf('R', s).x > cv.width + 20) {
+            if (posOf('R', s).x > cv.lw + 20) {
               running = false;
               document.getElementById('rampmsg').textContent =
                 'so shallow it left the screen still climbing — it would stop after ' +
@@ -235,7 +236,7 @@
           }
         } else {
           s = v0 * tau;                        // flat: constant velocity forever
-          if (posOf('R', s).x > cv.width + 20) {
+          if (posOf('R', s).x > cv.lw + 20) {
             document.getElementById('rampmsg').textContent =
               'flat track: nothing stops it — it just keeps going';
             running = false;
@@ -259,13 +260,13 @@
 
   /* ---------- section 2: equal force, unequal effect ---------- */
   (function () {
-    var cv = document.getElementById('f2cv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('f2cv'), cx = hiDPI(cv);
     var sl = document.getElementById('mratio');
     var F = 100;
     function draw() {
       var ratio = parseFloat(sl.value);
       document.getElementById('mrv').textContent = ratio.toFixed(0);
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       var rows = [
         { label: 'heavy body:  m = ' + (ratio).toFixed(0) + ' kg', m: ratio, y: 60, size: 30 + 26 * Math.log10(ratio) / 3 },
         { label: 'light body:  m = 1 kg', m: 1, y: 165, size: 26 }
@@ -276,19 +277,19 @@
         var s = r.size;
         cx.fillRect(70, r.y - s / 2, s, s); cx.strokeRect(70, r.y - s / 2, s, s);
         // force arrow — SAME length for both
-        cx.strokeStyle = '#C0392B'; cx.fillStyle = '#C0392B'; cx.lineWidth = 5;
+        cx.strokeStyle = '#ef4444'; cx.fillStyle = '#ef4444'; cx.lineWidth = 5;
         cx.beginPath(); cx.moveTo(18, r.y); cx.lineTo(58, r.y); cx.stroke();
         cx.beginPath(); cx.moveTo(68, r.y); cx.lineTo(54, r.y - 7); cx.lineTo(54, r.y + 7); cx.fill();
-        cx.font = 'bold 12px Helvetica';
+        cx.font = 'bold 12px Inter';
         cx.fillText('F = 100 N', 6, r.y - 14);
         // acceleration bar
         var acc = F / r.m;
         var barw = Math.min(430, 4.3 * acc);
-        cx.fillStyle = '#1E8449';
+        cx.fillStyle = '#10b981';
         cx.fillRect(70 + s + 26, r.y - 8, Math.max(barw, 2), 16);
-        cx.fillStyle = '#111'; cx.font = '12px Helvetica';
+        cx.fillStyle = '#fafafa'; cx.font = '12px Inter';
         cx.fillText('a = ' + (acc >= 10 ? acc.toFixed(0) : acc.toFixed(1)) + ' m/s²', 70 + s + 30 + Math.max(barw, 2), r.y + 4);
-        cx.fillStyle = '#555';
+        cx.fillStyle = '#a1a1aa';
         cx.fillText(r.label, 70, r.y - s / 2 - 8);
       });
     }
@@ -298,7 +299,7 @@
 
   /* ---------- section 3: Atwood machine ---------- */
   (function () {
-    var cv = document.getElementById('atcv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('atcv'), cx = hiDPI(cv);
     var s1 = document.getElementById('m1'), s2 = document.getElementById('m2');
     var G = 10;
     var t = 0, running = false, lastTs = null;
@@ -316,7 +317,7 @@
       document.getElementById('m2v').textContent = v.m2.toFixed(1);
       document.getElementById('atacc').textContent = v.a.toFixed(2) + ' m/s²' + (Math.abs(v.a) < 1e-9 ? ' (balanced)' : '');
       document.getElementById('atten').textContent = v.T.toFixed(1) + ' N';
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       // ceiling
       cx.strokeStyle = '#fff'; cx.lineWidth = 2;
       cx.beginPath(); cx.moveTo(px - 80, 12); cx.lineTo(px + 80, 12); cx.stroke();
@@ -336,11 +337,11 @@
         var s = 26 + m * 3.4;
         cx.fillStyle = color; cx.strokeStyle = '#fff'; cx.lineWidth = 2;
         cx.fillRect(x - s / 2, y, s, s); cx.strokeRect(x - s / 2, y, s, s);
-        cx.fillStyle = '#fff'; cx.font = 'bold 12px Helvetica';
+        cx.fillStyle = '#fff'; cx.font = 'bold 12px Inter';
         cx.fillText(label, x - 20, y + s + 15);
       }
-      block(px - R, y1, v.m1, '#2E86C155', 'm₁ = ' + v.m1.toFixed(1) + ' kg');
-      block(px + R, y2, v.m2, '#C0392B55', 'm₂ = ' + v.m2.toFixed(1) + ' kg');
+      block(px - R, y1, v.m1, '#3b82f655', 'm₁ = ' + v.m1.toFixed(1) + ' kg');
+      block(px + R, y2, v.m2, '#ef444455', 'm₂ = ' + v.m2.toFixed(1) + ' kg');
     }
     function tick(ts) {
       if (!running) return;

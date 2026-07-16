@@ -70,7 +70,7 @@
     <!-- ============ section 2 ============ -->
     <section class="idea" id="circuits">
       <h2>2 &nbsp;Circuits &amp; Ohm's Law</h2>
-      <p>Ohm's Law ($V = IR$) dictates how voltage from a battery pumps current through resistors. When resistors are connected in series, the current has only one path, increasing total resistance. In parallel, current splits across multiple paths, reducing equivalent resistance and allowing each bulb to burn at full battery voltage.</p>
+      <p>Ohm's Law (<i>V</i> = <i>IR</i>) dictates how voltage from a battery pumps current through resistors. When resistors are connected in series, the current has only one path, increasing total resistance. In parallel, current splits across multiple paths, reducing equivalent resistance and allowing each bulb to burn at full battery voltage.</p>
 
       <div class="viz">
         <div class="vhead">Circuit Simulator (Toggle Series vs Parallel)</div>
@@ -91,7 +91,7 @@
           <span>Current (I): <span class="big" id="currentVal">0.75</span> A</span>
           <span>Power (P): <span class="big" id="powerVal">6.75</span> W</span>
         </div>
-        <div class="note" style="margin-top:0.4rem">Adjust the voltage slider or individual bulb resistances. The speed of the moving yellow dots (electrons) is proportional to the electrical current. Lightbulb brightness reflects power consumed ($P = I^2 R$).</div>
+        <div class="note" style="margin-top:0.4rem">Adjust the voltage slider or individual bulb resistances. The speed of the moving yellow dots (electrons) is proportional to the electrical current. Lightbulb brightness reflects power consumed (<i>P</i> = <i>I</i>²<i>R</i>).</div>
       </div>
     </section>
 
@@ -103,11 +103,12 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
 /* ---------- SECTION 1: ELECTRIC FIELD SANDBOX ---------- */
 (function() {
   const canvas = document.getElementById('fieldCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const addPos = document.getElementById('addPosBtn');
   const addNeg = document.getElementById('addNegBtn');
   const clearBtn = document.getElementById('clearChargesBtn');
@@ -122,8 +123,8 @@
   // Mouse interaction
   canvas.addEventListener('pointerdown', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
     // Click collision
     for(let i = 0; i < charges.length; i++) {
@@ -137,11 +138,11 @@
   canvas.addEventListener('pointermove', (e) => {
     if (dragIdx === null) return;
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
-    charges[dragIdx].x = Math.max(15, Math.min(canvas.width - 15, mx));
-    charges[dragIdx].y = Math.max(15, Math.min(canvas.height - 15, my));
+    charges[dragIdx].x = Math.max(15, Math.min(canvas.lw - 15, mx));
+    charges[dragIdx].y = Math.max(15, Math.min(canvas.lh - 15, my));
     draw();
   });
 
@@ -196,12 +197,12 @@
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Draw field vector grid
     let step = 20;
-    for (let x = step/2; x < canvas.width; x += step) {
-      for (let y = step/2; y < canvas.height; y += step) {
+    for (let x = step/2; x < canvas.lw; x += step) {
+      for (let y = step/2; y < canvas.lh; y += step) {
         // Calculate net field E vector at (x,y)
         let ex = 0, ey = 0;
         charges.forEach(ch => {
@@ -233,7 +234,7 @@
 
       // Sign symbol
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 16px Helvetica';
+      ctx.font = 'bold 16px Inter';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(ch.q > 0 ? '+' : '-', ch.x, ch.y);
@@ -246,7 +247,7 @@
 /* ---------- SECTION 2: CIRCUIT SIMULATOR ---------- */
 (function() {
   const canvas = document.getElementById('circuitCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const radioSeries = document.getElementById('typeSeries');
   const radioParallel = document.getElementById('typeParallel');
   const vSlider = document.getElementById('voltageSlider');
@@ -314,7 +315,7 @@
 
     // Label
     ctx.fillStyle = 'var(--ink)';
-    ctx.font = '10px Helvetica';
+    ctx.font = '10px Inter';
     ctx.textAlign = 'center';
     ctx.fillText(`${label} (${R}\u2126)`, x, y + 28);
   }
@@ -343,7 +344,7 @@
     curEl.textContent = params.I.toFixed(2);
     powEl.textContent = params.P.toFixed(2);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Draw grid
     ctx.strokeStyle = '#fff';
@@ -372,11 +373,11 @@
     ctx.strokeRect(85, 80, 30, 40);
     // plus-minus line labels
     ctx.fillStyle = 'var(--ink)';
-    ctx.font = 'bold 12px Helvetica';
+    ctx.font = 'bold 12px Inter';
     ctx.textAlign = 'center';
     ctx.fillText('+', 100, 95);
     ctx.fillText('-', 100, 115);
-    ctx.font = '10px Helvetica';
+    ctx.font = '10px Inter';
     ctx.fillText(`${params.V}V`, 100, 134);
 
     // Draw Components and compute electron path

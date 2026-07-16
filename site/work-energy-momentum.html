@@ -52,7 +52,7 @@
     <!-- ============ section 1 ============ -->
     <section class="idea" id="collisions">
       <h2>1 &nbsp;2D Collisions &amp; Momentum</h2>
-      <p>When two objects collide in a closed system, the net external force is zero. This means their total momentum vector $\vec{P} = m_1\vec{v}_1 + m_2\vec{v}_2$ is conserved. Whether they bounce elastically or stick together inelastically, the momentum before and after the crash is identical. However, kinetic energy behaves differently: it is conserved in elastic collisions, but dissipates into heat and deformation in inelastic ones.</p>
+      <p>When two objects collide in a closed system, the net external force is zero. This means their total momentum vector <b>P</b> = m₁<b>v</b>₁ + m₂<b>v</b>₂ is conserved. Whether they bounce elastically or stick together inelastically, the momentum before and after the crash is identical. However, kinetic energy behaves differently: it is conserved in elastic collisions, but dissipates into heat and deformation in inelastic ones.</p>
 
       <div class="viz">
         <div class="vhead">Interactive 2D Collision Vector Sandbox</div>
@@ -107,11 +107,12 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
 /* ---------- SECTION 1: 2D COLLISION SANDBOX ---------- */
 (function() {
   const canvas = document.getElementById('collisionCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const eSlider = document.getElementById('coefRest');
   const mSlider = document.getElementById('massRatio');
   const playBtn = document.getElementById('playBtn');
@@ -125,8 +126,8 @@
   let t = 0;
 
   // Ball states
-  let bA = { x: 220, y: 160, vx: 3.5, vy: 0, r: 20, m: 1, color: '#2E86C1' };
-  let bB = { x: 440, y: 160, vx: -2.0, vy: 1.0, r: 20, m: 1, color: '#C0392B' };
+  let bA = { x: 220, y: 160, vx: 3.5, vy: 0, r: 20, m: 1, color: '#3b82f6' };
+  let bB = { x: 440, y: 160, vx: -2.0, vy: 1.0, r: 20, m: 1, color: '#ef4444' };
   
   // Save initial states to reset
   let bA_init = JSON.parse(JSON.stringify(bA));
@@ -175,8 +176,8 @@
   canvas.addEventListener('pointerdown', (e) => {
     if (state !== 'setup') return;
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
     // Check hit on A arrow tip
     let ax = bA.x + bA.vx * 30, ay = bA.y + bA.vy * 30;
@@ -201,12 +202,12 @@
 
   canvas.addEventListener('pointermove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
     if (dragBall) {
-      dragBall.x = Math.max(50, Math.min(canvas.width - 50, mx));
-      dragBall.y = Math.max(50, Math.min(canvas.height - 50, my));
+      dragBall.x = Math.max(50, Math.min(canvas.lw - 50, mx));
+      dragBall.y = Math.max(50, Math.min(canvas.lh - 50, my));
       bA_init = JSON.parse(JSON.stringify(bA));
       bB_init = JSON.parse(JSON.stringify(bB));
       draw();
@@ -261,16 +262,16 @@
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Draw background grid
     ctx.strokeStyle = '#ffffff06';
     ctx.lineWidth = 1;
-    for(let x=0; x<canvas.width; x+=30) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    for(let x=0; x<canvas.lw; x+=30) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.lh); ctx.stroke();
     }
-    for(let y=0; y<canvas.height; y+=30) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    for(let y=0; y<canvas.lh; y+=30) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.lw, y); ctx.stroke();
     }
 
     // Draw balls
@@ -286,7 +287,7 @@
 
       // Mass label
       ctx.fillStyle = '#fff';
-      ctx.font = '12px Helvetica';
+      ctx.font = '12px Inter';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(b.m.toFixed(1) + ' kg', b.x, b.y);
@@ -309,8 +310,8 @@
 
     // Wall bounce
     [bA, bB].forEach(b => {
-      if (b.x < b.r || b.x > canvas.width - b.r) b.vx *= -1;
-      if (b.y < b.r || b.y > canvas.height - b.r) b.vy *= -1;
+      if (b.x < b.r || b.x > canvas.lw - b.r) b.vx *= -1;
+      if (b.y < b.r || b.y > canvas.lh - b.r) b.vy *= -1;
     });
 
     // Check collision
@@ -394,7 +395,7 @@
 /* ---------- SECTION 2: ENERGY ROLLER COASTER ---------- */
 (function() {
   const canvas = document.getElementById('coasterCv');
-  const ctx = canvas.getContext('2d');
+  const ctx = hiDPI(canvas);
   const frictionSlider = document.getElementById('frictionCoeff');
   const releaseBtn = document.getElementById('coasterPlayBtn');
   const resetBtn = document.getElementById('coasterResetBtn');
@@ -484,8 +485,8 @@
 
   canvas.addEventListener('pointerdown', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
     // Check hit on control points
     for (let i = 0; i < track.length; i++) {
@@ -503,12 +504,12 @@
 
   canvas.addEventListener('pointermove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
-    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const mx = (e.clientX - rect.left) * (canvas.lw / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.lh / rect.height);
 
     if (dragPt !== null) {
-      track[dragPt].x = Math.max(20, Math.min(canvas.width - 20, mx));
-      track[dragPt].y = Math.max(20, Math.min(canvas.height - 20, my));
+      track[dragPt].x = Math.max(20, Math.min(canvas.lw - 20, mx));
+      track[dragPt].y = Math.max(20, Math.min(canvas.lh - 20, my));
       precomputePath();
       // Snap cart to closest path s
       if (state === 'ready') {
@@ -596,16 +597,16 @@
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.lw, canvas.lh);
 
     // Draw background grid lines
     ctx.strokeStyle = '#ffffff08';
     ctx.lineWidth = 1;
-    for(let x=0; x<canvas.width; x+=30) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    for(let x=0; x<canvas.lw; x+=30) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.lh); ctx.stroke();
     }
-    for(let y=0; y<canvas.height; y+=30) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    for(let y=0; y<canvas.lh; y+=30) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.lw, y); ctx.stroke();
     }
 
     // Draw track guide
@@ -625,7 +626,7 @@
     for (let i = 0; i < track.length; i++) {
       ctx.beginPath();
       ctx.moveTo(track[i].x, track[i].y);
-      ctx.lineTo(track[i].x, canvas.height - 20);
+      ctx.lineTo(track[i].x, canvas.lh - 20);
       ctx.stroke();
     }
 
@@ -642,7 +643,7 @@
 
     // Draw ground
     ctx.fillStyle = 'var(--paper-line)';
-    ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+    ctx.fillRect(0, canvas.lh - 20, canvas.lw, 20);
 
     // Draw cart
     let pos = getCoasterPos(cart.s);
@@ -661,7 +662,7 @@
 
     // Energy stats
     let m = 1.0;
-    let baselineHeight = canvas.height - 20;
+    let baselineHeight = canvas.lh - 20;
     let pe = m * 0.25 * (baselineHeight - cart.y);
     let ke = 0.5 * m * (cart.v**2);
     
@@ -698,7 +699,7 @@
 
     // Text label
     ctx.fillStyle = 'var(--ink)';
-    ctx.font = '8px Helvetica';
+    ctx.font = '8px Inter';
     ctx.textAlign = 'center';
     ctx.fillText('PE', bx + 7, by + bh + 10);
     ctx.fillText('KE', bx + 32, by + bh + 10);

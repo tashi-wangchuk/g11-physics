@@ -92,7 +92,7 @@
       <div class="viz">
         <div class="vhead">Predict, then reveal</div>
         <div class="controls" style="margin-top:0; margin-bottom:0.6rem">
-          <select id="preset" style="font-family:Helvetica; font-size:0.85rem; padding:0.3rem"></select>
+          <select id="preset" style="font-family:Inter, sans-serif; font-size:0.85rem; padding:0.3rem"></select>
           <button id="revealbtn">Reveal graphs</button>
           <button id="playbtn">&#9654; Play</button>
         </div>
@@ -141,10 +141,11 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
   /* ---------- section 1: secant -> tangent ---------- */
   (function () {
-    var cv = document.getElementById('seccv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('seccv'), cx = hiDPI(cv);
     var sl = document.getElementById('sdt');
     var T0 = 2, TMAX = 4.4, SMAX = 100;
     var L = 56, B = 320, W2 = 600, H2 = 290;
@@ -154,17 +155,17 @@
     function draw() {
       var dt = parseFloat(sl.value);
       document.getElementById('vdt').textContent = dt.toFixed(2);
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       // axes
       cx.strokeStyle = '#ffffff45'; cx.lineWidth = 1;
       cx.beginPath(); cx.moveTo(L, B); cx.lineTo(L + 600, B); cx.stroke();
-      cx.fillStyle = '#a1a1aa'; cx.font = '12px Helvetica';
+      cx.fillStyle = '#a1a1aa'; cx.font = '12px Inter';
       cx.fillText('t (s)', L + W2 - 20, B + 24);
       cx.fillText('s (m)', L - 40, B - H2 + 12);
       for (var tt = 1; tt <= 4; tt++) cx.fillText(tt, X(tt) - 3, B + 14);
       for (var ss = 20; ss <= 100; ss += 20) cx.fillText(ss, L - 30, Y(ss) + 4);
       // curve
-      cx.strokeStyle = '#C0392B'; cx.lineWidth = 2.5;
+      cx.strokeStyle = '#ef4444'; cx.lineWidth = 2.5;
       cx.beginPath();
       for (var i = 0; i <= 220; i++) {
         var t = i / 220 * TMAX;
@@ -173,29 +174,29 @@
       cx.stroke();
       // tangent (ghost)
       var m = 10 * T0;
-      cx.strokeStyle = '#1E844966'; cx.lineWidth = 2;
+      cx.strokeStyle = '#10b98166'; cx.lineWidth = 2;
       cx.setLineDash([6, 6]);
       cx.beginPath();
       cx.moveTo(X(T0 - 1.6), Y(s(T0) - m * 1.6));
       cx.lineTo(X(T0 + 2.2), Y(s(T0) + m * 2.2));
       cx.stroke();
       cx.setLineDash([]);
-      cx.fillStyle = '#1E8449'; cx.font = 'bold 12px Helvetica';
+      cx.fillStyle = '#10b981'; cx.font = 'bold 12px Inter';
       cx.fillText('tangent: slope 20 m/s', X(2.8), Y(s(2.8) + 26));
       // secant
       var t1 = T0 + dt;
       var slope = (s(t1) - s(T0)) / dt;
-      cx.strokeStyle = '#2E86C1'; cx.lineWidth = 2.5;
+      cx.strokeStyle = '#3b82f6'; cx.lineWidth = 2.5;
       cx.beginPath();
       cx.moveTo(X(T0 - 0.7), Y(s(T0) - slope * 0.7));
       cx.lineTo(X(Math.min(t1 + 0.7, TMAX)), Y(s(T0) + slope * (Math.min(t1 + 0.7, TMAX) - T0)));
       cx.stroke();
       // points
-      [[T0, '#fff'], [t1, '#2E86C1']].forEach(function (q) {
+      [[T0, '#fff'], [t1, '#3b82f6']].forEach(function (q) {
         cx.fillStyle = q[1];
         cx.beginPath(); cx.arc(X(q[0]), Y(s(q[0])), 6, 0, 7); cx.fill();
       });
-      cx.fillStyle = '#fff'; cx.font = 'bold 12px Helvetica';
+      cx.fillStyle = '#fff'; cx.font = 'bold 12px Inter';
       cx.fillText('t = 2 s', X(T0) - 44, Y(s(T0)) + 4);
       document.getElementById('vavg').textContent = slope.toFixed(1) + ' m/s';
     }
@@ -225,10 +226,10 @@
         T: 12.6, s: function(t){return 8*Math.sin(t);}, v: function(t){return 8*Math.cos(t);}, a: function(t){return -8*Math.sin(t);} }
     ];
     var cur = 1, revealed = false, playing = false, playT = 0, lastFrame = null;
-    var tcv = document.getElementById('trackcv'), tcx = tcv.getContext('2d');
-    var gcv = document.getElementById('graphcv'), gcx = gcv.getContext('2d');
-    var TW = tcv.width, TH = tcv.height;
-    var GW = gcv.width, GH = gcv.height;
+    var tcv = document.getElementById('trackcv'), tcx = hiDPI(tcv);
+    var gcv = document.getElementById('graphcv'), gcx = hiDPI(gcv);
+    var TW = tcv.lw, TH = tcv.lh;
+    var GW = gcv.lw, GH = gcv.lh;
     var sel = document.getElementById('preset');
     PRESETS.forEach(function (p, i) {
       var o = document.createElement('option');
@@ -274,7 +275,7 @@
       return [lo - pad, hi + pad];
     }
     function panel(y0, h, f, T, color, label, unit) {
-      var L = 50, R = 10, W = gcv.width;
+      var L = 50, R = 10, W = gcv.lw;
       var rg = range(f, T);
       function X(t) { return L + t / T * (W - L - R); }
       function Y(s) { return y0 + h - (s - rg[0]) / (rg[1] - rg[0]) * h; }
@@ -285,14 +286,14 @@
       gcx.stroke();
       gcx.beginPath(); gcx.moveTo(0, GH/2); gcx.lineTo(GW, GH/2); 
       gcx.strokeStyle = '#ffffff30'; gcx.stroke();
-      gcx.fillStyle = '#f4f4f5'; gcx.font = 'bold 14px Georgia';
+      gcx.fillStyle = '#f4f4f5'; gcx.font = 'bold 14px Inter';
       gcx.fillText('Interactive graph builder', 20, 28);
-      gcx.font = '10px Helvetica'; gcx.fillStyle = '#a1a1aa';
+      gcx.font = '10px Inter'; gcx.fillStyle = '#a1a1aa';
       gcx.fillText('drag orange control points below to shape the motion graph', 20, 44);
       if (!revealed) {
         gcx.fillStyle = '#ffffff10';
         gcx.fillRect(L, y0, W - L - R, h);
-        gcx.fillStyle = '#a1a1aa'; gcx.font = 'italic 13px Georgia';
+        gcx.fillStyle = '#a1a1aa'; gcx.font = 'italic 13px Inter';
         gcx.fillText('hidden — predict first, then reveal', L + 14, y0 + h / 2 + 4);
         return;
       }
@@ -307,27 +308,27 @@
     }
     function draw() {
       var p = PRESETS[cur];
-      tcx.clearRect(0, 0, tcv.width, tcv.height);
+      tcx.clearRect(0, 0, tcv.lw, tcv.lh);
       var rg = range(p.s, p.T), L = 50, R = 10;
       tcx.strokeStyle = '#a1a1aa'; tcx.lineWidth = 2;
       tcx.beginPath(); tcx.moveTo(0, TH/2); tcx.lineTo(TW, TH/2); tcx.stroke();
-      tcx.fillStyle = '#f4f4f5'; tcx.font = 'bold 11px Helvetica';
+      tcx.fillStyle = '#f4f4f5'; tcx.font = 'bold 11px Inter';
       tcx.fillText('the motion itself:', 6, 14);
-      tcx.fillText('t = ' + playT.toFixed(1) + ' s', tcv.width - 64, 14);
+      tcx.fillText('t = ' + playT.toFixed(1) + ' s', tcv.lw - 64, 14);
       var frac = (p.s(playT) - rg[0]) / (rg[1] - rg[0]);
-      tcx.beginPath(); tcx.arc(L + frac * (tcv.width - L - R), 42, 9, 0, 7);
-      tcx.fillStyle = '#C0392B'; tcx.fill();
-      gcx.clearRect(0, 0, gcv.width, gcv.height);
-      panel(8, 140, p.s, p.T, '#C0392B', 's(t)', 'm');
-      panel(166, 140, p.v, p.T, '#2E86C1', 'v(t)', 'm/s');
-      panel(324, 140, p.a, p.T, '#1E8449', 'a(t)', 'm/s²');
+      tcx.beginPath(); tcx.arc(L + frac * (tcv.lw - L - R), 42, 9, 0, 7);
+      tcx.fillStyle = '#ef4444'; tcx.fill();
+      gcx.clearRect(0, 0, gcv.lw, gcv.lh);
+      panel(8, 140, p.s, p.T, '#ef4444', 's(t)', 'm');
+      panel(166, 140, p.v, p.T, '#3b82f6', 'v(t)', 'm/s');
+      panel(324, 140, p.a, p.T, '#10b981', 'a(t)', 'm/s²');
     }
     draw();
   })();
 
   /* ---------- section 3: drop vs flick ---------- */
   (function () {
-    var cv = document.getElementById('coincv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('coincv'), cx = hiDPI(cv);
     var G = 9.8, H0 = 4.5;
     var U = 60;
     var ox = 90, groundY = 300;
@@ -335,11 +336,11 @@
     var sl = document.getElementById('vflick');
     function vf() { return parseFloat(sl.value); }
     function draw() {
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       document.getElementById('vfl').textContent = vf().toFixed(1);
       // ground
       cx.strokeStyle = '#a1a1aa'; cx.lineWidth = 2;
-      cx.beginPath(); cx.moveTo(ox - 60, groundY); cx.lineTo(cv.width - 20, groundY); cx.stroke();
+      cx.beginPath(); cx.moveTo(ox - 60, groundY); cx.lineTo(cv.lw - 20, groundY); cx.stroke();
       // tower
       cx.fillStyle = '#ffffff18';
       cx.fillRect(ox - 60, groundY - H0 * U, 40, H0 * U);
@@ -349,19 +350,19 @@
       cx.strokeStyle = '#ffffff12';
       for (var yy = 1; yy < H0; yy++) {
         cx.beginPath();
-        cx.moveTo(0, groundY - yy * U); cx.lineTo(cv.width, groundY - yy * U);
+        cx.moveTo(0, groundY - yy * U); cx.lineTo(cv.lw, groundY - yy * U);
         cx.stroke();
       }
       var tl = Math.sqrt(2 * H0 / G);
       var tc = Math.min(t, tl);
       var y = H0 - 0.5 * G * tc * tc;
       // dropped coin
-      cx.fillStyle = '#2E86C1';
+      cx.fillStyle = '#3b82f6';
       cx.beginPath(); cx.arc(ox - 35, groundY - y * U, 9, 0, 7); cx.fill();
       // flicked coin + trace
-      cx.fillStyle = '#C0392B';
+      cx.fillStyle = '#ef4444';
       cx.beginPath(); cx.arc(ox + vf() * tc * U * 0.55, groundY - y * U, 9, 0, 7); cx.fill();
-      cx.strokeStyle = '#C0392B44';
+      cx.strokeStyle = '#ef444444';
       cx.beginPath();
       for (var i = 0; i <= 40; i++) {
         var tt = tl * i / 40;
@@ -370,11 +371,11 @@
       }
       cx.stroke();
       // same-height marker
-      cx.font = 'bold 12px Helvetica'; cx.fillStyle = '#a1a1aa';
-      cx.fillText('t = ' + tc.toFixed(2) + ' s', cv.width - 80, 20);
+      cx.font = 'bold 12px Inter'; cx.fillStyle = '#a1a1aa';
+      cx.fillText('t = ' + tc.toFixed(2) + ' s', cv.lw - 80, 20);
       if (t >= tl) {
         document.getElementById('coinmsg').textContent = 'they land together';
-        document.getElementById('coinmsg').style.color = '#1E8449';
+        document.getElementById('coinmsg').style.color = '#10b981';
       }
     }
     function tick(ts) {

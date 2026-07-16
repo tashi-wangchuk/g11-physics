@@ -99,7 +99,7 @@
           <svg id="elsvg" viewBox="0 0 300 400" style="flex:0 1 240px" xmlns="http://www.w3.org/2000/svg">
             <!-- Shaft outline & Snapped cable marker -->
             <line id="cable" x1="150" y1="8" x2="150" y2="48" stroke="#fff" stroke-width="3"/>
-            <g id="snap" visibility="hidden"><line x1="140" y1="22" x2="162" y2="36" stroke="#C0392B" stroke-width="3"/></g>
+            <g id="snap" visibility="hidden"><line x1="140" y1="22" x2="162" y2="36" stroke="#ef4444" stroke-width="3"/></g>
             <rect x="52" y="48" width="196" height="300" fill="none" stroke="#fff" stroke-width="4"/>
             <rect x="54" y="336" width="192" height="10" fill="#27272a"/>
             <rect x="112" y="310" width="76" height="26" fill="#18181b" stroke="#fff" stroke-width="2"/>
@@ -115,22 +115,22 @@
             </g>
             <circle cx="150" cy="202" r="18" fill="#09090b" stroke="#fff" stroke-width="4"/>
             <g id="Nar">
-              <line id="Nl" x1="92" y1="310" x2="92" y2="210" stroke="#2E86C1" stroke-width="5"/>
-              <polygon id="Nh" points="92,200 84,216 100,216" fill="#2E86C1"/>
-              <text id="Nt" x="78" y="260" font-size="15" font-style="italic" fill="#2E86C1" text-anchor="middle">&#119977;</text>
+              <line id="Nl" x1="92" y1="310" x2="92" y2="210" stroke="#3b82f6" stroke-width="5"/>
+              <polygon id="Nh" points="92,200 84,216 100,216" fill="#3b82f6"/>
+              <text id="Nt" x="78" y="260" font-size="15" font-style="italic" fill="#3b82f6" text-anchor="middle">&#119977;</text>
             </g>
             <g>
-              <line x1="212" y1="210" x2="212" y2="310" stroke="#C0392B" stroke-width="5"/>
-              <polygon points="212,320 204,304 220,304" fill="#C0392B"/>
-              <text x="232" y="262" font-size="13" font-style="italic" fill="#C0392B" text-anchor="middle">mg</text>
+              <line x1="212" y1="210" x2="212" y2="310" stroke="#ef4444" stroke-width="5"/>
+              <polygon points="212,320 204,304 220,304" fill="#ef4444"/>
+              <text x="232" y="262" font-size="13" font-style="italic" fill="#ef4444" text-anchor="middle">mg</text>
             </g>
             <g id="Aar" visibility="hidden">
-              <line id="Al" x1="272" y1="250" x2="272" y2="190" stroke="#1E8449" stroke-width="5"/>
-              <polygon id="Ah" points="272,180 264,196 280,196" fill="#1E8449"/>
-              <text id="At" x="272" y="168" font-size="13" font-style="italic" fill="#1E8449" text-anchor="middle">a</text>
+              <line id="Al" x1="272" y1="250" x2="272" y2="190" stroke="#10b981" stroke-width="5"/>
+              <polygon id="Ah" points="272,180 264,196 280,196" fill="#10b981"/>
+              <text id="At" x="272" y="168" font-size="13" font-style="italic" fill="#10b981" text-anchor="middle">a</text>
             </g>
           </svg>
-          <div style="flex:1 1 240px; font-family:Helvetica; font-size:0.85rem">
+          <div style="flex:1 1 240px; font-family:Inter, sans-serif; font-size:0.85rem">
             <label style="display:block">elevator acceleration (up = +)<br>
               <input type="range" id="eacc" min="-10" max="10" step="0.1" value="0" style="width:95%">
             </label>
@@ -194,10 +194,11 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
   /* ---------- section 1: stick and slip ---------- */
   (function () {
-    var cv = document.getElementById('fricv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('fricv'), cx = hiDPI(cv);
     var sl = document.getElementById('fpush');
     var MU_S = 0.5, MU_K = 0.4, N = 100;      // m = 10 kg, g = 10
     var pos = 60, lastTs = null, vel = 0;
@@ -211,39 +212,39 @@
       var st = state();
       document.getElementById('fpv').textContent = st.F.toFixed(1);
       var el = document.getElementById('fstate');
-      if (st.slip) { el.textContent = 'slipping!'; el.style.color = '#C0392B'; }
-      else { el.textContent = 'stuck — friction matches you'; el.style.color = '#1E8449'; }
-      cx.clearRect(0, 0, cv.width, cv.height);
+      if (st.slip) { el.textContent = 'slipping!'; el.style.color = '#ef4444'; }
+      else { el.textContent = 'stuck — friction matches you'; el.style.color = '#10b981'; }
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       // ground
       cx.strokeStyle = 'var(--muted)'; cx.lineWidth = 2;
-      cx.beginPath(); cx.moveTo(0, groundY); cx.lineTo(cv.width, groundY); cx.stroke();
+      cx.beginPath(); cx.moveTo(0, groundY); cx.lineTo(cv.lw, groundY); cx.stroke();
       // block
       cx.fillStyle = '#ffffff20'; cx.strokeStyle = '#fff';
       cx.lineWidth = 2.5;
       cx.fillRect(pos - w/2, groundY - h, w, h);
       cx.strokeRect(pos - w/2, groundY - h, w, h);
       // pull vector
-      cx.strokeStyle = '#C0392B'; cx.fillStyle = '#C0392B'; cx.lineWidth = 5;
+      cx.strokeStyle = '#ef4444'; cx.fillStyle = '#ef4444'; cx.lineWidth = 5;
       var alen = st.F * 1.6;
       cx.beginPath(); cx.moveTo(pos - alen - 12, 120); cx.lineTo(pos - 12, 120); cx.stroke();
       cx.beginPath(); cx.moveTo(pos - 2, 120); cx.lineTo(pos - 16, 113); cx.lineTo(pos - 16, 127); cx.fill();
       // friction arrow (green, from right at base)
-      cx.strokeStyle = '#1E8449'; cx.fillStyle = '#1E8449';
+      cx.strokeStyle = '#10b981'; cx.fillStyle = '#10b981';
       var flen = st.f * 1.6;
       cx.beginPath(); cx.moveTo(pos + 90 + flen + 12, 144); cx.lineTo(pos + 90 + 12, 144); cx.stroke();
       cx.beginPath(); cx.moveTo(pos + 90 + 2, 144); cx.lineTo(pos + 90 + 16, 137); cx.lineTo(pos + 90 + 16, 151); cx.fill();
       // force bars
-      cx.font = 'bold 12px Helvetica';
-      cx.fillStyle = '#C0392B';
+      cx.font = 'bold 12px Inter';
+      cx.fillStyle = '#ef4444';
       cx.fillText('your push: ' + st.F.toFixed(0) + ' N', 20, 195);
       cx.fillRect(150, 185, st.F * 5, 12);
-      cx.fillStyle = '#1E8449';
+      cx.fillStyle = '#10b981';
       cx.fillText('friction: ' + st.f.toFixed(0) + ' N', 20, 225);
       cx.fillRect(150, 215, st.f * 5, 12);
       // force scale rules
       cx.strokeStyle = '#fff'; cx.lineWidth = 1.5;
       cx.beginPath(); cx.moveTo(ox, groundY + 18); cx.lineTo(ox, groundY + 36); cx.stroke();
-      cx.font = '11px Helvetica'; cx.fillStyle = '#a1a1aa';
+      cx.font = '11px Inter'; cx.fillStyle = '#a1a1aa';
       cx.fillText('μs𝒩 = 50 N', 150 + 250 + 6, 181);
     }
     function tick(ts) {
@@ -255,7 +256,7 @@
         var a = (st.F - st.f) / 10;      // m = 10 kg
         vel += a * dt * 30;
         pos += vel * dt;
-        if (pos > cv.width - 130) { pos = 60; vel = 0; }
+        if (pos > cv.lw - 130) { pos = 60; vel = 0; }
       } else { vel = 0; }
       draw();
       requestAnimationFrame(tick);
@@ -329,30 +330,30 @@
 
   /* ---------- section 3: Newton's cannonball ---------- */
   (function () {
-    var cv = document.getElementById('cncv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('cncv'), cx = hiDPI(cv);
     var sl = document.getElementById('cnv');
     var CX = 340, CY = 230, RE = 80;          // Earth center + radius in px
     var VC = 7.9;                              // km/s: circular at surface
     var running = false, trail = [], p = null, v = null, lastTs = null, elapsed = 0;
     function drawStatic() {
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       // Earth
       cx.beginPath(); cx.arc(CX, CY, RE, 0, 7);
-      cx.fillStyle = '#2E86C144'; cx.fill();
-      cx.strokeStyle = '#2E86C1'; cx.lineWidth = 2; cx.stroke();
+      cx.fillStyle = '#3b82f644'; cx.fill();
+      cx.strokeStyle = '#3b82f6'; cx.lineWidth = 2; cx.stroke();
       // Earth label
       cx.fillStyle = '#a1a1aa';
       cx.beginPath();
       cx.moveTo(CX - 10, CY - RE + 2); cx.lineTo(CX, CY - RE - 14); cx.lineTo(CX + 10, CY - RE + 2);
       cx.closePath(); cx.fill();
       // trail
-      cx.strokeStyle = '#C0392B'; cx.lineWidth = 2;
+      cx.strokeStyle = '#ef4444'; cx.lineWidth = 2;
       cx.beginPath();
       trail.forEach(function (q, i) { if (i === 0) cx.moveTo(q.x, q.y); else cx.lineTo(q.x, q.y); });
       cx.stroke();
       // ball
       if (p) {
-        cx.fillStyle = '#C0392B';
+        cx.fillStyle = '#ef4444';
         cx.beginPath(); cx.arc(p.x, p.y, 5, 0, 7); cx.fill();
       }
     }
@@ -383,8 +384,8 @@
         var ax = -acc * dx / r, ay = -acc * dy / r;
         v.x += ax * dt; v.y += ay * dt;
         p.x += v.x * dt; p.y += v.y * dt;
-        if (r < RE - 1) { running = false; document.getElementById('cnmsg').textContent = 'crashed — too slow'; document.getElementById('cnmsg').style.color = '#C0392B'; break; }
-        if (r > 500) { running = false; document.getElementById('cnmsg').textContent = 'gone — escape velocity exceeded'; document.getElementById('cnmsg').style.color = '#1E8449'; break; }
+        if (r < RE - 1) { running = false; document.getElementById('cnmsg').textContent = 'crashed — too slow'; document.getElementById('cnmsg').style.color = '#ef4444'; break; }
+        if (r > 500) { running = false; document.getElementById('cnmsg').textContent = 'gone — escape velocity exceeded'; document.getElementById('cnmsg').style.color = '#10b981'; break; }
       }
       trail.push({ x: p.x, y: p.y });
       if (trail.length > 2000) trail.shift();
@@ -393,7 +394,7 @@
       if (running) requestAnimationFrame(tick);
       else if (!document.getElementById('cnmsg').textContent && elapsed > 19) {
         document.getElementById('cnmsg').textContent = 'still going — it keeps missing the Earth: an orbit';
-        document.getElementById('cnmsg').style.color = '#1E8449';
+        document.getElementById('cnmsg').style.color = '#10b981';
       }
     }
     sl.addEventListener('input', function () {

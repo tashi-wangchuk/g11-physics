@@ -94,25 +94,25 @@
         <div class="vhead">Drag the arrowheads</div>
         <svg id="board" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <marker id="mA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E86C1"/></marker>
-            <marker id="mB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
-            <marker id="mBg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B" opacity="0.35"/></marker>
+            <marker id="mA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3b82f6"/></marker>
+            <marker id="mB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ef4444"/></marker>
+            <marker id="mBg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ef4444" opacity="0.35"/></marker>
             <marker id="mR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
           </defs>
           <g id="grid"></g>
-          <line id="bg" stroke="#C0392B" stroke-width="3" opacity="0.35" marker-end="url(#mBg)"/>
+          <line id="bg" stroke="#ef4444" stroke-width="3" opacity="0.35" marker-end="url(#mBg)"/>
           <line id="rr" stroke="#fff" stroke-width="4" marker-end="url(#mR)"/>
-          <line id="va" stroke="#2E86C1" stroke-width="4" marker-end="url(#mA)"/>
-          <line id="vb" stroke="#C0392B" stroke-width="4" marker-end="url(#mB)"/>
-          <circle id="ha" r="14" fill="#2E86C1" fill-opacity="0.15" stroke="#2E86C1" stroke-width="1.5" cursor="grab"/>
-          <circle id="hb" r="14" fill="#C0392B" fill-opacity="0.15" stroke="#C0392B" stroke-width="1.5" cursor="grab"/>
-          <text id="la" font-size="17" font-style="italic" fill="#2E86C1" font-weight="bold">a</text>
-          <text id="lb" font-size="17" font-style="italic" fill="#C0392B" font-weight="bold">b</text>
+          <line id="va" stroke="#3b82f6" stroke-width="4" marker-end="url(#mA)"/>
+          <line id="vb" stroke="#ef4444" stroke-width="4" marker-end="url(#mB)"/>
+          <circle id="ha" r="14" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="1.5" cursor="grab"/>
+          <circle id="hb" r="14" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-width="1.5" cursor="grab"/>
+          <text id="la" font-size="17" font-style="italic" fill="#3b82f6" font-weight="bold">a</text>
+          <text id="lb" font-size="17" font-style="italic" fill="#ef4444" font-weight="bold">b</text>
           <text id="lr" font-size="17" font-style="italic" fill="#fff" font-weight="bold">a+b</text>
         </svg>
         <div class="controls">
-          <span>|<b style="color:#2E86C1">a</b>| = <span class="big" id="maga"></span></span>
-          <span>|<b style="color:#C0392B">b</b>| = <span class="big" id="magb"></span></span>
+          <span>|<b style="color:#3b82f6">a</b>| = <span class="big" id="maga"></span></span>
+          <span>|<b style="color:#ef4444">b</b>| = <span class="big" id="magb"></span></span>
           <span>θ = <span class="big" id="ang"></span></span>
           <span>|<b>a+b</b>| = <span class="big" id="magr"></span></span>
           <button id="lockbtn">Challenge: lock at 4 and 3</button>
@@ -144,21 +144,21 @@
             <marker id="mC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
           </defs>
           <g id="cgrid"></g>
-          <line id="cshx" stroke="#1E8449" stroke-width="4" opacity="0.8"/>
-          <line id="cshy" stroke="#D35400" stroke-width="4" opacity="0.8"/>
+          <line id="cshx" stroke="#10b981" stroke-width="4" opacity="0.8"/>
+          <line id="cshy" stroke="#f97316" stroke-width="4" opacity="0.8"/>
           <line id="cdash1" stroke="#888" stroke-width="1" stroke-dasharray="5,5"/>
           <line id="cdash2" stroke="#888" stroke-width="1" stroke-dasharray="5,5"/>
           <line id="cv" stroke="#fff" stroke-width="4" marker-end="url(#mC)"/>
           <circle id="ch" r="14" fill="#fff" fill-opacity="0.1" stroke="#fff" stroke-width="1.5" cursor="grab"/>
-          <text id="clx" font-size="14" fill="#1E8449" font-weight="bold" font-family="Helvetica"></text>
-          <text id="cly" font-size="14" fill="#D35400" font-weight="bold" font-family="Helvetica"></text>
+          <text id="clx" font-size="14" fill="#10b981" font-weight="bold" font-family="Helvetica"></text>
+          <text id="cly" font-size="14" fill="#f97316" font-weight="bold" font-family="Helvetica"></text>
           <text id="clv" font-size="16" font-style="italic" fill="#fff" font-weight="bold">A</text>
         </svg>
         <div class="controls">
           <span>A = <span class="big" id="cmag"></span></span>
           <span>θ = <span class="big" id="cang"></span></span>
-          <span style="color:#1E8449">A cos θ = <span class="big" id="ccos"></span></span>
-          <span style="color:#D35400">A sin θ = <span class="big" id="csin"></span></span>
+          <span style="color:#10b981">A cos θ = <span class="big" id="ccos"></span></span>
+          <span style="color:#f97316">A sin θ = <span class="big" id="csin"></span></span>
         </div>
         <div class="note" style="margin-top:0.4rem">Drag the arrowhead in a circle and watch the two shadows trade length. Where is the green shadow zero? Where are the two shadows equal?</div>
       </div>
@@ -178,17 +178,18 @@
   </main>
 </div>
 
+<script src="ui.js"></script>
 <script>
   /* ---------- section 1: the walk dial ---------- */
   (function () {
-    var cv = document.getElementById('walkcv'), cx = cv.getContext('2d');
+    var cv = document.getElementById('walkcv'), cx = hiDPI(cv);
     var sl = document.getElementById('walkang');
     function draw() {
       var angDeg = parseFloat(sl.value);          // turn angle: 0 = straight on
       var ang = angDeg * Math.PI / 180;
       var U = 46;                                  // px per metre
       var ox = 110, oy = 210;
-      cx.clearRect(0, 0, cv.width, cv.height);
+      cx.clearRect(0, 0, cv.lw, cv.lh);
       // first leg: 4 m east
       var p1 = { x: ox + 4 * U, y: oy };
       // second leg: 3 m, turned by ang (counterclockwise up)
@@ -205,21 +206,21 @@
         cx.closePath(); cx.fill();
       }
       // legs
-      arrow({x:ox,y:oy}, p1, '#2E86C1', 4);
-      arrow(p1, p2, '#C0392B', 4);
+      arrow({x:ox,y:oy}, p1, '#3b82f6', 4);
+      arrow(p1, p2, '#ef4444', 4);
       // displacement
       cx.setLineDash([7, 6]);
       arrow({x:ox,y:oy}, p2, '#fff', 3);
       cx.setLineDash([]);
       // labels
-      cx.font = 'bold 14px Helvetica';
-      cx.fillStyle = '#2E86C1'; cx.fillText('4 m', ox + 2 * U - 12, oy + 22);
-      cx.fillStyle = '#C0392B';
+      cx.font = 'bold 14px Inter';
+      cx.fillStyle = '#3b82f6'; cx.fillText('4 m', ox + 2 * U - 12, oy + 22);
+      cx.fillStyle = '#ef4444';
       cx.fillText('3 m', (p1.x + p2.x) / 2 + 10, (p1.y + p2.y) / 2 - 8);
       // start dot
       cx.fillStyle = '#fff';
       cx.beginPath(); cx.arc(ox, oy, 4, 0, 7); cx.fill();
-      cx.font = '12px Helvetica'; cx.fillStyle = '#a1a1aa';
+      cx.font = '12px Inter'; cx.fillStyle = '#a1a1aa';
       cx.fillText('start', ox - 14, oy + 20);
       // displacement magnitude: law of cosines with interior angle
       var disp = Math.sqrt(16 + 9 + 24 * Math.cos(ang));
@@ -274,7 +275,7 @@
       if (locked) {
         document.getElementById('chmsg').innerHTML =
           Math.abs(mr - 5) < 0.05
-            ? '<b style="color:#1E8449">4 + 3 = 5 — you did it!</b> The angle reads ' + th.toFixed(1) + '°: cos θ has to vanish, so the arrows must be perpendicular.'
+            ? '<b style="color:#10b981">4 + 3 = 5 — you did it!</b> The angle reads ' + th.toFixed(1) + '°: cos θ has to vanish, so the arrows must be perpendicular.'
             : 'Magnitudes locked. |a+b| = ' + mr.toFixed(2) + ' — rotate until it reads exactly 5.';
       }
     }
