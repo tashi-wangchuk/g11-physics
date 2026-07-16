@@ -42,7 +42,7 @@
     <div class="relative z-10 h-full flex flex-col justify-between">
       
       <!-- Navigation Bar -->
-      <nav class="max-w-7xl mx-auto w-full px-8 py-6 flex items-center justify-between">
+      <nav class="relative z-50 max-w-7xl mx-auto w-full px-8 py-6 flex items-center justify-between">
         <!-- Brand Name / Owner -->
         <a href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer" class="text-2xl font-bold text-zinc-100 tracking-tight hover:opacity-75 transition-opacity">
           TASHI WANGCHUK
@@ -408,8 +408,9 @@
         // grid lines — nearer lines brighter, like light falling off with distance
         cx.lineWidth = 1;
         for (let r = 0; r <= ROWS; r++) {
-          const a = 0.05 + 0.30 * (r / ROWS);
-          cx.strokeStyle = 'rgba(190,205,255,' + a.toFixed(3) + ')';
+          const a = 0.05 + 0.35 * (r / ROWS);
+          // Neon Cyan grid for horizontal lines
+          cx.strokeStyle = 'rgba(34, 211, 238,' + a.toFixed(3) + ')';
           cx.beginPath();
           for (let c = 0; c <= COLS; c++) {
             const p = pts[r][c];
@@ -418,33 +419,62 @@
           cx.stroke();
         }
         for (let c = 0; c <= COLS; c++) {
-          cx.strokeStyle = 'rgba(190,205,255,0.10)';
-          cx.beginPath();
           for (let r = 0; r <= ROWS; r++) {
+            const a = 0.02 + 0.15 * (r / ROWS);
+            // Neon Indigo grid for vertical lines (fading into the depth)
+            cx.strokeStyle = 'rgba(99, 102, 241,' + a.toFixed(3) + ')';
             const p = pts[r][c];
-            if (r === 0) cx.moveTo(p.x, p.y); else cx.lineTo(p.x, p.y);
+            if (r === 0) {
+              cx.beginPath();
+              cx.moveTo(p.x, p.y);
+            } else {
+              cx.lineTo(p.x, p.y);
+            }
+            if (r === ROWS) cx.stroke();
           }
-          cx.stroke();
         }
 
-        // the star: a soft glow sitting in its own well
+        // --- Schwarzschild Black Hole Lensing ---
         const sp = project(star.x, depth(star.x, star.z, t, pp) - 0.55, star.z);
         const sr = 900 / sp.zz;
-        let g = cx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, sr);
-        g.addColorStop(0, 'rgba(255,255,255,0.95)');
-        g.addColorStop(0.25, 'rgba(215,225,255,0.35)');
-        g.addColorStop(1, 'rgba(215,225,255,0)');
-        cx.fillStyle = g;
-        cx.beginPath(); cx.arc(sp.x, sp.y, sr, 0, 7); cx.fill();
 
-        // the planet
+        // Accretion disk background glow
+        let gGlow = cx.createRadialGradient(sp.x, sp.y, sr * 0.15, sp.x, sp.y, sr * 0.85);
+        gGlow.addColorStop(0, 'rgba(251, 146, 60, 0.45)');  // neon orange
+        gGlow.addColorStop(0.25, 'rgba(249, 115, 22, 0.15)');
+        gGlow.addColorStop(1, 'rgba(249, 115, 22, 0)');
+        cx.fillStyle = gGlow;
+        cx.beginPath(); cx.arc(sp.x, sp.y, sr * 0.85, 0, Math.PI * 2); cx.fill();
+
+        // Einstein Gravitational Lensing Ring (Tilted, slowly rotating)
+        cx.strokeStyle = 'rgba(251, 146, 60, 0.75)';
+        cx.lineWidth = 3;
+        cx.beginPath();
+        cx.ellipse(sp.x, sp.y, sr * 0.42, sr * 0.14, Math.PI / 10 + Math.sin(t * 0.2) * 0.05, 0, Math.PI * 2);
+        cx.stroke();
+
+        // The Event Horizon: Pure Black core shadow
+        cx.fillStyle = '#000000';
+        cx.beginPath();
+        cx.arc(sp.x, sp.y, sr * 0.24, 0, Math.PI * 2);
+        cx.fill();
+
+        // Inner glowing ring right at the edge of the event horizon
+        cx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        cx.lineWidth = 1.2;
+        cx.beginPath();
+        cx.arc(sp.x, sp.y, sr * 0.25, 0, Math.PI * 2);
+        cx.stroke();
+
+        // --- The orbiting planet (Neutron Star / Indigo Giant) ---
         const plp = project(pp.x, depth(pp.x, pp.z, t, pp) - 0.3, pp.z);
         const pr = 260 / plp.zz;
-        g = cx.createRadialGradient(plp.x, plp.y, 0, plp.x, plp.y, pr);
-        g.addColorStop(0, 'rgba(200,214,255,0.9)');
-        g.addColorStop(1, 'rgba(200,214,255,0)');
-        cx.fillStyle = g;
-        cx.beginPath(); cx.arc(plp.x, plp.y, pr, 0, 7); cx.fill();
+        let gPlan = cx.createRadialGradient(plp.x, plp.y, 0, plp.x, plp.y, pr);
+        gPlan.addColorStop(0, 'rgba(129, 140, 248, 0.95)');  // Indigo core
+        gPlan.addColorStop(0.3, 'rgba(99, 102, 241, 0.3)');
+        gPlan.addColorStop(1, 'rgba(99, 102, 241, 0)');
+        cx.fillStyle = gPlan;
+        cx.beginPath(); cx.arc(plp.x, plp.y, pr, 0, Math.PI * 2); cx.fill();
       }
 
       if (reduced) {
