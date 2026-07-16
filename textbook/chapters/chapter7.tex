@@ -1,0 +1,133 @@
+%%-----------Chapter 7------------------------------------------
+\chapter{Research Skills: Error Analysis and Inquiry Labs}
+
+\section{Introduction: Thinking Like a Scientist}
+
+Physics is not an exercise in mathematics. It is an experimental science. Every formula we have written down so far in this textbook represents a model of physical reality, and that model is only as good as the measurements that support it. 
+
+When you make a measurement in the lab, you are asking nature a question. But nature’s answer is never a single, pure number. It is always a range: ``The value is around here, give or take a bit.'' In professional science, reporting a number without its uncertainty is meaningless. If you measure the speed of light to be \SI{3.1e8}{m/s}, is your experiment a breakthrough that disproves Einstein, or is it just a slightly noisy measurement? Without an uncertainty estimate, no one can tell.
+
+In this chapter, we will learn how to quantify this ``give or take'' using the mathematics of error analysis. We will then apply these tools to a set of open, inquiry-based labs where you will design your own procedures and analyze real data.
+
+\section{Introduction to Error Analysis}
+
+In science, the word ``error'' does not mean a mistake or a blunder. It refers to the inevitable uncertainty that accompanies any physical measurement. These uncertainties fall into two categories:
+
+1. **Random Errors**: These are unpredictable fluctuations that differ from one measurement to the next. For example, if you use a stopwatch to time a pendulum, your reaction time will vary slightly each time you click the button. Random errors can be reduced by taking multiple measurements and averaging them.
+2. **Systematic Errors**: These are constant biases that skew all measurements in the same direction. For example, if your stopwatch runs $2\%$ slow, or if your ruler is slightly warped, every measurement will be systematically off. Systematic errors cannot be detected by repeating the measurement; you must carefully calibrate your instruments.
+
+\subsection{Mean and Standard Deviation}
+
+If we repeat a measurement of a quantity $x$ several times under identical conditions, we get a set of values: $x_1, x_2, \dots, x_N$. Our best estimate for the true value of $x$ is the **mean** (average), $\bar{x}$:
+\begin{equation}
+    \bar{x} = \frac{1}{N}\sum_{i=1}^{N} x_i.
+\end{equation}
+To describe how widely the measurements spread around this average, we compute the **standard deviation**, $\sigma_x$:
+\begin{equation}
+    \sigma_x = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (x_i - \bar{x})^2}.
+\end{equation}
+The standard deviation measures the precision of a single trial. If the errors are normally distributed (following a bell curve), then about $68\%$ of your measurements will lie within $\pm \sigma_x$ of the mean, and $95\%$ will lie within $\pm 2\sigma_x$.
+
+\subsection{Standard Deviation of the Mean}
+
+If you repeat the entire experiment (taking another set of $N$ measurements), the new mean will be slightly different. How certain are we of the mean itself? The uncertainty of our average is called the **standard deviation of the mean** (or the **standard error**), $\sigma_{\bar{x}}$:
+\begin{equation}
+    \sigma_{\bar{x}} = \frac{\sigma_x}{\sqrt{N}}.
+\end{equation}
+This is a beautiful result: it says that the more measurements you take, the more certain you become of the average. If you want to cut your uncertainty in half, you need to take $2^2 = 4$ times as many measurements. We write our final measurement as:
+\begin{equation}
+    \text{(measured value)} = \bar{x} \pm \sigma_{\bar{x}}.
+\end{equation}
+
+\subsection{Propagation of Uncertainty}
+
+Often, you cannot measure the quantity you want directly. Instead, you measure other quantities and calculate the final result. For example, to find the speed $v$, you measure distance $d$ and time $t$, and compute $v = d/t$. If $d$ and $t$ have uncertainties $\delta d$ and $\delta t$, how do they combine to give the uncertainty $\delta v$?
+
+Here are the two fundamental rules of error propagation (derived from calculus):
+
+\begin{keybox}[Error Propagation Rules]
+Let $x$ and $y$ be independent measurements with uncertainties $\delta x$ and $\delta y$.
+\begin{itemize}
+  \item **Sums and Differences**: If $z = x + y$ or $z = x - y$, the absolute uncertainties add in quadrature:
+        \begin{equation}
+            \delta z = \sqrt{(\delta x)^2 + (\delta y)^2}.
+        \end{equation}
+  \item **Products and Quotients**: If $z = x y$ or $z = x / y$, the fractional uncertainties add in quadrature:
+        \begin{equation}
+            \frac{\delta z}{|z|} = \sqrt{\left(\frac{\delta x}{x}\right)^2 + \left(\frac{\delta y}{y}\right)^2}.
+        \end{equation}
+\end{itemize}
+\end{keybox}
+
+\begin{workedexample}[Uncertainty of Speed]
+A student measures the distance a cart travels to be $d = 2.00 \pm \SI{0.02}{m}$, and the time taken to be $t = 4.0 \pm \SI{0.2}{s}$. What is the calculated speed of the cart and its uncertainty?
+\newline
+\textbf{Solution:}
+The nominal speed is:
+\begin{equation*}
+    v = \frac{d}{t} = \frac{\SI{2.00}{m}}{\SI{4.0}{s}} = \SI{0.50}{m/s}.
+\end{equation*}
+Since $v$ is a quotient, we use the product/quotient rule for fractional uncertainties:
+\begin{equation*}
+    \frac{\delta d}{d} = \frac{0.02}{2.00} = 0.01 \quad (1\%), \quad \frac{\delta t}{t} = \frac{0.2}{4.0} = 0.05 \quad (5\%).
+\end{equation*}
+The fractional uncertainty of the speed is:
+\begin{equation*}
+    \frac{\delta v}{v} = \sqrt{(0.01)^2 + (0.05)^2} = \sqrt{0.0001 + 0.0025} \approx 0.051 \quad (5.1\%).
+\end{equation*}
+The absolute uncertainty is:
+\begin{equation*}
+    \delta v = v \times 0.051 = (\SI{0.50}{m/s})(0.051) \approx \SI{0.03}{m/s}.
+\end{equation*}
+So we report:
+\begin{equation*}
+    v = 0.50 \pm \SI{0.03}{m/s}.
+\end{equation*}
+\end{workedexample}
+
+\section{Inquiry-Based Lab Manual}
+
+In these labs, we do not give you a checklist of step-by-step instructions. Instead, we give you a goal, a list of available apparatus, and the physical constraints. It is your job as a group to design the experiment, identify the variables, estimate the uncertainties, and write a report defending your conclusions.
+
+Our lab is equipped with standard materials, smartphones (which contain slow-motion video, audio recorders, and accelerometers), PASCO scientific interface equipment (including photogates, motion sensors, and force probes), and Thymio educational robots.
+
+\subsection{Lab 1: The Speed of Sound via Time-of-Flight}
+\begin{itemize}
+  \item **Guiding Question**: What is the speed of sound in the air around the Dzong courtyard, and does it agree with the theoretical formula $v = 331.3 + 0.606\,T_C$ (where $T_C$ is temperature in Celsius)?
+  \item **Available Apparatus**: A long measuring tape, temperature sensor, and smartphones running an audio-recording app or a specialized acoustics app (like Phyphox) that can trigger a timer on loud claps.
+  \item **Guided Autonomy**: You must decide on the distance between the clap source and the receiver, how to account for human reaction times (or how to eliminate them using two smartphones separated by distance), and how many trials are needed to make the uncertainty smaller than the temperature dependence.
+\end{itemize}
+
+\subsection{Lab 2: Measuring $g$ with a Pendulum and Free Fall}
+\begin{itemize}
+  \item **Guiding Question**: What is the local value of the acceleration due to gravity $g$ in Paro?
+  \item **Available Apparatus**: Strings, masses, a stand, a ruler, PASCO photogates, and PASCO motion sensors.
+  \item **Guided Autonomy**: You should use two different methods to determine $g$. Method A: measure the period of a simple pendulum as a function of length. Method B: drop an object and record its position versus time using a PASCO motion sensor or photogate. Compare the results. Which method has a smaller systematic error? Which has a smaller random error? How do you account for air resistance?
+\end{itemize}
+
+\subsection{Lab 3: Projectile Launch and Range Prediction}
+\begin{itemize}
+  \item **Guiding Question**: Can we predict exactly where a projectile launched at an arbitrary angle will land, including uncertainty?
+  \item **Available Apparatus**: A spring-loaded projectile launcher, a target plate, carbon paper to mark the landing spot, tape, a ruler, and PASCO photogates to measure launch velocity.
+  \item **Guided Autonomy**: First, launch the projectile horizontally multiple times to determine the launch speed $v_0$ (using photogates to find the mean and standard deviation). Then, calculate the predicted landing spot for a launch angle of $35^\circ$ from a given height. Propagate the uncertainties of $v_0$, angle, and height to draw a ``target zone'' on the floor. Place your target plate on the floor. Your grade is based on whether the projectile lands within your predicted uncertainty zone on the first shot!
+\end{itemize}
+
+\subsection{Lab 4: Thymio Mars Rover Navigation and Noise Characterization}
+\begin{itemize}
+  \item **Guiding Question**: How does measurement noise affect a robot's ability to navigate autonomously, and how can we characterize its sensors?
+  \item **Available Apparatus**: A Thymio II educational robot, a laptop for programming (Aseba/Scratch/Python), distance sensor calibration targets, and obstacle courses.
+  \item **Guided Autonomy**: The Thymio robot uses infrared sensors to detect objects. These sensors do not report distance directly; they report a raw intensity value. 
+        1. First, characterize the horizontal distance sensor: record the sensor reading at distances from \SI{2}{cm} to \SI{20}{cm} (in \SI{2}{cm} increments) using a ruler. Plot this curve to find the function mapping raw readings to distance.
+        2. Identify the noise: record $50$ readings at a fixed distance of \SI{10}{cm}. Calculate the mean and standard deviation of the raw sensor noise.
+        3. Design a control algorithm for a ``Mars Rover'' that allows the robot to drive toward a wall and stop exactly $10 \pm \SI{1}{cm}$ away. Program the robot, run $10$ trials, and verify if the final stopping distance matches your target within your characterized uncertainty limits.
+\end{itemize}
+
+\begin{whiteboard}[7.1: Classifying Errors]
+A student group measures the acceleration of a cart rolling down an inclined plane. In their report, they list the following issues. Classify each as a **random error**, a **systematic error**, or a **blunder** (mistake):
+\begin{enumerate}[label=(\alph*), itemsep=1pt]
+  \item The track was slightly sloped sideways, causing the cart to rub against the guard rail in every trial.
+  \item The stopwatch was clicked by a student who was looking at the cart from a sharp angle, causing parallax in their timing.
+  \item The student recording the numbers wrote down $0.35$ instead of $0.53$ for Trial 4.
+  \item Air currents in the room caused the cart’s travel times to vary by a few hundredths of a second.
+\end{enumerate}
+\end{whiteboard}

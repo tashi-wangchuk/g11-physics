@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electricity &amp; Magnetism — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 8</div>
+    <h1>Electricity &amp; Magnetism</h1>
+    <p class="lead">Electric charges create forces through fields. By placing static charges, running currents through circuits under Ohm's Law, and rotating magnetic fields, we see the dual nature of electromagnetism in action.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#efield">1. Electric Field Sandbox</a></li>
+      <li><a href="#circuits">2. Circuit Builder</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="efield">
+      <h2>1 &nbsp;Electric Field Sandbox</h2>
+      <p>Coulomb's Law states that positive and negative charges attract or repel each other with an inverse-square force. Across empty space, we say charges create an electric field. The net electric field vector at any point is the vector sum of the fields from each charge. Field vectors point away from positive charges and toward negative ones.</p>
+
+      <div class="viz">
+        <div class="vhead">Interactive Electric Vector Field Sandbox</div>
+        <canvas id="fieldCv" width="680" height="320" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <button id="addPosBtn" style="background:var(--red); color:white; border-color:var(--red);">Add Positive (+)</button>
+          <button id="addNegBtn" style="background:var(--blue); color:white; border-color:var(--blue);">Add Negative (-)</button>
+          <button id="clearChargesBtn">Clear Sandbox</button>
+        </div>
+        <div class="note" style="margin-top:0.4rem; color:var(--muted)">Click buttons to add positive (red) and negative (blue) point charges. Drag them around the grid and watch the electric field vector lines update instantly!</div>
+      </div>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="circuits">
+      <h2>2 &nbsp;Circuits &amp; Ohm's Law</h2>
+      <p>Ohm's Law ($V = IR$) dictates how voltage from a battery pumps current through resistors. When resistors are connected in series, the current has only one path, increasing total resistance. In parallel, current splits across multiple paths, reducing equivalent resistance and allowing each bulb to burn at full battery voltage.</p>
+
+      <div class="viz">
+        <div class="vhead">Circuit Simulator (Toggle Series vs Parallel)</div>
+        <div style="text-align:center; margin-bottom: 0.8rem;">
+          <label><input type="radio" name="circuitType" id="typeSeries" checked> Resistors in Series</label>
+          <label style="margin-left: 2rem;"><input type="radio" name="circuitType" id="typeParallel"> Resistors in Parallel</label>
+        </div>
+        <canvas id="circuitCv" width="680" height="200" style="border: 1px solid var(--paper-line); background: #fbf9f0; border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <label>Battery (V) <input type="range" id="voltageSlider" min="1" max="15" step="0.5" value="9"></label>
+          <label>R1 (&Omega;) <input type="range" id="r1Slider" min="2" max="20" step="1" value="6"></label>
+          <label>R2 (&Omega;) <input type="range" id="r2Slider" min="2" max="20" step="1" value="6"></label>
+        </div>
+
+        <div class="controls" style="justify-content:space-around; font-size:0.85rem">
+          <span>R<sub>eq</sub>: <span class="big" id="reqVal">12.0</span> &Omega;</span>
+          <span>Current (I): <span class="big" id="currentVal">0.75</span> A</span>
+          <span>Power (P): <span class="big" id="powerVal">6.75</span> W</span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Adjust the voltage slider or individual bulb resistances. The speed of the moving yellow dots (electrons) is proportional to the electrical current. Lightbulb brightness reflects power consumed ($P = I^2 R$).</div>
+      </div>
+    </section>
+
+    <footer class="pager">
+      <a href="research-skills.html">&larr; Chapter 7: Research Skills</a>
+      <a href="optics.html">Chapter 9: Optics &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------- SECTION 1: ELECTRIC FIELD SANDBOX ---------- */
+(function() {
+  const canvas = document.getElementById('fieldCv');
+  const ctx = canvas.getContext('2d');
+  const addPos = document.getElementById('addPosBtn');
+  const addNeg = document.getElementById('addNegBtn');
+  const clearBtn = document.getElementById('clearChargesBtn');
+
+  let charges = [
+    { x: 240, y: 160, q: 1.5 },  // Positive
+    { x: 440, y: 160, q: -1.5 }  // Negative
+  ];
+
+  let dragIdx = null;
+
+  // Mouse interaction
+  canvas.addEventListener('pointerdown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    // Click collision
+    for(let i = 0; i < charges.length; i++) {
+      if (Math.hypot(mx - charges[i].x, my - charges[i].y) < 16) {
+        dragIdx = i;
+        return;
+      }
+    }
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (dragIdx === null) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    charges[dragIdx].x = Math.max(15, Math.min(canvas.width - 15, mx));
+    charges[dragIdx].y = Math.max(15, Math.min(canvas.height - 15, my));
+    draw();
+  });
+
+  window.addEventListener('pointerup', () => {
+    dragIdx = null;
+  });
+
+  addPos.addEventListener('click', () => {
+    charges.push({ x: 100 + Math.random()*150, y: 100 + Math.random()*120, q: 1.5 });
+    draw();
+  });
+
+  addNeg.addEventListener('click', () => {
+    charges.push({ x: 400 + Math.random()*150, y: 100 + Math.random()*120, q: -1.5 });
+    draw();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    charges = [];
+    draw();
+  });
+
+  function drawVector(x, y, dx, dy, color) {
+    let mag = Math.hypot(dx, dy);
+    if (mag < 0.05) return;
+    
+    // Scale length
+    let maxL = 20;
+    let len = Math.min(maxL, mag * 18);
+    let angle = Math.atan2(dy, dx);
+    let tx = x + len * Math.cos(angle);
+    let ty = y + len * Math.sin(angle);
+
+    // Alpha is field strength representation
+    let alpha = Math.min(0.85, mag * 1.5);
+    ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+    ctx.lineWidth = 1.5;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(tx, ty);
+    ctx.stroke();
+
+    // head
+    ctx.beginPath();
+    ctx.moveTo(tx, ty);
+    ctx.lineTo(tx - 4 * Math.cos(angle - Math.PI/6), ty - 4 * Math.sin(angle - Math.PI/6));
+    ctx.lineTo(tx - 4 * Math.cos(angle + Math.PI/6), ty - 4 * Math.sin(angle + Math.PI/6));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw field vector grid
+    let step = 20;
+    for (let x = step/2; x < canvas.width; x += step) {
+      for (let y = step/2; y < canvas.height; y += step) {
+        // Calculate net field E vector at (x,y)
+        let ex = 0, ey = 0;
+        charges.forEach(ch => {
+          let rx = x - ch.x;
+          let ry = y - ch.y;
+          let r2 = rx*rx + ry*ry;
+          let r = Math.sqrt(r2);
+          if (r > 12) {
+            // E = k * q / r^2
+            let emag = ch.q / r2;
+            ex += emag * (rx / r);
+            ey += emag * (ry / r);
+          }
+        });
+        
+        drawVector(x, y, ex, ey);
+      }
+    }
+
+    // Draw charges
+    charges.forEach(ch => {
+      ctx.beginPath();
+      ctx.arc(ch.x, ch.y, 14, 0, 2*Math.PI);
+      ctx.fillStyle = ch.q > 0 ? 'var(--red)' : 'var(--blue)';
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.fill();
+      ctx.stroke();
+
+      // Sign symbol
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 16px Helvetica';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(ch.q > 0 ? '+' : '-', ch.x, ch.y);
+    });
+  }
+
+  draw();
+})();
+
+/* ---------- SECTION 2: CIRCUIT SIMULATOR ---------- */
+(function() {
+  const canvas = document.getElementById('circuitCv');
+  const ctx = canvas.getContext('2d');
+  const radioSeries = document.getElementById('typeSeries');
+  const radioParallel = document.getElementById('typeParallel');
+  const vSlider = document.getElementById('voltageSlider');
+  const r1Slider = document.getElementById('r1Slider');
+  const r2Slider = document.getElementById('r2Slider');
+
+  const reqEl = document.getElementById('reqVal');
+  const curEl = document.getElementById('currentVal');
+  const powEl = document.getElementById('powerVal');
+
+  let electrons = [];
+  let numElectrons = 35;
+  for (let i = 0; i < numElectrons; i++) {
+    electrons.push(i / numElectrons); // position along loop from 0 to 1
+  }
+
+  let animationId = null;
+
+  function getCircuitParams() {
+    let V = parseFloat(vSlider.value);
+    let r1 = parseFloat(r1Slider.value);
+    let r2 = parseFloat(r2Slider.value);
+    let isSeries = radioSeries.checked;
+
+    let req = 0;
+    if (isSeries) {
+      req = r1 + r2;
+    } else {
+      req = (r1 * r2) / (r1 + r2);
+    }
+
+    let I = V / req;
+    let P = V * I;
+
+    return { V, r1, r2, isSeries, req, I, P };
+  }
+
+  function drawBulb(x, y, R, current, label) {
+    // base circle
+    ctx.strokeStyle = '#2b2b2b';
+    ctx.lineWidth = 2;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(x, y, 16, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.stroke();
+
+    // cross wire filament
+    ctx.beginPath();
+    ctx.moveTo(x - 11, y - 11);
+    ctx.lineTo(x + 11, y + 11);
+    ctx.moveTo(x + 11, y - 11);
+    ctx.lineTo(x - 11, y + 11);
+    ctx.stroke();
+
+    // glowing circle (glow proportional to power: I^2 * R)
+    let power = (current**2) * R;
+    if (power > 0.05) {
+      let glowAlpha = Math.min(0.8, power / 12);
+      ctx.fillStyle = `rgba(241, 196, 15, ${glowAlpha})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 16, 0, 2*Math.PI);
+      ctx.fill();
+    }
+
+    // Label
+    ctx.fillStyle = 'var(--ink)';
+    ctx.font = '10px Helvetica';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${label} (${R}\u2126)`, x, y + 28);
+  }
+
+  function getSeriesPathPos(p) {
+    // Standard loop path: rectangle 100 to 580 in X, 40 to 160 in Y
+    let W = 480, H = 120;
+    let perimeter = 2 * (W + H);
+    let dist = p * perimeter;
+
+    if (dist < W) {
+      return { x: 100 + dist, y: 40 }; // Top
+    } else if (dist < W + H) {
+      return { x: 580, y: 40 + (dist - W) }; // Right
+    } else if (dist < 2*W + H) {
+      return { x: 580 - (dist - W - H), y: 160 }; // Bottom
+    } else {
+      return { x: 100, y: 160 - (dist - 2*W - H) }; // Left
+    }
+  }
+
+  function tick() {
+    let params = getCircuitParams();
+
+    reqEl.textContent = params.req.toFixed(1);
+    curEl.textContent = params.I.toFixed(2);
+    powEl.textContent = params.P.toFixed(2);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw grid
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1;
+    if (params.isSeries) {
+      // Single loop
+      ctx.strokeRect(100, 40, 480, 120);
+    } else {
+      // Parallel branches
+      ctx.beginPath();
+      // main loops
+      ctx.moveTo(100, 100); ctx.lineTo(100, 40); ctx.lineTo(580, 40); ctx.lineTo(580, 100);
+      ctx.moveTo(100, 100); ctx.lineTo(100, 160); ctx.lineTo(580, 160); ctx.lineTo(580, 100);
+      
+      // inner splits
+      ctx.moveTo(250, 40); ctx.lineTo(250, 160);
+      ctx.moveTo(430, 40); ctx.lineTo(430, 160);
+      ctx.stroke();
+    }
+
+    // Battery (left side)
+    ctx.fillStyle = 'var(--paper)';
+    ctx.strokeStyle = '#2b2b2b';
+    ctx.lineWidth = 2;
+    ctx.fillRect(85, 80, 30, 40);
+    ctx.strokeRect(85, 80, 30, 40);
+    // plus-minus line labels
+    ctx.fillStyle = 'var(--ink)';
+    ctx.font = 'bold 12px Helvetica';
+    ctx.textAlign = 'center';
+    ctx.fillText('+', 100, 95);
+    ctx.fillText('-', 100, 115);
+    ctx.font = '10px Helvetica';
+    ctx.fillText(`${params.V}V`, 100, 134);
+
+    // Draw Components and compute electron path
+    // Electron animation speed matches current
+    let speed = params.I * 0.005;
+
+    if (params.isSeries) {
+      // Resistors on top branch
+      drawBulb(250, 40, params.r1, params.I, 'Bulb 1');
+      drawBulb(430, 40, params.r2, params.I, 'Bulb 2');
+
+      // Draw moving electrons
+      electrons.forEach((p, idx) => {
+        electrons[idx] = (p + speed) % 1.0;
+        let pos = getSeriesPathPos(electrons[idx]);
+        ctx.fillStyle = '#f1c40f';
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 4, 0, 2*Math.PI);
+        ctx.fill();
+      });
+    } else {
+      // Parallel layout:
+      // Resistor 1 on branch X = 250 (vertical)
+      // Resistor 2 on branch X = 430 (vertical)
+      // Let's place bulb 1 in the middle left vertical wire, bulb 2 on the right vertical wire
+      // Current splits: I1 = V / R1, I2 = V / R2
+      let I1 = params.V / params.r1;
+      let I2 = params.V / params.r2;
+
+      drawBulb(250, 100, params.r1, I1, 'Bulb 1');
+      drawBulb(430, 100, params.r2, I2, 'Bulb 2');
+
+      // Draw electrons flowing along branches
+      // Electrons enter from left, split, and re-unite on right
+      // Let's animate them flowing:
+      // Main battery path: bottom-left to top-left.
+      // Top branch: left to right.
+      // Branch 1: down through bulb 1.
+      // Branch 2: down through bulb 2.
+      // Bottom branch: right to left.
+      // In parallel, current is higher in the main trunk (I = I1 + I2).
+      // We can animate them by mapping pathways:
+      electrons.forEach((p, idx) => {
+        electrons[idx] = (p + speed) % 1.0;
+        // Basic representation of flow:
+        // We split the visual paths so they branch naturally
+        let x, y;
+        let branchVal = idx % 2; // split electrons half-half
+        
+        let pathPct = electrons[idx];
+        if (branchVal === 0) {
+          // Pathway 1: through bulb 1
+          // left battery trunk -> split at 250 -> bulb 1 -> bottom wire -> battery
+          if (pathPct < 0.25) {
+            // go from battery up to split (100,100) -> (100,40) -> (250,40)
+            let sPct = pathPct / 0.25;
+            x = sPct < 0.5 ? 100 : 100 + (sPct - 0.5) * 150 * 2;
+            y = sPct < 0.5 ? 100 - sPct * 60 * 2 : 40;
+          } else if (pathPct < 0.5) {
+            // down through bulb 1 (250, 40) -> (250, 160)
+            let sPct = (pathPct - 0.25) / 0.25;
+            x = 250;
+            y = 40 + sPct * 120;
+          } else if (pathPct < 0.75) {
+            // left to battery along bottom (250, 160) -> (100, 160) -> (100, 100)
+            let sPct = (pathPct - 0.5) / 0.25;
+            x = sPct < 0.5 ? 250 - sPct * 150 * 2 : 100;
+            y = sPct < 0.5 ? 160 : 160 - (sPct - 0.5) * 60 * 2;
+          } else {
+            // recharge
+            x = 100;
+            y = 100;
+          }
+        } else {
+          // Pathway 2: through bulb 2
+          // left battery -> top wire to 430 -> down through bulb 2 -> bottom wire to battery
+          if (pathPct < 0.3) {
+            // battery up to top-right split (100,100) -> (100,40) -> (430,40)
+            let sPct = pathPct / 0.3;
+            x = sPct < 0.3 ? 100 : 100 + (sPct - 0.3)/0.7 * 330;
+            y = sPct < 0.3 ? 100 - sPct/0.3 * 60 : 40;
+          } else if (pathPct < 0.6) {
+            // down through bulb 2 (430, 40) -> (430, 160)
+            let sPct = (pathPct - 0.3) / 0.3;
+            x = 430;
+            y = 40 + sPct * 120;
+          } else if (pathPct < 0.9) {
+            // back along bottom wire (430, 160) -> (100, 160) -> (100, 100)
+            let sPct = (pathPct - 0.6) / 0.3;
+            x = sPct < 0.7 ? 430 - sPct/0.7 * 330 : 100;
+            y = sPct < 0.7 ? 160 : 160 - (sPct - 0.7)/0.3 * 60;
+          } else {
+            x = 100;
+            y = 100;
+          }
+        }
+
+        ctx.fillStyle = '#f1c40f';
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, 2*Math.PI);
+        ctx.fill();
+      });
+    }
+
+    animationId = requestAnimationFrame(tick);
+  }
+
+  [vSlider, r1Slider, r2Slider].forEach(slider => {
+    slider.addEventListener('input', () => {
+      // update calculations
+    });
+  });
+
+  [radioSeries, radioParallel].forEach(radio => {
+    radio.addEventListener('change', () => {
+      // change calculations
+    });
+  });
+
+  animationId = requestAnimationFrame(tick);
+})();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+</script>
+
+</body>
+</html>

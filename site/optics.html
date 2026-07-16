@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optics: Waves &amp; Rays — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 9</div>
+    <h1>Optics: Waves &amp; Rays</h1>
+    <p class="lead">Light bends, scatters, and interferes. We can describe it as waves reflecting off barriers or as rays taking the path of absolute least time across refractive boundaries.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#fermat">1. Fermat's Least Time</a></li>
+      <li><a href="#interference">2. Wave Interference</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="fermat">
+      <h2>1 &nbsp;Fermat's Principle of Least Time</h2>
+      <p>How does light know to bend at a boundary? Pierre de Fermat solved this in 1662: light takes the path that takes the <b>least time</b>. Since light travels faster in air ($n_1=1$) than in water ($n_2=1.5$), it spends more distance in the fast medium and less in the slow one. The path that minimizes total time is bent, and the math yields Snell's Law ($n_1\sin\theta_1 = n_2\sin\theta_2$) exactly.</p>
+
+      <div class="viz">
+        <div class="vhead">Fermat Refraction Sandbox (Drag entry point x)</div>
+        <canvas id="fermatCv" width="680" height="280" style="border: 1px solid var(--paper-line); border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <label>Entry Point (x) <input type="range" id="xSlider" min="100" max="580" step="1" value="250"></label>
+          <span style="font-family:Helvetica; font-size:0.85rem">Total Time: <span class="big" id="timeVal" style="color:var(--red)">0.00</span> &mu;s</span>
+        </div>
+
+        <div class="controls" style="justify-content:space-around; font-size:0.82rem">
+          <span style="color:#D35400">n<sub>1</sub> sin &theta;<sub>1</sub> = <span class="big" id="nSin1">0.00</span></span>
+          <span style="color:var(--blue)">n<sub>2</sub> sin &theta;<sub>2</sub> = <span class="big" id="nSin2">0.00</span></span>
+          <span id="opticsVerdict" style="font-weight:bold;"></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Point A is a lifeguard on the sand; Point B is a swimmer in water. Drag the entry slider to change the path. Notice that the travel time is minimized exactly when the two values of $n\sin\theta$ align!</div>
+      </div>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="interference">
+      <h2>2 &nbsp;Young's Double-Slit Wave Interference</h2>
+      <p>When light waves pass through two slits, they spread out and overlap. Where two wave crests meet, they reinforce (constructive interference, bright fringe). Where a crest meets a trough, they cancel (destructive interference, dark fringe). This interference creates a series of bright and dark fringes on a screen.</p>
+
+      <div class="viz">
+        <div class="vhead">Interactive Wave Interference Double Slit</div>
+        <canvas id="waveCv" width="680" height="260" style="border: 1px solid var(--paper-line); background:#09090b; border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <label>Wavelength (&lambda;) <input type="range" id="waveLambda" min="12" max="32" step="1" value="20"></label>
+          <label>Slit Spacing (d) <input type="range" id="waveSpacing" min="16" max="60" step="2" value="34"></label>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Adjust the sliders. Observe how shorter wavelengths or larger slit spacing create narrower, more densely packed interference fringes on the screen (the rightmost vertical bar).</div>
+      </div>
+    </section>
+
+    <footer class="pager">
+      <a href="electricity-magnetism.html">&larr; Chapter 8: Electromagnetism</a>
+      <a href="modern-physics.html">Chapter 10: Modern Physics &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------- SECTION 1: FERMAT REFRACTION ---------- */
+(function() {
+  const canvas = document.getElementById('fermatCv');
+  const ctx = canvas.getContext('2d');
+  const xSlider = document.getElementById('xSlider');
+  const timeVal = document.getElementById('timeVal');
+  const nSin1El = document.getElementById('nSin1');
+  const nSin2El = document.getElementById('nSin2');
+  const verdictEl = document.getElementById('opticsVerdict');
+
+  // Lifeguard A (sand) and Swimmer B (water)
+  const A = { x: 180, y: 50 };
+  const B = { x: 500, y: 230 };
+  const boundaryY = 140;
+  const midY = 140;
+
+  const n_sand = 1.0;
+  const n_water = 1.5;
+  const c = 0.3; // speed constant for visualization time scale
+
+  xSlider.addEventListener('input', draw);
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Sand (top half)
+    ctx.fillStyle = 'rgba(244, 208, 63, 0.1)';
+    ctx.fillRect(0, 0, canvas.width, midY);
+    ctx.fillStyle = '#a1a1aa';
+    ctx.font = '10px Helvetica';
+    ctx.fillText('Sand (Air, n₁ = 1.0)', 15, 20);
+
+    // Water (bottom half)
+    ctx.fillStyle = 'rgba(52, 152, 219, 0.15)';
+    ctx.fillRect(0, midY, canvas.width, canvas.height - midY);
+    ctx.fillStyle = '#a1a1aa';
+    ctx.fillText('Water (n₂ = 1.5)', 15, midY + 20);
+
+    // Boundary line
+    ctx.strokeStyle = '#ffffff22';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, midY);
+    ctx.lineTo(canvas.width, midY);
+    ctx.stroke();
+
+    // Current Entry point x
+    let x = parseFloat(xSlider.value);
+
+    // Draw paths
+    ctx.strokeStyle = 'var(--red)';
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    ctx.moveTo(A.x, A.y);
+    ctx.lineTo(x, boundaryY);
+    ctx.lineTo(B.x, B.y);
+    ctx.stroke();
+
+    // Normal lines
+    ctx.strokeStyle = '#ffffff22';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.moveTo(x, boundaryY - 40);
+    ctx.lineTo(x, boundaryY + 40);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Nodes
+    ctx.fillStyle = 'var(--ink)';
+    ctx.beginPath();
+    ctx.arc(A.x, A.y, 6, 0, 2*Math.PI);
+    ctx.arc(B.x, B.y, 6, 0, 2*Math.PI);
+    ctx.fill();
+    
+    ctx.fillStyle = 'var(--red)';
+    ctx.beginPath();
+    ctx.arc(x, boundaryY, 5, 0, 2*Math.PI);
+    ctx.fill();
+
+    // Text labels
+    ctx.fillStyle = 'var(--ink)';
+    ctx.font = 'bold 12px Helvetica';
+    ctx.fillText('A', A.x - 14, A.y - 4);
+    ctx.fillText('B', B.x + 10, B.y + 4);
+
+    // Calculations
+    let d1 = Math.hypot(x - A.x, boundaryY - A.y);
+    let d2 = Math.hypot(B.x - x, B.y - boundaryY);
+
+    let t1 = (n_sand * d1) / c;
+    let t2 = (n_water * d2) / c;
+    let totalT = (t1 + t2) / 1000; // in simulated microseconds
+
+    timeVal.textContent = totalT.toFixed(3);
+
+    // Angles
+    let sin1 = Math.abs(x - A.x) / d1;
+    let sin2 = Math.abs(B.x - x) / d2;
+    let val1 = n_sand * sin1;
+    let val2 = n_water * sin2;
+
+    nSin1El.textContent = val1.toFixed(3);
+    nSin2El.textContent = val2.toFixed(3);
+
+    // Check if close to minimum (Snell's law solution is around x = 328)
+    if (Math.abs(val1 - val2) < 0.01) {
+      verdictEl.textContent = 'LEAST TIME REACHED!';
+      verdictEl.style.color = 'var(--green)';
+    } else {
+      verdictEl.textContent = '';
+    }
+  }
+
+  draw();
+})();
+
+/* ---------- SECTION 2: WAVE INTERFERENCE ---------- */
+(function() {
+  const canvas = document.getElementById('waveCv');
+  const ctx = canvas.getContext('2d');
+  const lambdaSlider = document.getElementById('waveLambda');
+  const spacingSlider = document.getElementById('waveSpacing');
+
+  let time = 0;
+
+  function tick() {
+    time += 0.12;
+
+    let lambda = parseFloat(lambdaSlider.value);
+    let d = parseFloat(spacingSlider.value);
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Slit coordinates
+    let sy1 = canvas.height / 2 - d / 2;
+    let sy2 = canvas.height / 2 + d / 2;
+    let sx = 140;
+
+    // Draw wave field on canvas
+    // Because full pixel-by-pixel wave shading is extremely expensive, we draw wave crest lines!
+    // A crest occurs where distance from source is an integer multiple of wavelength + time offset
+    let maxDist = canvas.width - sx - 50;
+
+    ctx.strokeStyle = '#ffffff22';
+    ctx.lineWidth = 1;
+    
+    // Left barrier
+    ctx.fillStyle = '#18181b';
+    ctx.fillRect(sx - 8, 0, 8, sy1 - 4);
+    ctx.fillRect(sx - 8, sy1 + 4, 8, sy2 - sy1 - 8);
+    ctx.fillRect(sx - 8, sy2 + 4, 8, canvas.height - sy2 - 4);
+
+    // Draw wave rings expanding from slits
+    ctx.lineWidth = 2.5;
+    let screenX = canvas.width - 50;
+
+    // We draw circles representing wave crests
+    for (let r = (time * 2) % lambda; r < maxDist; r += lambda) {
+      // Slit 1
+      ctx.strokeStyle = '#3b82f650';
+      ctx.beginPath();
+      ctx.arc(sx, sy1, r, -Math.PI/2, Math.PI/2);
+      ctx.stroke();
+
+      // Slit 2
+      ctx.beginPath();
+      ctx.arc(sx, sy2, r, -Math.PI/2, Math.PI/2);
+      ctx.stroke();
+    }
+
+    // Draw interference lines on screen (right side)
+    // The screen is a vertical bar at x = screenX
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(screenX, 0, 15, canvas.height);
+    ctx.strokeRect(screenX, 0, 15, canvas.height);
+
+    // Render bright/dark gradient on screen
+    let stripeH = 2;
+    for (let y = 0; y < canvas.height; y += stripeH) {
+      // distance from y to slits
+      let r1 = Math.hypot(screenX - sx, y - sy1);
+      let r2 = Math.hypot(screenX - sx, y - sy2);
+      let pathDiff = Math.abs(r1 - r2);
+      
+      // Phase difference
+      let k = (2 * Math.PI) / lambda;
+      let phaseDiff = k * pathDiff;
+      let intensity = Math.cos(phaseDiff / 2)**2; // 0 to 1
+
+      // Map wavelength to color (simplistic)
+      let rColor = 40;
+      let gColor = 100 + (lambda * 4);
+      let bColor = 220 - (lambda * 3);
+
+      ctx.fillStyle = `rgba(${rColor}, ${gColor}, ${bColor}, ${intensity})`;
+      ctx.fillRect(screenX + 1, y, 13, stripeH);
+    }
+
+    // Screen labels
+    ctx.fillStyle = 'var(--muted)';
+    ctx.font = '10px Helvetica';
+    ctx.fillText('Screen', screenX - 5, 20);
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+</script>
+
+</body>
+</html>

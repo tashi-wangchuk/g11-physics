@@ -9,13 +9,22 @@
 <body>
 
 <nav class="topnav">
-  <a class="brand" href="index.html">Fundamentals of Physics</a>
-  <a class="chap current" href="vectors.html">1 Vectors</a>
-  <a class="chap" href="dimensions.html">2 Dimensions</a>
-  <a class="chap" href="motion.html">3 Motion</a>
-  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
-  <a class="chap" href="further-applications.html">5 Applications</a>
-  <a class="pdf" href="main.pdf">Textbook PDF</a>
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
 </nav>
 
 <div class="chapter-head">
@@ -88,18 +97,18 @@
             <marker id="mA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E86C1"/></marker>
             <marker id="mB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
             <marker id="mBg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B" opacity="0.35"/></marker>
-            <marker id="mR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+            <marker id="mR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
           </defs>
           <g id="grid"></g>
           <line id="bg" stroke="#C0392B" stroke-width="3" opacity="0.35" marker-end="url(#mBg)"/>
-          <line id="rr" stroke="#111" stroke-width="4" marker-end="url(#mR)"/>
+          <line id="rr" stroke="#fff" stroke-width="4" marker-end="url(#mR)"/>
           <line id="va" stroke="#2E86C1" stroke-width="4" marker-end="url(#mA)"/>
           <line id="vb" stroke="#C0392B" stroke-width="4" marker-end="url(#mB)"/>
           <circle id="ha" r="14" fill="#2E86C1" fill-opacity="0.15" stroke="#2E86C1" stroke-width="1.5" cursor="grab"/>
           <circle id="hb" r="14" fill="#C0392B" fill-opacity="0.15" stroke="#C0392B" stroke-width="1.5" cursor="grab"/>
           <text id="la" font-size="17" font-style="italic" fill="#2E86C1" font-weight="bold">a</text>
           <text id="lb" font-size="17" font-style="italic" fill="#C0392B" font-weight="bold">b</text>
-          <text id="lr" font-size="17" font-style="italic" fill="#111" font-weight="bold">a+b</text>
+          <text id="lr" font-size="17" font-style="italic" fill="#fff" font-weight="bold">a+b</text>
         </svg>
         <div class="controls">
           <span>|<b style="color:#2E86C1">a</b>| = <span class="big" id="maga"></span></span>
@@ -132,18 +141,18 @@
         <div class="vhead">One vector and its two shadows</div>
         <svg id="cboard" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <marker id="mC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+            <marker id="mC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fff"/></marker>
           </defs>
           <g id="cgrid"></g>
           <line id="cshx" stroke="#1E8449" stroke-width="4" opacity="0.8"/>
           <line id="cshy" stroke="#D35400" stroke-width="4" opacity="0.8"/>
           <line id="cdash1" stroke="#888" stroke-width="1" stroke-dasharray="5,5"/>
           <line id="cdash2" stroke="#888" stroke-width="1" stroke-dasharray="5,5"/>
-          <line id="cv" stroke="#111" stroke-width="4" marker-end="url(#mC)"/>
-          <circle id="ch" r="14" fill="#111" fill-opacity="0.1" stroke="#111" stroke-width="1.5" cursor="grab"/>
+          <line id="cv" stroke="#fff" stroke-width="4" marker-end="url(#mC)"/>
+          <circle id="ch" r="14" fill="#fff" fill-opacity="0.1" stroke="#fff" stroke-width="1.5" cursor="grab"/>
           <text id="clx" font-size="14" fill="#1E8449" font-weight="bold" font-family="Helvetica"></text>
           <text id="cly" font-size="14" fill="#D35400" font-weight="bold" font-family="Helvetica"></text>
-          <text id="clv" font-size="16" font-style="italic" fill="#111" font-weight="bold">A</text>
+          <text id="clv" font-size="16" font-style="italic" fill="#fff" font-weight="bold">A</text>
         </svg>
         <div class="controls">
           <span>A = <span class="big" id="cmag"></span></span>
@@ -200,7 +209,7 @@
       arrow(p1, p2, '#C0392B', 4);
       // displacement
       cx.setLineDash([7, 6]);
-      arrow({x:ox,y:oy}, p2, '#111', 3);
+      arrow({x:ox,y:oy}, p2, '#fff', 3);
       cx.setLineDash([]);
       // labels
       cx.font = 'bold 14px Helvetica';
@@ -208,9 +217,9 @@
       cx.fillStyle = '#C0392B';
       cx.fillText('3 m', (p1.x + p2.x) / 2 + 10, (p1.y + p2.y) / 2 - 8);
       // start dot
-      cx.fillStyle = '#111';
+      cx.fillStyle = '#fff';
       cx.beginPath(); cx.arc(ox, oy, 4, 0, 7); cx.fill();
-      cx.font = '12px Helvetica'; cx.fillStyle = '#555';
+      cx.font = '12px Helvetica'; cx.fillStyle = '#a1a1aa';
       cx.fillText('start', ox - 14, oy + 20);
       // displacement magnitude: law of cosines with interior angle
       var disp = Math.sqrt(16 + 9 + 24 * Math.cos(ang));
@@ -226,10 +235,10 @@
     var a = { x: 4, y: 0 }, b = { x: 0, y: 3 }, locked = false;
     var svg = document.getElementById('board');
     var g = document.getElementById('grid'), s = '';
-    for (var x = ORG.x % U; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#00000010"/>';
-    for (var y = ORG.y % U; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#00000010"/>';
-    s += '<line x1="0" y1="'+ORG.y+'" x2="'+W+'" y2="'+ORG.y+'" stroke="#00000030"/>';
-    s += '<line x1="'+ORG.x+'" y1="0" x2="'+ORG.x+'" y2="'+H+'" stroke="#00000030"/>';
+    for (var x = ORG.x % U; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#ffffff10"/>';
+    for (var y = ORG.y % U; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#ffffff10"/>';
+    s += '<line x1="0" y1="'+ORG.y+'" x2="'+W+'" y2="'+ORG.y+'" stroke="#ffffff30"/>';
+    s += '<line x1="'+ORG.x+'" y1="0" x2="'+ORG.x+'" y2="'+H+'" stroke="#ffffff30"/>';
     g.innerHTML = s;
 
     function px(v) { return { x: ORG.x + v.x * U, y: ORG.y - v.y * U }; }
@@ -317,10 +326,10 @@
     var v = { x: 5, y: 3 };
     var svg = document.getElementById('cboard');
     var g = document.getElementById('cgrid'), s = '';
-    for (var x = ORG.x % U; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#00000010"/>';
-    for (var y = ORG.y % U; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#00000010"/>';
-    s += '<line x1="0" y1="'+ORG.y+'" x2="'+W+'" y2="'+ORG.y+'" stroke="#00000030"/>';
-    s += '<line x1="'+ORG.x+'" y1="0" x2="'+ORG.x+'" y2="'+H+'" stroke="#00000030"/>';
+    for (var x = ORG.x % U; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#ffffff10"/>';
+    for (var y = ORG.y % U; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#ffffff10"/>';
+    s += '<line x1="0" y1="'+ORG.y+'" x2="'+W+'" y2="'+ORG.y+'" stroke="#ffffff30"/>';
+    s += '<line x1="'+ORG.x+'" y1="0" x2="'+ORG.x+'" y2="'+H+'" stroke="#ffffff30"/>';
     g.innerHTML = s;
 
     function update() {
@@ -374,6 +383,25 @@
     });
     update();
   })();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 </script>
 
 </body>

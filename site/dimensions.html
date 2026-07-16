@@ -9,13 +9,22 @@
 <body>
 
 <nav class="topnav">
-  <a class="brand" href="index.html">Fundamentals of Physics</a>
-  <a class="chap" href="vectors.html">1 Vectors</a>
-  <a class="chap current" href="dimensions.html">2 Dimensions</a>
-  <a class="chap" href="motion.html">3 Motion</a>
-  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
-  <a class="chap" href="further-applications.html">5 Applications</a>
-  <a class="pdf" href="main.pdf">Textbook PDF</a>
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
 </nav>
 
 <div class="chapter-head">
@@ -175,9 +184,9 @@
       var E = Ekt * KT;
       cx.clearRect(0, 0, cv.width, cv.height);
       // axes
-      cx.strokeStyle = '#00000045'; cx.lineWidth = 1;
+      cx.strokeStyle = '#ffffff45'; cx.lineWidth = 1;
       cx.beginPath(); cx.moveTo(L, B - H2); cx.lineTo(L, B); cx.lineTo(L + W2, B); cx.stroke();
-      cx.fillStyle = '#555'; cx.font = '12px Helvetica';
+      cx.fillStyle = '#a1a1aa'; cx.font = '12px Helvetica';
       cx.fillText('time after detonation (ms)', L + W2/2 - 70, B + 26);
       cx.save(); cx.translate(16, B - H2/2 + 50); cx.rotate(-Math.PI/2);
       cx.fillText('fireball radius (m)', 0, 0); cx.restore();
@@ -186,7 +195,7 @@
       }
       for (var r = 0; r <= 250; r += 50) {
         cx.fillText(r, L - 30, Y(r) + 4);
-        cx.strokeStyle = '#00000012';
+        cx.strokeStyle = '#ffffff12';
         cx.beginPath(); cx.moveTo(L, Y(r)); cx.lineTo(L + W2, Y(r)); cx.stroke();
       }
       // curve R = (E t^2 / rho)^(1/5)
@@ -201,7 +210,7 @@
       cx.stroke();
       // Taylor's data point
       var tD = 0.025, rD = 140;
-      cx.fillStyle = '#111';
+      cx.fillStyle = '#fff';
       cx.beginPath(); cx.arc(X(tD), Y(rD), 6, 0, 7); cx.fill();
       cx.font = 'bold 12px Helvetica';
       cx.fillText('declassified frame: 140 m at 25 ms', X(tD) + 12, Y(rD) - 6);
@@ -217,6 +226,25 @@
     se.addEventListener('input', draw);
     draw();
   })();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 </script>
 
 </body>

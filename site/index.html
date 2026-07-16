@@ -1,61 +1,329 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fundamentals of Physics — a visual introduction</title>
-<link rel="stylesheet" href="style.css">
+<title>Fundamentals of Physics — For the Love of Physics</title>
+<!-- Google Fonts: Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons CDN -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        },
+        colors: {
+          brandDark: '#f4f4f5',
+          brandHover: '#e4e4e7',
+        }
+      }
+    }
+  }
+</script>
 </head>
-<body>
+<body class="min-h-screen bg-black flex flex-col font-sans antialiased text-zinc-100">
 
-<div class="hero">
-  <h1>Fundamentals of Physics</h1>
-  <p class="tag">A visual, interactive companion to the Grade 11 physics course at
-  Druk Gyalpo's Institute. Every idea comes with something to poke at:
-  predict first, then check.</p>
-  <div class="actions">
-    <a class="primary" href="vectors.html">Start with Chapter 1</a>
-    <a class="secondary" href="main.pdf">Download the full textbook (PDF)</a>
-  </div>
-</div>
+  <!-- ==================== HERO SECTION ==================== -->
+  <header id="home" class="relative h-screen overflow-hidden">
+    <!-- Video Background -->
+    <video 
+      id="bgVideo"
+      class="absolute inset-0 w-full h-full object-cover z-0"
+      muted 
+      playsinline
+      preload="auto"
+      src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_091828_e240eb17-6edc-4129-ad9d-98678e3fd238.mp4">
+    </video>
+    
+    <!-- Premium Gradient Overlay for Readability (Darkened for Black theme) -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black z-0"></div>
 
-<div class="cards">
-  <a class="card" href="vectors.html">
-    <div class="num">Chapter 1</div>
-    <h3>Vectors</h3>
-    <p>Why 4 + 3 can equal anything from 1 to 7 — the arithmetic of quantities that point.</p>
-  </a>
-  <a class="card" href="dimensions.html">
-    <div class="num">Chapter 2</div>
-    <h3>Dimensional Analysis</h3>
-    <p>Predict formulas before deriving them, using nothing but the bookkeeping of units.</p>
-  </a>
-  <a class="card" href="motion.html">
-    <div class="num">Chapter 3</div>
-    <h3>Motion</h3>
-    <p>What a speedometer actually means — Zeno's puzzle, the derivative, and graphs that talk to each other.</p>
-  </a>
-  <a class="card" href="newtons-laws.html">
-    <div class="num">Chapter 4</div>
-    <h3>Newton's Three Laws</h3>
-    <p>Galileo's ramps, force as the changer of motion, and why equal forces have unequal consequences.</p>
-  </a>
-  <a class="card" href="further-applications.html">
-    <div class="num">Chapter 5</div>
-    <h3>Friction, Elevators &amp; Gravity</h3>
-    <p>Contact forces, what a scale really reads, and the law that connects a falling apple to the Moon.</p>
-  </a>
-  <a class="card soon" href="#">
-    <div class="num">Chapter 6</div>
-    <h3>Work, Energy &amp; Momentum</h3>
-    <p>Coming soon.</p>
-  </a>
-</div>
+    <!-- Content Wrapper -->
+    <div class="relative z-10 h-full flex flex-col justify-between">
+      
+      <!-- Navigation Bar -->
+      <nav class="max-w-7xl mx-auto w-full px-8 py-6 flex items-center justify-between">
+        <!-- Brand Name / Owner -->
+        <a href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer" class="text-2xl font-bold text-zinc-100 tracking-tight hover:opacity-75 transition-opacity">
+          TASHI WANGCHUK
+        </a>
 
-<p class="sitefoot">
-  Tashi Wangchuk &middot; Druk Gyalpo's Institute, Pangbisa, Paro<br>
-  The same content, in full written form: <a href="main.pdf">textbook PDF</a>.
-</p>
+        <!-- Desktop Menu Items -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#home" class="text-sm font-semibold text-zinc-100 hover:text-zinc-300 transition-colors">Home</a>
+          <a href="#chapters" class="text-sm font-semibold text-zinc-100 hover:text-zinc-300 transition-colors">Chapters</a>
+          <a href="main.pdf" class="text-sm font-semibold text-zinc-100 hover:text-zinc-300 transition-colors">Textbook</a>
+        </div>
 
+        <!-- Mobile Hamburger Button -->
+        <div class="md:hidden">
+          <button id="menuBtn" class="text-zinc-100 focus:outline-none hover:text-zinc-300 transition-colors">
+            <i id="menuIcon" data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Dropdown Menu (Dark theme) -->
+      <div id="mobileMenu" class="hidden absolute top-20 right-8 left-8 bg-zinc-900/95 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-800 p-6 flex flex-col gap-4 z-50 transition-all duration-300">
+        <a href="#home" onclick="toggleMenu()" class="text-lg font-medium text-zinc-100 hover:text-zinc-300 transition-colors">Home</a>
+        <a href="#chapters" onclick="toggleMenu()" class="text-lg font-medium text-zinc-100 hover:text-zinc-300 transition-colors">Chapters</a>
+        <a href="main.pdf" onclick="toggleMenu()" class="text-lg font-medium text-zinc-100 hover:text-zinc-300 transition-colors">Textbook PDF</a>
+      </div>
+
+      <!-- Main Hero Content -->
+      <div class="flex-1 flex flex-col items-center justify-center text-center px-4 -mt-24 md:-mt-32">
+        <!-- Upper Label -->
+        <span class="text-xs md:text-sm font-bold text-zinc-400 tracking-widest uppercase mb-4 block">
+          GRADE 11
+        </span>
+        
+        <!-- Large overlapping heading -->
+        <h1 class="flex flex-col items-center">
+          <span class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal text-zinc-400 leading-none tracking-tighter">
+            For the Love of
+          </span>
+          <span class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-none tracking-tighter -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-[16px] block">
+            Physics
+          </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg md:text-xl text-zinc-400 mt-6 mb-8 max-w-2xl leading-relaxed">
+          A visual, interactive companion to the Grade 11 physics course at Druk Gyalpo's Institute. Every idea comes with something to poke at: predict first, then check.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="#chapters" class="px-6 py-3 rounded-full bg-zinc-800/90 backdrop-blur-sm text-zinc-100 font-medium hover:bg-zinc-700 transition-colors">
+            Discover
+          </a>
+          <a href="main.pdf" class="px-6 py-3 rounded-full text-black bg-white font-medium hover:bg-zinc-200 transition-colors">
+            Download PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- Arrow Indicator bottom center -->
+      <div class="pb-8 flex justify-center z-10 animate-bounce">
+        <a href="#chapters" class="text-zinc-400 hover:text-zinc-100 transition-colors">
+          <i data-lucide="chevron-down" class="w-6 h-6"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ==================== CHAPTER CARDS GRID ==================== -->
+  <section id="chapters" class="bg-black py-24 px-6 md:px-12 flex-1 scroll-mt-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-xs font-bold text-zinc-500 tracking-widest uppercase mb-2 block">COURSE INDEX</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-zinc-100 tracking-tight">Explore the Interactive Chapters</h2>
+        <div class="h-1 w-16 bg-white mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="vectors.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 1</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Vectors</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Why 4 + 3 can equal anything from 1 to 7 — the arithmetic of quantities that point.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="dimensions.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 2</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Dimensional Analysis</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Predict formulas before deriving them, using nothing but the bookkeeping of units.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="motion.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 3</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Motion</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">What a speedometer actually means — Zeno's puzzle, the derivative, and graphs that talk to each other.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="newtons-laws.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 4</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Newton's Three Laws</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Galileo's ramps, force as the changer of motion, and why equal forces have unequal consequences.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="further-applications.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 5</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Friction, Elevators &amp; Gravity</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Contact forces, what a scale really reads, and the law that connects a falling apple to the Moon.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="work-energy-momentum.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 6</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Work, Energy &amp; Momentum</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">The conservation laws that simplify the universe — work, collisions, rockets, and why planetary orbits sweep equal areas.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="research-skills.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 7</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Research Skills</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Measurement uncertainties, mean and standard error, error propagation, and guided-autonomy inquiry labs.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="electricity-magnetism.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 8</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Electricity &amp; Magnetism</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Coulomb's torsion balance, battery circuits under Ohm's Law, and how electric currents create magnetic fields.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="optics.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 9</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Optics: Waves &amp; Rays</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Young's double slit interference, Fermat's principle of least time, and the physics of rainbows.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+        <a class="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 border-t-4 border-zinc-500 rounded-2xl p-6 hover:shadow-2xl hover:shadow-zinc-900/50 hover:-translate-y-1 transition-all duration-300" href="modern-physics.html">
+          <div>
+            <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Chapter 10</div>
+            <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors mb-2">Modern Physics</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Einstein's photoelectric photons, wave-particle duality, and the probabilistic world of quantum mechanics.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-bold text-zinc-300 group-hover:translate-x-1 transition-transform">
+            Start Chapter <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-black border-t border-zinc-900 py-12 px-6 text-center text-sm text-zinc-500">
+    <div class="max-w-6xl mx-auto">
+      <p class="mb-2">&copy; 2026 Tashi Wangchuk &middot; Druk Gyalpo's Institute, Pangbisa, Paro</p>
+      <p>Read the textbook offline: <a href="main.pdf" class="text-zinc-300 hover:text-zinc-100 font-medium hover:underline">Download full PDF version</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Toggle Mobile Menu
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const menuIcon = document.getElementById('menuIcon');
+      
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        // Change icon to close (X)
+        menuIcon.setAttribute('data-lucide', 'x');
+      } else {
+        menu.classList.add('hidden');
+        // Change icon to hamburger
+        menuIcon.setAttribute('data-lucide', 'menu');
+      }
+      lucide.createIcons();
+    }
+
+    document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+
+    // Video Scrubbing with Seeking Guard
+    const video = document.getElementById('bgVideo');
+    let targetTime = 0;
+    let currentTime = 0;
+    let duration = 0;
+
+    video.addEventListener('loadedmetadata', () => {
+      duration = video.duration;
+      updateTargetTime();
+    });
+
+    if (video.readyState >= 1) {
+      duration = video.duration;
+      updateTargetTime();
+    }
+
+    function updateTargetTime() {
+      if (!duration) return;
+      let scrollFraction = window.scrollY / window.innerHeight;
+      // Clamp scrollFraction between 0 and 1
+      scrollFraction = Math.max(0, Math.min(1, scrollFraction));
+      targetTime = scrollFraction * duration;
+    }
+
+    window.addEventListener('scroll', updateTargetTime);
+    window.addEventListener('resize', updateTargetTime);
+
+    function scrubLoop() {
+      if (!duration && video.duration) {
+        duration = video.duration;
+        updateTargetTime();
+      }
+
+      if (duration) {
+        // Smooth interpolation
+        currentTime += (targetTime - currentTime) * 0.08;
+
+        // Seeking guard: update frame only when not actively seeking and delta > threshold
+        if (!video.seeking && Math.abs(video.currentTime - currentTime) > 0.01) {
+          video.currentTime = currentTime;
+        }
+      }
+
+      requestAnimationFrame(scrubLoop);
+    }
+
+    requestAnimationFrame(scrubLoop);
+  </script>
 </body>
 </html>

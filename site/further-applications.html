@@ -9,13 +9,22 @@
 <body>
 
 <nav class="topnav">
-  <a class="brand" href="index.html">Fundamentals of Physics</a>
-  <a class="chap" href="vectors.html">1 Vectors</a>
-  <a class="chap" href="dimensions.html">2 Dimensions</a>
-  <a class="chap" href="motion.html">3 Motion</a>
-  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
-  <a class="chap current" href="further-applications.html">5 Applications</a>
-  <a class="pdf" href="main.pdf">Textbook PDF</a>
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
 </nav>
 
 <div class="chapter-head">
@@ -88,19 +97,23 @@
         <div class="vhead">A 60 kg person on a scale (g = 10 m/s²)</div>
         <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-start">
           <svg id="elsvg" viewBox="0 0 300 400" style="flex:0 1 240px" xmlns="http://www.w3.org/2000/svg">
-            <line id="cable" x1="150" y1="8" x2="150" y2="48" stroke="#222" stroke-width="3"/>
+            <!-- Shaft outline & Snapped cable marker -->
+            <line id="cable" x1="150" y1="8" x2="150" y2="48" stroke="#fff" stroke-width="3"/>
             <g id="snap" visibility="hidden"><line x1="140" y1="22" x2="162" y2="36" stroke="#C0392B" stroke-width="3"/></g>
-            <rect x="52" y="48" width="196" height="300" fill="none" stroke="#222" stroke-width="4"/>
-            <rect x="54" y="336" width="192" height="10" fill="#ccc"/>
-            <rect x="112" y="310" width="76" height="26" fill="#bbb" stroke="#222" stroke-width="2"/>
-            <rect x="126" y="315" width="48" height="16" fill="#fff" stroke="#888"/>
-            <text id="elread" x="150" y="327" font-size="11" font-family="Courier New" text-anchor="middle" font-weight="bold">60.0</text>
-            <g stroke="#222" stroke-width="4" fill="none" stroke-linecap="round">
-              <line x1="138" y1="310" x2="150" y2="292"/><line x1="162" y1="310" x2="150" y2="292"/>
-              <line x1="150" y1="292" x2="150" y2="222"/>
-              <line x1="150" y1="255" x2="124" y2="268"/><line x1="150" y1="255" x2="176" y2="268"/>
+            <rect x="52" y="48" width="196" height="300" fill="none" stroke="#fff" stroke-width="4"/>
+            <rect x="54" y="336" width="192" height="10" fill="#27272a"/>
+            <rect x="112" y="310" width="76" height="26" fill="#18181b" stroke="#fff" stroke-width="2"/>
+            <rect x="126" y="315" width="48" height="16" fill="#000" stroke="#888"/>
+            <text id="elread" x="150" y="327" font-size="11" font-family="Courier New" text-anchor="middle" font-weight="bold" fill="#fff">60.0</text>
+            <!-- Person -->
+            <g stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round">
+              <line x1="150" y1="220" x2="150" y2="250"/>
+              <line x1="150" y1="230" x2="136" y2="242"/>
+              <line x1="150" y1="230" x2="164" y2="242"/>
+              <line x1="150" y1="250" x2="140" y2="280"/>
+              <line x1="150" y1="250" x2="160" y2="280"/>
             </g>
-            <circle cx="150" cy="202" r="18" fill="#F2E4C2" stroke="#222" stroke-width="4"/>
+            <circle cx="150" cy="202" r="18" fill="#09090b" stroke="#fff" stroke-width="4"/>
             <g id="Nar">
               <line id="Nl" x1="92" y1="310" x2="92" y2="210" stroke="#2E86C1" stroke-width="5"/>
               <polygon id="Nh" points="92,200 84,216 100,216" fill="#2E86C1"/>
@@ -188,6 +201,7 @@
     var sl = document.getElementById('fpush');
     var MU_S = 0.5, MU_K = 0.4, N = 100;      // m = 10 kg, g = 10
     var pos = 60, lastTs = null, vel = 0;
+    var ox = 340, groundY = 150, w = 90, h = 60;
     function state() {
       var F = parseFloat(sl.value);
       if (F <= MU_S * N) return { F: F, f: F, slip: false };
@@ -201,12 +215,14 @@
       else { el.textContent = 'stuck — friction matches you'; el.style.color = '#1E8449'; }
       cx.clearRect(0, 0, cv.width, cv.height);
       // ground
-      cx.strokeStyle = '#6a5f45'; cx.lineWidth = 2;
-      cx.beginPath(); cx.moveTo(0, 150); cx.lineTo(cv.width, 150); cx.stroke();
-      // box
-      cx.fillStyle = '#00000020'; cx.strokeStyle = '#333';
-      cx.fillRect(pos, 90, 90, 60); cx.strokeRect(pos, 90, 90, 60);
-      // push arrow (red, from left)
+      cx.strokeStyle = 'var(--muted)'; cx.lineWidth = 2;
+      cx.beginPath(); cx.moveTo(0, groundY); cx.lineTo(cv.width, groundY); cx.stroke();
+      // block
+      cx.fillStyle = '#ffffff20'; cx.strokeStyle = '#fff';
+      cx.lineWidth = 2.5;
+      cx.fillRect(pos - w/2, groundY - h, w, h);
+      cx.strokeRect(pos - w/2, groundY - h, w, h);
+      // pull vector
       cx.strokeStyle = '#C0392B'; cx.fillStyle = '#C0392B'; cx.lineWidth = 5;
       var alen = st.F * 1.6;
       cx.beginPath(); cx.moveTo(pos - alen - 12, 120); cx.lineTo(pos - 12, 120); cx.stroke();
@@ -224,10 +240,10 @@
       cx.fillStyle = '#1E8449';
       cx.fillText('friction: ' + st.f.toFixed(0) + ' N', 20, 225);
       cx.fillRect(150, 215, st.f * 5, 12);
-      // threshold tick
-      cx.strokeStyle = '#111'; cx.lineWidth = 1.5;
-      cx.beginPath(); cx.moveTo(150 + 50 * 5, 180); cx.lineTo(150 + 50 * 5, 232); cx.stroke();
-      cx.font = '11px Helvetica'; cx.fillStyle = '#555';
+      // force scale rules
+      cx.strokeStyle = '#fff'; cx.lineWidth = 1.5;
+      cx.beginPath(); cx.moveTo(ox, groundY + 18); cx.lineTo(ox, groundY + 36); cx.stroke();
+      cx.font = '11px Helvetica'; cx.fillStyle = '#a1a1aa';
       cx.fillText('μs𝒩 = 50 N', 150 + 250 + 6, 181);
     }
     function tick(ts) {
@@ -322,10 +338,10 @@
       cx.clearRect(0, 0, cv.width, cv.height);
       // Earth
       cx.beginPath(); cx.arc(CX, CY, RE, 0, 7);
-      cx.fillStyle = '#2E86C122'; cx.fill();
+      cx.fillStyle = '#2E86C144'; cx.fill();
       cx.strokeStyle = '#2E86C1'; cx.lineWidth = 2; cx.stroke();
-      // mountain
-      cx.fillStyle = '#6a5f45';
+      // Earth label
+      cx.fillStyle = '#a1a1aa';
       cx.beginPath();
       cx.moveTo(CX - 10, CY - RE + 2); cx.lineTo(CX, CY - RE - 14); cx.lineTo(CX + 10, CY - RE + 2);
       cx.closePath(); cx.fill();
@@ -387,6 +403,25 @@
     document.getElementById('cnvv').textContent = parseFloat(sl.value).toFixed(1);
     drawStatic();
   })();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 </script>
 
 </body>

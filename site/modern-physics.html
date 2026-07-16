@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modern Physics — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 10</div>
+    <h1>Modern Physics: A Quantum Preview</h1>
+    <p class="lead">At the subatomic scale, certainty dissolves. Light travels in packets called photons, solid electrons behave like waves that can pass through multiple doors at once, and probability replaces clockwork determinism.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#photoelectric">1. Photoelectric Effect</a></li>
+      <li><a href="#duality">2. Wave-Particle Duality</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="photoelectric">
+      <h2>1 &nbsp;The Photoelectric Effect</h2>
+      <p>When light hits metal, it knocks out electrons. If light were a classical wave, any color could eject electrons if it were bright enough. But Einstein showed that light consists of packets called <b>photons</b>. An electron absorbs one photon: if the photon's energy ($E = hf$) is less than the metal's work function ($\Phi$), no electron escapes, no matter how bright the beam. If $E > \Phi$, electrons fly out instantly.</p>
+
+      <div class="viz">
+        <div class="vhead">Photoelectric Chamber and Energy Plot</div>
+        <div style="display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center;">
+          <canvas id="photochamberCv" width="350" height="230" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;"></canvas>
+          <canvas id="energyplotCv" width="290" height="230" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;"></canvas>
+        </div>
+        
+        <div class="controls">
+          <label>Wavelength (&lambda;) <input type="range" id="photoLambda" min="200" max="800" step="5" value="400"> <span class="big" id="lambdaNum">400</span> nm</label>
+          <label>Intensity <input type="range" id="photoIntensity" min="0" max="100" step="5" value="50"> <span class="big" id="intensityNum">50</span>%</label>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Adjust the sliders. Violet/UV light has high energy and knocks out electrons (yellow dots). Red/Infrared light has low energy and ejects nothing, even at 100% intensity! The plot shows kinetic energy $K_{\text{max}}$ versus light frequency $f$.</div>
+      </div>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="duality">
+      <h2>2 &nbsp;Wave-Particle Duality</h2>
+      <p>Fire electrons one-by-one at a double slit. Each electron lands as a single point on the screen (particle nature). Yet, as we accumulate thousands of electrons, they organize into an interference pattern of bands (wave nature). Each electron passes through both slits as a probability wave, interfering with itself before collapsing to a point on the screen.</p>
+
+      <div class="viz">
+        <div class="vhead">Interactive Single-Electron Double-Slit Builder</div>
+        <canvas id="diffractionCv" width="680" height="260" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <button id="fireBtn">Fire Single Electron</button>
+          <button id="runBtn">Run Continuous</button>
+          <button id="clearDiffBtn">Clear Screen</button>
+          <span style="font-family:Helvetica; font-size:0.85rem">Total Electrons: <span class="big" id="electronCount">0</span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Click "Fire Single Electron" to see individual hits. Click "Run Continuous" to watch thousands of electrons build up. Notice how an ordered wave interference pattern emerges from completely random individual particle hits!</div>
+      </div>
+    </section>
+
+    <footer class="pager">
+      <a href="optics.html">&larr; Chapter 9: Optics</a>
+      <span></span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------- SECTION 1: PHOTOELECTRIC EFFECT ---------- */
+(function() {
+  const chCanvas = document.getElementById('photochamberCv');
+  const chCtx = chCanvas.getContext('2d');
+  const plCanvas = document.getElementById('energyplotCv');
+  const plCtx = plCanvas.getContext('2d');
+
+  const lambdaSlider = document.getElementById('photoLambda');
+  const intensitySlider = document.getElementById('photoIntensity');
+  const lambdaNum = document.getElementById('lambdaNum');
+  const intensityNum = document.getElementById('intensityNum');
+
+  // CS metal plate parameters
+  const workFunction = 2.14; // Cesium work function in eV
+  const h = 4.1357e-15; // Planck's constant in eV.s
+  const c = 3.0e17; // nm/s
+
+  let electrons = [];
+
+  function getPhysics() {
+    let lambda = parseFloat(lambdaSlider.value);
+    let intensity = parseFloat(intensitySlider.value);
+
+    // E = hc / lambda
+    let frequency = c / lambda; // in Hz (10^15 scale)
+    let photonEnergy = (1240 / lambda); // in eV
+    let keMax = photonEnergy - workFunction;
+    let thresholdLambda = 1240 / workFunction; // ~579nm
+
+    return { lambda, intensity, frequency, photonEnergy, keMax, thresholdLambda };
+  }
+
+  function tick() {
+    let phys = getPhysics();
+    lambdaNum.textContent = phys.lambda;
+    intensityNum.textContent = phys.intensity;
+
+    // Eject electrons: probability based on intensity and threshold
+    if (phys.keMax > 0 && phys.intensity > 0) {
+      // Eject rate proportional to intensity
+      if (Math.random() < (phys.intensity / 100) * 0.25) {
+        electrons.push({
+          x: 90,
+          y: 40 + Math.random() * 150,
+          vx: Math.sqrt(phys.keMax) * 1.8 + 0.5,
+          vy: (Math.random() - 0.5) * 0.6
+        });
+      }
+    }
+
+    // Update electrons
+    electrons.forEach((el, idx) => {
+      el.x += el.vx;
+      el.y += el.vy;
+    });
+
+    // Remove offscreen
+    electrons = electrons.filter(el => el.x < 260);
+
+    drawChamber(phys);
+    drawPlot(phys);
+
+    requestAnimationFrame(tick);
+  }
+
+  function drawChamber(p) {
+    chCtx.clearRect(0, 0, chCanvas.width, chCanvas.height);
+
+    // Draw plates
+    chCtx.fillStyle = '#7f8c8d';
+    chCtx.fillRect(75, 40, 15, 150); // Emitter plate
+    chCtx.fillStyle = '#bdc3c7';
+    chCtx.fillRect(260, 40, 15, 150); // Collector plate
+
+    // Labels
+    chCtx.fillStyle = '#fff';
+    chCtx.font = '9px Helvetica';
+    chCtx.fillText('Emitter (Cesium)', 45, 205);
+    chCtx.fillText('Collector', 245, 205);
+
+    // Draw Light beam
+    if (p.intensity > 0) {
+      // Color mapping from wavelength
+      let r = 0, g = 0, b = 0;
+      if (p.lambda < 400) { r = 160; b = 255; } // UV/Violet
+      else if (p.lambda < 480) { g = 80; b = 255; } // Blue
+      else if (p.lambda < 560) { g = 255; } // Green
+      else if (p.lambda < 620) { r = 241; g = 196; } // Yellow/Orange
+      else { r = 255; } // Red
+
+      let alpha = (p.intensity / 100) * 0.45;
+      chCtx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      chCtx.lineWidth = 18;
+      chCtx.beginPath();
+      chCtx.moveTo(0, 50);
+      chCtx.lineTo(75, 115);
+      chCtx.stroke();
+    }
+
+    // Draw electrons
+    electrons.forEach(el => {
+      chCtx.fillStyle = '#f1c40f';
+      chCtx.beginPath();
+      chCtx.arc(el.x, el.y, 3.5, 0, 2*Math.PI);
+      chCtx.fill();
+    });
+  }
+
+  function drawPlot(p) {
+    plCtx.clearRect(0, 0, plCanvas.width, plCanvas.height);
+
+    let ox = 40, oy = 180;
+    let graphW = 220, graphH = 140;
+
+    // Draw Axes
+    plCtx.strokeStyle = '#fff';
+    plCtx.lineWidth = 1.5;
+    plCtx.beginPath();
+    plCtx.moveTo(ox, oy); plCtx.lineTo(ox + graphW, oy); // frequency
+    plCtx.moveTo(ox, oy); plCtx.lineTo(ox, oy - graphH); // KE
+    plCtx.stroke();
+
+    // Axis labels
+    plCtx.fillStyle = '#fff';
+    plCtx.font = '9px Helvetica';
+    plCtx.fillText('f (10¹⁴ Hz)', ox + graphW - 50, oy + 18);
+    plCtx.fillText('K_max (eV)', ox - 32, oy - graphH + 10);
+
+    // Draw threshold boundary
+    let fThreshold = workFunction / h / 1e14; //Cesium threshold frequency
+    // Draw KE line: K = hf - Phi
+    // h = 4.14 eV.s (frequency is scaled to 1e14 Hz, so slope h = 0.414 eV per 1e14 Hz)
+    // f ranges from 3.75 (800nm) to 15 (200nm)
+    let fMin = 3.0, fMax = 15.0;
+    
+    function getCanvasCoords(f, ke) {
+      let cx = ox + ((f - fMin) / (fMax - fMin)) * graphW;
+      let cy = oy - (ke / 4.0) * graphH; // max KE is 4eV
+      return { cx, cy };
+    }
+
+    // Draw negative dashed line below threshold
+    plCtx.strokeStyle = '#2b2b2b33';
+    plCtx.setLineDash([4, 4]);
+    let pMin = getCanvasCoords(fMin, -workFunction);
+    let pTh = getCanvasCoords(fThreshold, 0);
+    plCtx.beginPath();
+    plCtx.moveTo(pMin.cx, pMin.cy);
+    plCtx.lineTo(pTh.cx, pTh.cy);
+    plCtx.stroke();
+    plCtx.setLineDash([]);
+
+    // Draw positive line above threshold
+    plCtx.strokeStyle = '#3498db';
+    plCtx.lineWidth = 2.5;
+    let pMax = getCanvasCoords(fMax, h * fMax * 1e14 - workFunction);
+    plCtx.beginPath();
+    plCtx.moveTo(pTh.cx, pTh.cy);
+    plCtx.lineTo(pMax.cx, pMax.cy);
+    plCtx.stroke();
+
+    // Work function intercept labels
+    plCtx.fillStyle = '#95a5a6';
+    plCtx.fillText('-\u03a6', ox - 14, oy + (workFunction / 4.0) * graphH);
+
+    // Current point on plot
+    let currentF = p.frequency / 1e14;
+    let currentKE = Math.max(0, p.keMax);
+    let pt = getCanvasCoords(currentF, currentKE);
+    
+    plCtx.fillStyle = '#e74c3c';
+    plCtx.beginPath();
+    plCtx.arc(pt.cx, pt.cy, 6, 0, 2*Math.PI);
+    plCtx.fill();
+
+    plCtx.fillStyle = '#fff';
+    plCtx.font = '10px Helvetica';
+    plCtx.fillText(`hf = ${p.photonEnergy.toFixed(2)} eV`, ox + 15, oy - graphH + 30);
+    plCtx.fillText(`K = ${currentKE.toFixed(2)} eV`, ox + 15, oy - graphH + 45);
+  }
+
+  tick();
+})();
+
+/* ---------- SECTION 2: ELECTRON DOUBLE-SLIT ---------- */
+(function() {
+  const canvas = document.getElementById('diffractionCv');
+  const ctx = canvas.getContext('2d');
+  const fireBtn = document.getElementById('fireBtn');
+  const runBtn = document.getElementById('runBtn');
+  const clearBtn = document.getElementById('clearDiffBtn');
+  const countEl = document.getElementById('electronCount');
+
+  let electrons = [];
+  let screenHits = [];
+  let isRunning = false;
+  let animationId = null;
+
+  let sx = 160;
+  let sy1 = canvas.height / 2 - 25;
+  let sy2 = canvas.height / 2 + 25;
+  let screenX = canvas.width - 60;
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw slit barrier
+    ctx.fillStyle = '#18181b';
+    ctx.fillRect(sx - 4, 0, 8, sy1 - 4);
+    ctx.fillRect(sx - 4, sy1 + 4, 8, sy2 - sy1 - 8);
+    ctx.fillRect(sx - 4, sy2 + 4, 8, canvas.height - sy2 - 4);
+
+    // Draw detector screen
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(screenX, 0); ctx.lineTo(screenX, canvas.height);
+    ctx.stroke();
+
+    // Move current firing electrons
+    electrons.forEach((el, idx) => {
+      el.x += el.vx;
+      el.y += el.vy;
+
+      // Draw electron dot
+      ctx.fillStyle = 'cyan';
+      ctx.beginPath();
+      ctx.arc(el.x, el.y, 4, 0, 2*Math.PI);
+      ctx.fill();
+
+      // Check hit on screen
+      if (el.x >= screenX) {
+        screenHits.push(el.targetY);
+        electrons.splice(idx, 1);
+        countEl.textContent = screenHits.length;
+      }
+    });
+
+    // Draw static hits on screen
+    screenHits.forEach(y => {
+      ctx.fillStyle = 'rgba(0, 255, 255, 0.45)';
+      ctx.beginPath();
+      ctx.arc(screenX, y, 3, 0, 2*Math.PI);
+      ctx.fill();
+    });
+
+    // If continuous, fire frequently
+    if (isRunning && Math.random() < 0.18) {
+      fireElectron();
+    }
+
+    animationId = requestAnimationFrame(tick);
+  }
+
+  function fireElectron() {
+    // Determine landing spot using double slit probability pattern
+    // probability distribution: P(y) = cos^2(pi * d * y / (lambda * L))
+    // We can sample this distribution using rejection sampling
+    let lambda = 12; // fixed wavelength scale
+    let d = 50; // slit spacing
+    let L = screenX - sx; // distance to screen
+    let targetY = 0;
+
+    while (true) {
+      let yTry = Math.random() * canvas.height;
+      let r1 = Math.hypot(L, yTry - sy1);
+      let r2 = Math.hypot(L, yTry - sy2);
+      let diff = Math.abs(r1 - r2);
+      let k = (2 * Math.PI) / lambda;
+      let p = Math.cos(k * diff / 2)**2;
+      
+      if (Math.random() < p) {
+        targetY = yTry;
+        break;
+      }
+    }
+
+    // Launch trajectory starting at gun x=20, aiming through one of the slits randomly
+    let startY = canvas.height / 2;
+    let chosenSlitY = Math.random() < 0.5 ? sy1 : sy2;
+    
+    // We animate a straight path from gun through slit to target
+    let vx = 5.0;
+    // calculate vy to hit target
+    let timeToScreen = L / vx;
+    let vy = (targetY - chosenSlitY) / timeToScreen;
+
+    electrons.push({
+      x: sx,
+      y: chosenSlitY,
+      vx: vx,
+      vy: vy,
+      targetY: targetY
+    });
+  }
+
+  fireBtn.addEventListener('click', () => {
+    if (electrons.length < 5) {
+      fireElectron();
+    }
+  });
+
+  runBtn.addEventListener('click', () => {
+    isRunning = !isRunning;
+    runBtn.textContent = isRunning ? 'Stop Continuous' : 'Run Continuous';
+  });
+
+  clearBtn.addEventListener('click', () => {
+    screenHits = [];
+    countEl.textContent = 0;
+  });
+
+  animationId = requestAnimationFrame(tick);
+})();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+</script>
+
+</body>
+</html>

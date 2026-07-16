@@ -1,3 +1,381 @@
 %%-----------Chapter 6------------------------------------------
-\chapter{}
- 
+\chapter{Work, Energy, and Momentum}
+
+\section{Introduction: The Grand Conservation Laws}
+
+In the previous chapters, we analyzed motion by looking at forces moment by moment. We asked: what is the acceleration right now? Where will the particle be in the next instant? This is Newton’s direct path, and it is incredibly powerful. But as systems grow from a single particle to many interacting pieces, tracking every force at every instant becomes a nightmare. 
+
+Fortunately, nature has hidden shortcuts. If we step back and look at the beginning and the end of a process, we discover that certain quantities remain completely unchanged, no matter how chaotic the middle was. These are the **conservation laws**. In this chapter, we will meet three of them: the conservation of linear momentum, the conservation of energy, and the conservation of angular momentum. Together, they form the backbone of classical mechanics and provide a modern, first-principles way to understand everything from a colliding billiard ball to a launching rocket and an orbiting planet.
+
+\section{Momentum and Its Conservation}
+
+Let us begin with a simple observation. A cricket ball and a tennis ball are thrown at you at the same speed. Which is harder to catch? The cricket ball, of course. Now imagine a tennis ball thrown at a gentle pace versus one served by a professional at \SI{200}{km/h}. Again, the faster one is harder to catch.
+
+What makes an object hard to stop is a combination of its mass and its velocity. Newton called this the ``quantity of motion.'' Today, we call it **linear momentum**, denoted by the vector $\vec{p}$.
+
+\begin{keybox}[Linear Momentum]
+The **linear momentum** $\vec{p}$ of a particle of mass $m$ moving with velocity $\vec{v}$ is the product of its mass and its velocity:
+\begin{equation}
+    \vec{p} = m \vec{v}.
+\end{equation}
+Momentum is a vector quantity. Its direction is the same as the velocity, and its SI unit is the kilogram-metre per second (\si{kg.m/s}).
+\end{keybox}
+
+Newton’s second law was originally written not as $\vec{F} = m\vec{a}$, but in terms of momentum:
+\begin{equation}
+    \vec{F} = \frac{d\vec{p}}{dt}. \label{eq:newton2_mom}
+\end{equation}
+If mass is constant, this recovers $\vec{F} = d(m\vec{v})/dt = m(d\vec{v}/dt) = m\vec{a}$. But Eq.~\eqref{eq:newton2_mom} is more fundamental because it holds even when mass is changing (like a rocket burning fuel) and in the relativistic domain where mass appears to increase with speed.
+
+\subsection{Impulse and the Change in Momentum}
+
+If we multiply a force by the short time interval $dt$ over which it acts, we get a quantity called **impulse**, $\vec{J}$:
+\begin{equation}
+    d\vec{J} = \vec{F}\,dt \implies \vec{J} = \int_{t_1}^{t_2} \vec{F}\,dt.
+\end{equation}
+Integrating Eq.~\eqref{eq:newton2_mom} from $t_1$ to $t_2$, we obtain the **impulse-momentum theorem**:
+\begin{equation}
+    \vec{J} = \vec{p}_2 - \vec{p}_1 = \Delta\vec{p}.
+\end{equation}
+The impulse applied to an object is exactly equal to its change in momentum. This explains why safety nets, crumple zones in cars, and catching a cricket ball with ``soft hands'' (pulling your hands back as you catch) reduce the impact force. By increasing the time interval $\Delta t$ over which the momentum change occurs, the average force is reduced: $\vec{F}_{\text{avg}} = \Delta\vec{p}/\Delta t$.
+
+\begin{workedexample}[The Soft Hands of a Fielder]
+A cricket ball of mass $m = \SI{0.16}{kg}$ reaches a fielder traveling at $v = \SI{20}{m/s}$.
+\begin{enumerate}[label=(\alph*), itemsep=1pt]
+  \item What is the initial momentum of the ball?
+  \item If the fielder catches the ball by holding their hands rigid, bringing it to rest in $\Delta t = \SI{0.01}{s}$, what is the average force felt by their hands?
+  \item If they pull their hands back during the catch, extending the time to $\Delta t = \SI{0.15}{s}$, what is the average force?
+\end{enumerate}
+\textbf{Solution:}
+\begin{enumerate}[label=(\alph*)]
+  \item $p_i = m v = (\SI{0.16}{kg})(\SI{20}{m/s}) = \SI{3.2}{kg.m/s}$.
+  \item The change in momentum is $\Delta p = p_f - p_i = 0 - 3.2 = -\SI{3.2}{kg.m/s}$. The average force is:
+        \begin{equation*}
+            F_{\text{avg}} = \frac{\Delta p}{\Delta t} = \frac{-\SI{3.2}{kg.m/s}}{\SI{0.01}{s}} = -\SI{320}{N}.
+        \end{equation*}
+        This is about \SI{32}{kg} of weight slamming into the hands.
+  \item With the extended time:
+        \begin{equation*}
+            F_{\text{avg}} = \frac{-\SI{3.2}{kg.m/s}}{\SI{0.15}{s}} \approx -\SI{21.3}{N}.
+        \end{equation*}
+        Pulling the hands back reduces the force by a factor of 15, making the catch safe and painless.
+\end{enumerate}
+\end{workedexample}
+
+\subsection{Conservation of Linear Momentum}
+
+Consider a system of two colliding particles, $A$ and $B$. During the collision, particle $A$ exerts a force $\vec{F}_{B \to A}$ on $B$, and by Newton's third law, $B$ exerts an equal and opposite force $\vec{F}_{A \to B} = -\vec{F}_{B \to A}$ on $A$. If no external forces act on the system:
+\begin{equation}
+    \frac{d\vec{p}_A}{dt} + \frac{d\vec{p}_B}{dt} = \vec{F}_{B \to A} + \vec{F}_{A \to B} = \vec{0} \implies \frac{d}{dt}(\vec{p}_A + \vec{p}_B) = \vec{0}.
+\end{equation}
+Thus, the total momentum $\vec{P}_{\text{total}} = \vec{p}_A + \vec{p}_B$ is constant.
+
+\begin{keybox}[Conservation of Linear Momentum]
+If the net external force acting on a system of particles is zero, the total linear momentum of the system remains constant:
+\begin{equation}
+    \vec{P}_{\text{initial}} = \vec{P}_{\text{final}}.
+\end{equation}
+\end{keybox}
+
+\begin{predictbox}[6.1: The Recoil of a Rifle]
+A heavy rifle of mass $M$ fires a light bullet of mass $m$ horizontally with velocity $\vec{v}_b$ relative to the ground. Before firing, everything is at rest. 
+Predict: which direction will the rifle move when fired, and will its speed be greater than, equal to, or less than the bullet's speed? Commit to your prediction before reading further.
+\end{predictbox}
+
+Since the net external horizontal force on the rifle-bullet system is zero, momentum must be conserved:
+\begin{equation}
+    \vec{P}_i = \vec{0} \implies \vec{P}_f = M\vec{v}_r + m\vec{v}_b = \vec{0} \implies \vec{v}_r = -\frac{m}{M}\vec{v}_b.
+\end{equation}
+The negative sign means the rifle moves in the opposite direction (recoil). Since the rifle is much heavier than the bullet ($M \gg m$), its speed is much smaller ($v_r \ll v_b$).
+
+\subsection{Rocket Propulsion: The Tsiolkovsky Equation}
+
+A rocket is a beautiful application of momentum conservation in which the mass of the system changes continuously as fuel is burned and ejected.
+
+Let a rocket of mass $m$ be moving with speed $v$ at time $t$. In a short time interval $dt$, it ejects a mass $dm$ of gas backward with an exhaust speed $u$ relative to the rocket (which means speed $v - u$ relative to the ground). The rocket's mass becomes $m - dm$, and its speed increases to $v + dv$. 
+
+Applying momentum conservation in the ground frame (ignoring gravity for now):
+\begin{equation}
+    P(t) = P(t+dt) \implies m v = (m - dm)(v + dv) + dm(v - u).
+\end{equation}
+Expanding this and ignoring the tiny second-order product $dm\,dv$:
+\begin{equation}
+    m v = m v + m\,dv - v\,dm - u\,dm + v\,dm \implies m\,dv = u\,dm.
+\end{equation}
+Since the rocket's mass decreases, the change in the rocket's mass is $dm = -dm_{\text{rocket}}$. Let us write this as $m\,dv = -u\,dm$, where $dm$ is now the differential change in the rocket's own mass ($dm < 0$). Dividing by $m$ and integrating:
+\begin{equation}
+    \int_{v_0}^{v} dv' = -u \int_{m_0}^{m} \frac{dm'}{m'} \implies v - v_0 = u \ln\left(\frac{m_0}{m}\right).
+\end{equation}
+This is the famous **Tsiolkovsky rocket equation**, derived independently by the Russian schoolteacher Konstantin Tsiolkovsky in 1897. It shows that to reach high speeds, a rocket must either have an extremely high exhaust velocity $u$ or eject a massive fraction of its initial mass as fuel ($m_0/m \gg 1$).
+
+\section{Work and Kinetic Energy}
+
+We now shift to our second conservation law: energy. Historically, the concept of energy was much slower to develop than momentum. While Newton's mechanics focused on forces and momentum, Leibniz and others argued that another quantity, which they called \emph{vis viva} (``living force'') and computed as $mv^2$, was also conserved in certain collisions. This was the precursor to kinetic energy.
+
+To connect forces to energy, we define the concept of **work**.
+
+\subsection{Work Done by a Force}
+
+If a constant force $\vec{F}$ acts on an object while it undergoes a displacement $\vec{d}$, the work $W$ done by the force is:
+\begin{equation}
+    W = \vec{F} \cdot \vec{d} = F d \cos\phi,
+\end{equation}
+where $\phi$ is the angle between the force and displacement vectors. If the force varies along the path, we must integrate:
+\begin{equation}
+    W = \int_{\vec{r}_1}^{\vec{r}_2} \vec{F} \cdot d\vec{r}.
+\end{equation}
+Work is a scalar quantity. Its SI unit is the newton-metre, which we rename the **joule** (\si{J}) in honour of James Prescott Joule.
+
+\subsection{The Work-Kinetic Energy Theorem}
+
+What does work do? Let us compute the work done by a net force $\vec{F}_{\text{net}}$ on a particle of mass $m$ as it moves along a path:
+\begin{equation}
+    W = \int_{1}^{2} \vec{F}_{\text{net}} \cdot d\vec{r} = \int_{1}^{2} m \frac{d\vec{v}}{dt} \cdot d\vec{r}.
+\end{equation}
+Since $\vec{v} = d\vec{r}/dt$, we can swap the variables using the chain rule: $d\vec{r} = \vec{v}\,dt$. Thus:
+\begin{equation}
+    W = \int_{t_1}^{t_2} m \frac{d\vec{v}}{dt} \cdot \vec{v}\,dt = \int_{v_1}^{v_2} m \vec{v} \cdot d\vec{v}.
+\end{equation}
+Since $\vec{v} \cdot d\vec{v} = v\,dv$ (the change in speed squared), we get:
+\begin{equation}
+    W = \int_{v_1}^{v_2} m v\,dv = \frac{1}{2}m v_2^2 - \frac{1}{2}m v_1^2.
+\end{equation}
+
+\begin{keybox}[Work-Kinetic Energy Theorem]
+The net work done on a particle is exactly equal to the change in its **kinetic energy** $K$:
+\begin{equation}
+    W_{\text{net}} = \Delta K, \quad \text{where } K \equiv \frac{1}{2}m v^2.
+\end{equation}
+\end{keybox}
+
+This theorem connects kinematic changes in speed directly to the forces acting over distances.
+
+\section{Potential Energy and Conservative Forces}
+
+Some forces, like gravity or a spring, are special: the work they do on an object as it moves from point $A$ to point $B$ depends only on the endpoints $A$ and $B$, not on the path taken. Such forces are called **conservative**.
+
+\begin{keybox}[Conservative Forces]
+A force $\vec{F}$ is **conservative** if either of these equivalent statements holds:
+\begin{enumerate}
+  \item The work done by $\vec{F}$ around any closed loop is zero: $\oint \vec{F} \cdot d\vec{r} = 0$.
+  \item The work done by $\vec{F}$ between two points is independent of the path connecting them.
+\end{enumerate}
+\end{keybox}
+
+For any conservative force, we can define a scalar function called **potential energy**, $U(\vec{r})$, such that the work done by the force is the negative change in this potential energy:
+\begin{equation}
+    W_{\text{cons}} = -\Delta U = U_1 - U_2.
+\end{equation}
+In one dimension, this relationship is:
+\begin{equation}
+    F_x = -\frac{dU}{dx}.
+\end{equation}
+For gravity near the Earth's surface, $U(y) = mgy$ (where $F_y = -mg$). For a spring obeying Hooke's law ($F_x = -kx$), $U(x) = \frac{1}{2}kx^2$.
+
+\subsection{Conservation of Mechanical Energy}
+
+If only conservative forces do work on a system, then $W_{\text{net}} = W_{\text{cons}} = -\Delta U$. But by the work-KE theorem, $W_{\text{net}} = \Delta K$. Equating these:
+\begin{equation}
+    \Delta K = -\Delta U \implies \Delta(K + U) = 0.
+\end{equation}
+We define the **total mechanical energy** as $E \equiv K + U$. Thus, if no non-conservative forces (like friction or drag) do work:
+\begin{equation}
+    E = K + U = \text{constant}.
+\end{equation}
+
+If non-conservative forces *do* work (like friction $f_k$), we write:
+\begin{equation}
+    W_{\text{net}} = W_{\text{cons}} + W_{\text{nc}} = -\Delta U + W_{\text{nc}} = \Delta K \implies E_2 - E_1 = W_{\text{nc}}.
+\end{equation}
+Since friction always does negative work, mechanical energy is lost to heat (thermal energy). The total energy of the universe is still conserved, but mechanical energy is dissipated.
+
+\begin{workedexample}[The Loop-the-Loop]
+A small block of mass $m$ slides down a frictionless track and enters a circular loop of radius $R$. What is the minimum height $h$ from which the block must start (from rest) to make it all the way around the loop without falling off at the top?
+\newline
+\textbf{Solution:}
+Let us first look at the top of the loop (point $T$, height $2R$). Two forces act on the block: gravity $mg$ downward and the normal force $\mathscr{N}$ downward. For circular motion:
+\begin{equation*}
+    \Sigma F_{\text{radial}} = mg + \mathscr{N} = m \frac{v_T^2}{R}.
+\end{equation*}
+To just maintain contact, the normal force must not drop below zero ($\mathscr{N} \ge 0$). Thus, the minimum speed required at the top is:
+\begin{equation*}
+    v_T^2 \ge gR.
+\end{equation*}
+Now we use conservation of mechanical energy between the starting point (height $h$, speed $v_0 = 0$) and the top (height $2R$, speed $v_T$):
+\begin{align*}
+    E_{\text{initial}} &= E_{\text{final}} \\
+    mgh + 0 &= mg(2R) + \frac{1}{2}m v_T^2.
+\end{align*}
+Canceling $m$ and substituting the threshold speed $v_T^2 = gR$:
+\begin{equation*}
+    gh = 2gR + \frac{1}{2}gR \implies h = \frac{5}{2}R.
+\end{equation*}
+To clear the loop, the block must start at a height at least $2.5$ times the radius of the loop.
+\end{workedexample}
+
+\begin{checkpoint}[6.2]
+A cart is released from rest at height $h$ on a roller coaster track. It goes down a valley and up a hill of height $H < h$. If friction is present:
+\newline
+\begin{tabular}{ll}
+  A. The speed at the top of the hill is $\sqrt{2g(h-H)}$. & B. The speed is less than $\sqrt{2g(h-H)}$. \\
+  C. The speed is greater than $\sqrt{2g(h-H)}$. & D. The cart cannot reach the hill.
+\end{tabular}
+\checkanswer{B. Because friction does negative work, some mechanical energy is lost to thermal energy, so the speed at the top of the hill will be less than the frictionless prediction.}
+\end{checkpoint}
+
+\section{Collisions in 2D}
+
+Let us bring momentum and energy together to analyze collisions. In any collision where the net external force is zero, **momentum is conserved**. However, kinetic energy is not always conserved:
+- An **elastic collision** is one in which the total kinetic energy is conserved: $K_i = K_f$.
+- An **inelastic collision** is one in which kinetic energy is not conserved: $K_i > K_f$ (energy is lost to sound, deformation, and heat). If the objects stick together, the collision is **perfectly inelastic**.
+
+In two dimensions, we write momentum conservation as vector components:
+\begin{align}
+    P_{i,x} &= P_{f,x} \\
+    P_{i,y} &= P_{f,y}.
+\end{align}
+
+\begin{workedexample}[2D Elastic Collision of Identical Balls]
+A billiard ball $A$ of mass $m$ moving with speed $v$ along the $x$-axis collides elastically with an identical ball $B$ of mass $m$ at rest. After the collision, ball $A$ moves off at angle $\theta_A$ relative to the $x$-axis, and ball $B$ moves off at angle $\theta_B$.
+Prove that the angle between their final paths, $\theta_A + \theta_B$, is exactly $90^\circ$ (unless the collision is head-on).
+\newline
+\textbf{Solution:}
+Let $\vec{v}$ be the initial velocity of ball $A$. Let $\vec{v}_A$ and $\vec{v}_B$ be the final velocities of the two balls.
+Conservation of linear momentum gives:
+\begin{equation*}
+    m\vec{v} = m\vec{v}_A + m\vec{v}_B \implies \vec{v} = \vec{v}_A + \vec{v}_B.
+\end{equation*}
+Let us take the dot product of this vector equation with itself:
+\begin{equation}
+    v^2 = (\vec{v}_A + \vec{v}_B) \cdot (\vec{v}_A + \vec{v}_B) = v_A^2 + v_B^2 + 2\vec{v}_A \cdot \vec{v}_B. \label{eq:coll_dot}
+\end{equation}
+Because the collision is elastic, kinetic energy is also conserved:
+\begin{equation*}
+    \frac{1}{2}mv^2 = \frac{1}{2}mv_A^2 + \frac{1}{2}mv_B^2 \implies v^2 = v_A^2 + v_B^2.
+\end{equation*}
+Subtracting this from Eq.~\eqref{eq:coll_dot}, we find:
+\begin{equation*}
+    2\vec{v}_A \cdot \vec{v}_B = 0 \implies \vec{v}_A \cdot \vec{v}_B = 0.
+\end{equation*}
+If the dot product of the final velocity vectors is zero, they must be perpendicular! Thus, the angle between them is $\theta_A + \theta_B = 90^\circ$. (This holds for any non-head-on elastic collision of identical masses).
+\end{workedexample}
+
+\section{The Center of Mass}
+
+If we drop a spinning, vibrating wrench, its motion looks incredibly complex. But if we paint a bright dot at one specific point on the wrench, we discover that the dot traces out a perfect parabola, exactly like a single point particle. That special point is the **center of mass**.
+
+\begin{keybox}[Center of Mass]
+For a system of $N$ discrete particles with masses $m_i$ and positions $\vec{r}_i$, the position of the center of mass $\vec{R}_{\text{cm}}$ is:
+\begin{equation}
+    \vec{R}_{\text{cm}} = \frac{1}{M}\sum_{i=1}^{N} m_i \vec{r}_i, \quad \text{where } M \equiv \sum_{i=1}^{N} m_i.
+\end{equation}
+For a continuous object of mass density $\rho$, we integrate:
+\begin{equation}
+    \vec{R}_{\text{cm}} = \frac{1}{M}\int \vec{r}\,dm.
+\end{equation}
+\end{keybox}
+
+Differentiating the position of the center of mass with respect to time, we find:
+\begin{equation}
+    \vec{V}_{\text{cm}} = \frac{d\vec{R}_{\text{cm}}}{dt} = \frac{1}{M}\sum m_i \vec{v}_i = \frac{\vec{P}_{\text{total}}}{M}.
+\end{equation}
+Thus, the total momentum of a system is simply the total mass multiplied by the velocity of the center of mass: $\vec{P}_{\text{total}} = M \vec{V}_{\text{cm}}$. If no net external force acts, $\vec{P}_{\text{total}}$ is constant, which means the center of mass moves at constant velocity, completely unaffected by any internal collisions or explosions!
+
+\section{Angular Momentum and Torque}
+
+Just as linear momentum describes an object's resistance to stopping its straight-line motion, **angular momentum** describes its resistance to stopping its rotation.
+
+For a single particle of mass $m$ at position $\vec{r}$ relative to an origin, moving with momentum $\vec{p} = m\vec{v}$, we define its angular momentum $\vec{L}$ relative to that origin using the cross product:
+\begin{keybox}[Angular Momentum of a Particle]
+The **angular momentum** $\vec{L}$ of a particle is:
+\begin{equation}
+    \vec{L} \equiv \vec{r} \times \vec{p}.
+\end{equation}
+Its magnitude is $L = r p \sin\theta$, where $\theta$ is the angle between $\vec{r}$ and $\vec{p}$. The units of angular momentum are \si{kg.m^2/s}.
+\end{keybox}
+
+What changes angular momentum? Let us take the time derivative of $\vec{L}$:
+\begin{equation}
+    \frac{d\vec{L}}{dt} = \frac{d}{dt}(\vec{r} \times \vec{p}) = \left(\frac{d\vec{r}}{dt} \times \vec{p}\right) + \left(\vec{r} \times \frac{d\vec{p}}{dt}\right).
+\end{equation}
+The first term is $\vec{v} \times (m\vec{v}) = m(\vec{v} \times \vec{v}) = \vec{0}$, since the cross product of any vector with itself is zero. The second term is $\vec{r} \times \vec{F}_{\text{net}}$, using Newton's second law. We call the cross product of position and force the **torque**, $\vec{\tau}$:
+\begin{equation}
+    \vec{\tau} \equiv \vec{r} \times \vec{F}.
+\end{equation}
+Thus, we arrive at the rotational version of Newton's second law:
+\begin{equation}
+    \vec{\tau}_{\text{net}} = \frac{d\vec{L}}{dt}.
+\end{equation}
+If the net torque on a system is zero, its angular momentum is conserved: $\vec{L}_{\text{initial}} = \vec{L}_{\text{final}}$.
+
+\subsection{Kepler's Second Law: A Disguised Conservation Law}
+
+We promised in Chapter 5 that Kepler's second law --- that a planet's position vector sweeps out equal areas in equal times --- is actually just the conservation of angular momentum in disguise. Let us prove it.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.2]
+  % Sun
+  \draw[fill=orange!80, orange] (0,0) circle (0.15);
+  \node[below] at (0,-0.18) {\small Sun};
+  
+  % Orbit path segment
+  \draw[dashed, thin] (-0.5,1.8) to[out=10, in=180] (2,1.5) to[out=0, in=120] (4,0.5);
+  
+  % Planet positions
+  \coordinate (P1) at (2,1.5);
+  \coordinate (P2) at (2.8,1.4);
+  
+  % vectors
+  \draw[-latex, myblue, thick] (0,0) -- (P1) node[midway, left] {$\vec{r}$};
+  \draw[-latex, myred, thick] (P1) -- (P2) node[midway, above] {$d\vec{r}$};
+  \draw[myblue, thin] (0,0) -- (P2);
+  
+  % swept area shading
+  \fill[myblue!15, opacity=0.5] (0,0) -- (P1) -- (P2) -- cycle;
+  
+  \node[above right] at (2.8,1.4) {\small Planet};
+  \node at (1.2,0.8) {$dA$};
+\end{tikzpicture}
+\caption{The area $dA$ swept out by a planet's radius vector $\vec{r}$ in time $dt$ is a triangle defined by $\vec{r}$ and the displacement $d\vec{r}$.}
+\label{fig:kepler_proof}
+\end{figure}
+
+The area of the tiny triangle swept out by the radius vector $\vec{r}$ as the planet moves through displacement $d\vec{r} = \vec{v}\,dt$ is half the area of the parallelogram formed by $\vec{r}$ and $d\vec{r}$:
+\begin{equation}
+    dA = \frac{1}{2} |\vec{r} \times d\vec{r}| = \frac{1}{2} |\vec{r} \times \vec{v}|\,dt.
+\end{equation}
+Dividing by $dt$, the rate at which area is swept out (the areal velocity) is:
+\begin{equation}
+    \frac{dA}{dt} = \frac{1}{2} |\vec{r} \times \vec{v}|.
+\end{equation}
+Since $\vec{p} = m\vec{v}$, we can write $\vec{r} \times \vec{v} = (\vec{r} \times \vec{p})/m = \vec{L}/m$. Thus:
+\begin{equation}
+    \frac{dA}{dt} = \frac{|\vec{L}|}{2m}. \label{eq:areal_vel}
+\end{equation}
+Now, what is the torque acting on the planet? Gravity points directly along the line connecting the planet and the Sun. Thus, the force $\vec{F}_g$ is parallel to the radius vector $\vec{r}$. The torque is:
+\begin{equation}
+    \vec{\tau} = \vec{r} \times \vec{F}_g = \vec{0}.
+\end{equation}
+Since the torque is zero, the planet's angular momentum $\vec{L}$ is constant! Since $L$ and the mass $m$ are constant, Eq.~\eqref{eq:areal_vel} tells us that $dA/dt$ is constant. 
+
+The planet sweeps out equal areas in equal times because gravity is a **central force** (pointing directly toward the source), which ensures that the planet's angular momentum remains perfectly conserved. What seemed a wonder is no wonder.
+
+\begin{whiteboard}[6.1: Spinning in a Chair]
+Sit in a swivel office chair that spins freely. Hold two heavy books in your hands and stretch your arms out wide. Have a partner spin you gently. Now, pull your arms in tight to your chest.
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=1pt]
+  \item Predict: what will happen to your spinning speed when you pull your arms in?
+  \item Why? Use the conservation of angular momentum. Identify what happens to your distribution of mass (moment of inertia) and how that affects your angular speed $\omega$.
+  \item If you extend your arms again, does your speed return to its original value?
+\end{enumerate}
+\end{whiteboard}
+
+\section{Summary of Conservation Laws}
+
+\begin{formulabox}[The Three Pillars of Mechanics]
+\begin{itemize}
+  \item **Linear Momentum**: $\vec{p} = m\vec{v}$. Conserved if net external force is zero: $\Sigma \vec{F}_{\text{ext}} = \vec{0}$.
+  \item **Mechanical Energy**: $E = K + U$, where $K = \frac{1}{2}mv^2$. Conserved if only conservative forces do work: $W_{\text{nc}} = 0$.
+  \item **Angular Momentum**: $\vec{L} = \vec{r} \times \vec{p}$. Conserved if net external torque is zero: $\Sigma \vec{\tau}_{\text{ext}} = \vec{0}$.
+\end{itemize}
+\end{formulabox}

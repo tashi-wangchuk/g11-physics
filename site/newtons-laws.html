@@ -9,13 +9,22 @@
 <body>
 
 <nav class="topnav">
-  <a class="brand" href="index.html">Fundamentals of Physics</a>
-  <a class="chap" href="vectors.html">1 Vectors</a>
-  <a class="chap" href="dimensions.html">2 Dimensions</a>
-  <a class="chap" href="motion.html">3 Motion</a>
-  <a class="chap current" href="newtons-laws.html">4 Newton's Laws</a>
-  <a class="chap" href="further-applications.html">5 Applications</a>
-  <a class="pdf" href="main.pdf">Textbook PDF</a>
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
 </nav>
 
 <div class="chapter-head">
@@ -163,7 +172,7 @@
       document.getElementById('rangv').textContent = sl.value;
       var a = ang();
       // dashed start-height line
-      cx.strokeStyle = '#88774f'; cx.setLineDash([6, 6]); cx.lineWidth = 1.2;
+      cx.strokeStyle = 'var(--muted)'; cx.setLineDash([6, 6]); cx.lineWidth = 1.2;
       cx.beginPath(); cx.moveTo(0, vy0 - H * U); cx.lineTo(cv.width, vy0 - H * U); cx.stroke();
       cx.setLineDash([]);
       cx.font = '12px Helvetica'; cx.fillStyle = '#6a5f45';
@@ -263,7 +272,7 @@
       ];
       rows.forEach(function (r) {
         // block
-        cx.fillStyle = '#00000020'; cx.strokeStyle = '#333'; cx.lineWidth = 2;
+        cx.fillStyle = '#ffffff20'; cx.strokeStyle = '#fff'; cx.lineWidth = 2;
         var s = r.size;
         cx.fillRect(70, r.y - s / 2, s, s); cx.strokeRect(70, r.y - s / 2, s, s);
         // force arrow — SAME length for both
@@ -309,12 +318,12 @@
       document.getElementById('atten').textContent = v.T.toFixed(1) + ' N';
       cx.clearRect(0, 0, cv.width, cv.height);
       // ceiling
-      cx.strokeStyle = '#333'; cx.lineWidth = 2;
+      cx.strokeStyle = '#fff'; cx.lineWidth = 2;
       cx.beginPath(); cx.moveTo(px - 80, 12); cx.lineTo(px + 80, 12); cx.stroke();
-      cx.beginPath(); cx.moveTo(px, 12); cx.lineTo(px, py - R); cx.stroke();
+      cx.beginPath(); cx.moveTo(px, py - 40); cx.lineTo(px, py); cx.stroke();
       // pulley
       cx.beginPath(); cx.arc(px, py, R, 0, 7);
-      cx.fillStyle = '#00000015'; cx.fill(); cx.strokeStyle = '#333'; cx.stroke();
+      cx.fillStyle = '#ffffff15'; cx.fill(); cx.strokeStyle = '#fff'; cx.stroke();
       // displacement (m -> px): slow-mo animation, 30 px per metre
       var d = 0.5 * v.a * t * t * 30;
       d = Math.max(Math.min(d, 100), -100);
@@ -325,9 +334,9 @@
       // blocks: size ∝ mass
       function block(x, y, m, color, label) {
         var s = 26 + m * 3.4;
-        cx.fillStyle = color; cx.strokeStyle = '#333'; cx.lineWidth = 2;
+        cx.fillStyle = color; cx.strokeStyle = '#fff'; cx.lineWidth = 2;
         cx.fillRect(x - s / 2, y, s, s); cx.strokeRect(x - s / 2, y, s, s);
-        cx.fillStyle = '#111'; cx.font = 'bold 12px Helvetica';
+        cx.fillStyle = '#fff'; cx.font = 'bold 12px Helvetica';
         cx.fillText(label, x - 20, y + s + 15);
       }
       block(px - R, y1, v.m1, '#2E86C155', 'm₁ = ' + v.m1.toFixed(1) + ' kg');
@@ -351,6 +360,25 @@
     });
     draw();
   })();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 </script>
 
 </body>

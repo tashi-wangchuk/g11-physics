@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work, Energy &amp; Momentum — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 6</div>
+    <h1>Work, Energy &amp; Momentum</h1>
+    <p class="lead">Forces act over time and distance. By stepping back and looking at the beginning and the end of a process, we find quantities that never change — conservation laws that govern everything from colliding atoms to rockets and orbits.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#collisions">1. 2D Collisions</a></li>
+      <li><a href="#coaster">2. Energy Coaster</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="collisions">
+      <h2>1 &nbsp;2D Collisions &amp; Momentum</h2>
+      <p>When two objects collide in a closed system, the net external force is zero. This means their total momentum vector $\vec{P} = m_1\vec{v}_1 + m_2\vec{v}_2$ is conserved. Whether they bounce elastically or stick together inelastically, the momentum before and after the crash is identical. However, kinetic energy behaves differently: it is conserved in elastic collisions, but dissipates into heat and deformation in inelastic ones.</p>
+
+      <div class="viz">
+        <div class="vhead">Interactive 2D Collision Vector Sandbox</div>
+        <canvas id="collisionCv" width="680" height="320" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <label>Elasticity (e) <input type="range" id="coefRest" min="0" max="1" step="0.1" value="0.8"></label>
+          <label>Mass Ratio (A/B) <input type="range" id="massRatio" min="0.2" max="3" step="0.1" value="1.0"></label>
+          <button id="playBtn">Play Collision</button>
+          <button id="resetBtn">Reset</button>
+        </div>
+
+        <div class="controls" style="font-size:0.8rem; justify-content: space-around;">
+          <span>Before Collision: <span class="big" id="momBefore" style="color:var(--blue)">P = 0.00</span> kg&middot;m/s</span>
+          <span>After Collision: <span class="big" id="momAfter" style="color:var(--red)">P = 0.00</span> kg&middot;m/s</span>
+          <span>KE Kept: <span class="big" id="keKept">100%</span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Drag the circles to reposition the balls. Drag the arrows to change their initial velocities, then click "Play". Note that the total momentum is conserved in all directions!</div>
+      </div>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="coaster">
+      <h2>2 &nbsp;Conservation of Energy</h2>
+      <p>Mechanical energy is the sum of kinetic energy (energy of motion) and potential energy (stored energy). If only conservative forces like gravity do work, mechanical energy is conserved: as height decreases, speed increases. If friction is present, some mechanical energy converts to thermal energy (heat), but the total energy remains constant.</p>
+
+      <div class="viz">
+        <div class="vhead">Interactive Energy Conservation Coaster</div>
+        <canvas id="coasterCv" width="680" height="340" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;"></canvas>
+        
+        <div class="controls">
+          <label>Friction <input type="range" id="frictionCoeff" min="0" max="0.05" step="0.005" value="0.005"></label>
+          <button id="coasterPlayBtn">Release Cart</button>
+          <button id="coasterResetBtn">Reset Track</button>
+        </div>
+
+        <div class="controls" style="justify-content: space-around; font-size: 0.82rem;">
+          <span style="color: var(--green)">Potential: <span class="big" id="peVal">0 J</span></span>
+          <span style="color: var(--blue)">Kinetic: <span class="big" id="keVal">0 J</span></span>
+          <span style="color: var(--red)">Thermal: <span class="big" id="thVal">0 J</span></span>
+          <span style="color: var(--ink)">Total: <span class="big" id="totVal">0 J</span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Drag the three hollow green circles to reshape the track. Drag the blue cart to set its release point, then click "Release Cart". Observe how Potential and Kinetic energy trade places.</div>
+      </div>
+    </section>
+
+    <footer class="pager">
+      <a href="further-applications.html">&larr; Chapter 5: Friction &amp; Gravity</a>
+      <a href="research-skills.html">Chapter 7: Research Skills &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------- SECTION 1: 2D COLLISION SANDBOX ---------- */
+(function() {
+  const canvas = document.getElementById('collisionCv');
+  const ctx = canvas.getContext('2d');
+  const eSlider = document.getElementById('coefRest');
+  const mSlider = document.getElementById('massRatio');
+  const playBtn = document.getElementById('playBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const momBeforeEl = document.getElementById('momBefore');
+  const momAfterEl = document.getElementById('momAfter');
+  const keKeptEl = document.getElementById('keKept');
+
+  let state = 'setup'; // 'setup', 'running', 'done'
+  let t = 0;
+
+  // Ball states
+  let bA = { x: 220, y: 160, vx: 3.5, vy: 0, r: 20, m: 1, color: '#2E86C1' };
+  let bB = { x: 440, y: 160, vx: -2.0, vy: 1.0, r: 20, m: 1, color: '#C0392B' };
+  
+  // Save initial states to reset
+  let bA_init = JSON.parse(JSON.stringify(bA));
+  let bB_init = JSON.parse(JSON.stringify(bB));
+
+  let animationId = null;
+
+  function calculateMomentum() {
+    let px = bA.m * bA.vx + bB.m * bB.vx;
+    let py = bA.m * bA.vy + bB.m * bB.vy;
+    let mag = Math.hypot(px, py);
+    return mag;
+  }
+
+  function calculateKE() {
+    let ke = 0.5 * bA.m * (bA.vx**2 + bA.vy**2) + 0.5 * bB.m * (bB.vx**2 + bB.vy**2);
+    return ke;
+  }
+
+  let ke_initial = calculateKE();
+  let mom_initial = calculateMomentum();
+
+  function updateParams() {
+    if (state === 'setup') {
+      bA.m = parseFloat(mSlider.value);
+      bA.r = 20 * Math.sqrt(bA.m);
+      bB.r = 20; // constant mass 1 for B
+      bA_init = JSON.parse(JSON.stringify(bA));
+      bB_init = JSON.parse(JSON.stringify(bB));
+      mom_initial = calculateMomentum();
+      ke_initial = calculateKE();
+      momBeforeEl.textContent = mom_initial.toFixed(2);
+      momAfterEl.textContent = "---";
+      keKeptEl.textContent = "---";
+      draw();
+    }
+  }
+
+  mSlider.addEventListener('input', updateParams);
+  eSlider.addEventListener('input', updateParams);
+
+  // Interaction
+  let dragBall = null;
+  let dragArrow = null; // 'A' or 'B'
+
+  canvas.addEventListener('pointerdown', (e) => {
+    if (state !== 'setup') return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    // Check hit on A arrow tip
+    let ax = bA.x + bA.vx * 30, ay = bA.y + bA.vy * 30;
+    if (Math.hypot(mx - ax, my - ay) < 15) {
+      dragArrow = 'A';
+      return;
+    }
+    // Check hit on B arrow tip
+    let bx = bB.x + bB.vx * 30, by = bB.y + bB.vy * 30;
+    if (Math.hypot(mx - bx, my - by) < 15) {
+      dragArrow = 'B';
+      return;
+    }
+
+    // Check hit on balls
+    if (Math.hypot(mx - bA.x, my - bA.y) < bA.r) {
+      dragBall = bA;
+    } else if (Math.hypot(mx - bB.x, my - bB.y) < bB.r) {
+      dragBall = bB;
+    }
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    if (dragBall) {
+      dragBall.x = Math.max(50, Math.min(canvas.width - 50, mx));
+      dragBall.y = Math.max(50, Math.min(canvas.height - 50, my));
+      bA_init = JSON.parse(JSON.stringify(bA));
+      bB_init = JSON.parse(JSON.stringify(bB));
+      draw();
+    } else if (dragArrow) {
+      let b = dragArrow === 'A' ? bA : bB;
+      let dx = mx - b.x, dy = my - b.y;
+      b.vx = Math.max(-5, Math.min(5, dx / 30));
+      b.vy = Math.max(-5, Math.min(5, dy / 30));
+      bA_init = JSON.parse(JSON.stringify(bA));
+      bB_init = JSON.parse(JSON.stringify(bB));
+      mom_initial = calculateMomentum();
+      ke_initial = calculateKE();
+      momBeforeEl.textContent = mom_initial.toFixed(2);
+      draw();
+    }
+  });
+
+  window.addEventListener('pointerup', () => {
+    dragBall = null;
+    dragArrow = null;
+  });
+
+  function drawArrow(x, y, vx, vy, color) {
+    let ax = x + vx * 30, ay = y + vy * 30;
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(ax, ay);
+    ctx.stroke();
+
+    // head
+    let angle = Math.atan2(vy, vx);
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(ax - 10 * Math.cos(angle - Math.PI/6), ay - 10 * Math.sin(angle - Math.PI/6));
+    ctx.lineTo(ax - 10 * Math.cos(angle + Math.PI/6), ay - 10 * Math.sin(angle + Math.PI/6));
+    ctx.closePath();
+    ctx.fill();
+
+    // drag handle dot at tip
+    if (state === 'setup') {
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(ax, ay, 5, 0, 2*Math.PI);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw background grid
+    ctx.strokeStyle = '#ffffff06';
+    ctx.lineWidth = 1;
+    for(let x=0; x<canvas.width; x+=30) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for(let y=0; y<canvas.height; y+=30) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+
+    // Draw balls
+    [bB, bA].forEach(b => {
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, 2*Math.PI);
+      ctx.shadowColor = 'rgba(0,0,0,0.1)';
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetY = 4;
+      ctx.fill();
+      ctx.shadowColor = 'transparent';
+
+      // Mass label
+      ctx.fillStyle = '#fff';
+      ctx.font = '12px Helvetica';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(b.m.toFixed(1) + ' kg', b.x, b.y);
+
+      // Arrow
+      if (state === 'setup') {
+        drawArrow(b.x, b.y, b.vx, b.vy, b.color);
+      }
+    });
+  }
+
+  function runSimulation() {
+    if (state !== 'running') return;
+
+    // Move balls
+    bA.x += bA.vx;
+    bA.y += bA.vy;
+    bB.x += bB.vx;
+    bB.y += bB.vy;
+
+    // Wall bounce
+    [bA, bB].forEach(b => {
+      if (b.x < b.r || b.x > canvas.width - b.r) b.vx *= -1;
+      if (b.y < b.r || b.y > canvas.height - b.r) b.vy *= -1;
+    });
+
+    // Check collision
+    let dist = Math.hypot(bB.x - bA.x, bB.y - bA.y);
+    if (dist < bA.r + bB.r) {
+      // Normal and tangent vectors at impact
+      let nx = (bB.x - bA.x) / dist;
+      let ny = (bB.y - bA.y) / dist;
+
+      // Project velocities onto normal
+      let vAn = bA.vx * nx + bA.vy * ny;
+      let vBn = bB.vx * nx + bB.vy * ny;
+
+      if (vAn - vBn > 0) { // they are moving towards each other
+        let tx = -ny;
+        let ty = nx;
+
+        let vAt = bA.vx * tx + bA.vy * ty;
+        let vBt = bB.vx * tx + bB.vy * ty;
+
+        // 1D elastic/inelastic collision formula along normal
+        let e = parseFloat(eSlider.value);
+        let mA = bA.m, mB = bB.m;
+
+        let vAn_final = ((mA - e*mB)*vAn + (1+e)*mB*vBn) / (mA + mB);
+        let vBn_final = ((mB - e*mA)*vBn + (1+e)*mA*vAn) / (mA + mB);
+
+        // Convert back to cartesian
+        bA.vx = vAn_final * nx + vAt * tx;
+        bA.vy = vAn_final * ny + vAt * ty;
+        bB.vx = vBn_final * nx + vBt * tx;
+        bB.vy = vBn_final * ny + vBt * ty;
+
+        // Push away slightly to prevent overlap stick
+        let overlap = (bA.r + bB.r) - dist;
+        bA.x -= overlap * nx * 0.5;
+        bA.y -= overlap * ny * 0.5;
+        bB.x += overlap * nx * 0.5;
+        bB.y += overlap * ny * 0.5;
+
+        // update statistics
+        let momAfter = calculateMomentum();
+        let keAfter = calculateKE();
+        momAfterEl.textContent = momAfter.toFixed(2);
+        let ratio = (keAfter / ke_initial) * 100;
+        keKeptEl.textContent = ratio.toFixed(0) + "%";
+      }
+    }
+
+    draw();
+    animationId = requestAnimationFrame(runSimulation);
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (state === 'setup') {
+      state = 'running';
+      playBtn.textContent = 'Pause';
+      runSimulation();
+    } else if (state === 'running') {
+      state = 'setup';
+      playBtn.textContent = 'Resume';
+      cancelAnimationFrame(animationId);
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    state = 'setup';
+    playBtn.textContent = 'Play Collision';
+    cancelAnimationFrame(animationId);
+    bA = JSON.parse(JSON.stringify(bA_init));
+    bB = JSON.parse(JSON.stringify(bB_init));
+    momBeforeEl.textContent = mom_initial.toFixed(2);
+    momAfterEl.textContent = "---";
+    keKeptEl.textContent = "---";
+    draw();
+  });
+
+  updateParams();
+})();
+
+/* ---------- SECTION 2: ENERGY ROLLER COASTER ---------- */
+(function() {
+  const canvas = document.getElementById('coasterCv');
+  const ctx = canvas.getContext('2d');
+  const frictionSlider = document.getElementById('frictionCoeff');
+  const releaseBtn = document.getElementById('coasterPlayBtn');
+  const resetBtn = document.getElementById('coasterResetBtn');
+
+  const peVal = document.getElementById('peVal');
+  const keVal = document.getElementById('keVal');
+  const thVal = document.getElementById('thVal');
+  const totVal = document.getElementById('totVal');
+
+  // Track points (control points for bezier or segments)
+  let track = [
+    { x: 50, y: 80 },
+    { x: 220, y: 280 },
+    { x: 380, y: 150 },
+    { x: 520, y: 230 }
+  ];
+
+  let cart = { s: 0, v: 0, x: 0, y: 0 };
+  let frictionTerm = 0;
+  let state = 'ready'; // 'ready', 'running'
+
+  // Parameter calculation from bezier curve path
+  function getBezierPoint(t) {
+    let x = (1-t)**3 * track[0].x + 3*(1-t)**2*t * track[1].x + 3*(1-t)*t**2 * track[2].x + t**3 * track[3].x;
+    let y = (1-t)**3 * track[0].y + 3*(1-t)**2*t * track[1].y + 3*(1-t)*t**2 * track[2].y + t**3 * track[3].y;
+    return { x, y };
+  }
+
+  // Find derivative dy/dx or slope at t
+  function getSlope(t) {
+    let dx = 3*(1-t)**2*(track[1].x - track[0].x) + 6*(1-t)*t*(track[2].x - track[1].x) + 3*t**2*(track[3].x - track[2].x);
+    let dy = 3*(1-t)**2*(track[1].y - track[0].y) + 6*(1-t)*t*(track[2].y - track[1].y) + 3*t**2*(track[3].y - track[2].y);
+    return Math.atan2(dy, dx);
+  }
+
+  // Pre-calculate path length for arc-length parametrization
+  let path = [];
+  let totalLength = 0;
+  function precomputePath() {
+    path = [];
+    totalLength = 0;
+    let steps = 400;
+    let prev = getBezierPoint(0);
+    path.push({ s: 0, t: 0, x: prev.x, y: prev.y, theta: getSlope(0) });
+    for (let i = 1; i <= steps; i++) {
+      let t_val = i / steps;
+      let curr = getBezierPoint(t_val);
+      let d = Math.hypot(curr.x - prev.x, curr.y - prev.y);
+      totalLength += d;
+      path.push({ s: totalLength, t: t_val, x: curr.x, y: curr.y, theta: getSlope(t_val) });
+      prev = curr;
+    }
+  }
+
+  // Interpolate state along path
+  function getCoasterPos(s) {
+    if (s <= 0) return path[0];
+    if (s >= totalLength) return path[path.length - 1];
+    // Binary search
+    let low = 0, high = path.length - 1;
+    while (low < high - 1) {
+      let mid = (low + high) >> 1;
+      if (path[mid].s < s) low = mid;
+      else high = mid;
+    }
+    let p0 = path[low], p1 = path[high];
+    let f = (s - p0.s) / (p1.s - p0.s);
+    return {
+      x: p0.x + f * (p1.x - p0.x),
+      y: p0.y + f * (p1.y - p0.y),
+      theta: p0.theta + f * (p1.theta - p0.theta)
+    };
+  }
+
+  precomputePath();
+
+  // Reset cart to start
+  cart.s = 0;
+  cart.v = 0;
+  let thermalEnergy = 0;
+  let init_pos = getCoasterPos(cart.s);
+  cart.x = init_pos.x; cart.y = init_pos.y;
+
+  // Drag states
+  let dragPt = null;
+  let dragCart = false;
+
+  canvas.addEventListener('pointerdown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    // Check hit on control points
+    for (let i = 0; i < track.length; i++) {
+      if (Math.hypot(mx - track[i].x, my - track[i].y) < 14) {
+        dragPt = i;
+        return;
+      }
+    }
+
+    // Check hit on cart
+    if (state === 'ready' && Math.hypot(mx - cart.x, my - cart.y) < 20) {
+      dragCart = true;
+    }
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    if (dragPt !== null) {
+      track[dragPt].x = Math.max(20, Math.min(canvas.width - 20, mx));
+      track[dragPt].y = Math.max(20, Math.min(canvas.height - 20, my));
+      precomputePath();
+      // Snap cart to closest path s
+      if (state === 'ready') {
+        let best_s = 0, best_d = Infinity;
+        for (let s_val = 0; s_val <= totalLength; s_val += 5) {
+          let pos = getCoasterPos(s_val);
+          let d = Math.hypot(mx - pos.x, my - pos.y);
+          if (d < best_d) {
+            best_d = d;
+            best_s = s_val;
+          }
+        }
+        cart.s = best_s;
+        let pos = getCoasterPos(cart.s);
+        cart.x = pos.x; cart.y = pos.y;
+        thermalEnergy = 0;
+      }
+      draw();
+    } else if (dragCart) {
+      // Find closest point on path to cursor
+      let best_s = 0, best_d = Infinity;
+      for (let s_val = 0; s_val <= totalLength; s_val += 3) {
+        let pos = getCoasterPos(s_val);
+        let d = Math.hypot(mx - pos.x, my - pos.y);
+        if (d < best_d) {
+          best_d = d;
+          best_s = s_val;
+        }
+      }
+      cart.s = best_s;
+      cart.v = 0;
+      thermalEnergy = 0;
+      let pos = getCoasterPos(cart.s);
+      cart.x = pos.x; cart.y = pos.y;
+      draw();
+    }
+  });
+
+  window.addEventListener('pointerup', () => {
+    dragPt = null;
+    dragCart = false;
+  });
+
+  let coasterAnimationId = null;
+
+  function runCoasterSim() {
+    if (state !== 'running') return;
+
+    let pos = getCoasterPos(cart.s);
+    let slope = pos.theta;
+
+    // Forces: Gravity parallel to slope F_g = -g * sin(slope)
+    // In canvas y is down, so positive gravity accelerates cart if slope goes down (y increases).
+    let g = 0.25; // scaling gravity constant
+    let acc = g * Math.sin(slope);
+
+    // Friction force: proportional to velocity and normal force
+    let mu = parseFloat(frictionSlider.value);
+    let normalForce = g * Math.cos(slope);
+    let friction = mu * cart.v;
+
+    // Update velocity and position
+    cart.v += acc - friction;
+    cart.s += cart.v;
+
+    // Track dissipation
+    let workFriction = Math.abs(friction * cart.v);
+    thermalEnergy += workFriction;
+
+    // Boundary conditions
+    if (cart.s < 0) {
+      cart.s = 0;
+      cart.v = -cart.v * 0.5; // bounce slightly
+    } else if (cart.s > totalLength) {
+      cart.s = totalLength;
+      cart.v = -cart.v * 0.5; // bounce
+    }
+
+    let updated_pos = getCoasterPos(cart.s);
+    cart.x = updated_pos.x;
+    cart.y = updated_pos.y;
+
+    draw();
+    coasterAnimationId = requestAnimationFrame(runCoasterSim);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw background grid lines
+    ctx.strokeStyle = '#ffffff08';
+    ctx.lineWidth = 1;
+    for(let x=0; x<canvas.width; x+=30) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for(let y=0; y<canvas.height; y+=30) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+
+    // Draw track guide
+    ctx.strokeStyle = '#a1a1aa';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(track[0].x, track[0].y);
+    for (let s_val = 0; s_val <= totalLength; s_val += 2) {
+      let p = getCoasterPos(s_val);
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.stroke();
+
+    // Draw support lines
+    ctx.strokeStyle = '#ffffff22';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < track.length; i++) {
+      ctx.beginPath();
+      ctx.moveTo(track[i].x, track[i].y);
+      ctx.lineTo(track[i].x, canvas.height - 20);
+      ctx.stroke();
+    }
+
+    // Draw track control points
+    track.forEach((pt, idx) => {
+      ctx.fillStyle = '#09090b';
+      ctx.strokeStyle = 'var(--green)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 7, 0, 2*Math.PI);
+      ctx.fill();
+      ctx.stroke();
+    });
+
+    // Draw ground
+    ctx.fillStyle = 'var(--paper-line)';
+    ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+
+    // Draw cart
+    let pos = getCoasterPos(cart.s);
+    ctx.save();
+    ctx.translate(pos.x, pos.y);
+    ctx.rotate(pos.theta);
+    ctx.fillStyle = 'var(--blue)';
+    ctx.fillRect(-14, -14, 28, 12);
+    // wheels
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(-8, -2, 4, 0, 2*Math.PI);
+    ctx.arc(8, -2, 4, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.restore();
+
+    // Energy stats
+    let m = 1.0;
+    let baselineHeight = canvas.height - 20;
+    let pe = m * 0.25 * (baselineHeight - cart.y);
+    let ke = 0.5 * m * (cart.v**2);
+    
+    // Scale for visual bar graph (placed at the top-right corner)
+    let bx = 550, by = 40, bw = 80, bh = 140;
+    ctx.fillStyle = '#ffffff08';
+    ctx.fillRect(bx, by, bw, bh);
+    ctx.strokeStyle = '#ffffff22';
+    ctx.strokeRect(bx, by, bw, bh);
+
+    // PE Bar (Green)
+    ctx.fillStyle = 'var(--green)';
+    let peH = Math.min(bh, pe * 0.6);
+    ctx.fillRect(bx + 10, by + (bh - peH) - 5, 15, peH);
+
+    // KE Bar (Blue)
+    ctx.fillStyle = 'var(--blue)';
+    let keH = Math.min(bh, ke * 0.6);
+    ctx.fillRect(bx + 25, by + (bh - keH), 15, keH);
+
+    // Thermal Bar (Red)
+    ctx.fillStyle = 'var(--red)';
+    let thH = Math.min(bh, thermalEnergy * 0.6);
+    ctx.fillRect(bx + 50, by + (bh - thH), 15, thH);
+
+    // Total Energy Indicator
+    ctx.strokeStyle = '#222';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    let totH = Math.min(bh, (pe + ke + thermalEnergy) * 0.6);
+    ctx.moveTo(bx - 4, by + (bh - totH));
+    ctx.lineTo(bx + 70, by + (bh - totH));
+    ctx.stroke();
+
+    // Text label
+    ctx.fillStyle = 'var(--ink)';
+    ctx.font = '8px Helvetica';
+    ctx.textAlign = 'center';
+    ctx.fillText('PE', bx + 7, by + bh + 10);
+    ctx.fillText('KE', bx + 32, by + bh + 10);
+    ctx.fillText('Th', bx + 57, by + bh + 10);
+
+    peVal.textContent = Math.round(pe) + ' J';
+    keVal.textContent = Math.round(ke) + ' J';
+    thVal.textContent = Math.round(thermalEnergy) + ' J';
+    totVal.textContent = Math.round(pe + ke + thermalEnergy) + ' J';
+  }
+
+  releaseBtn.addEventListener('click', () => {
+    if (state === 'ready') {
+      state = 'running';
+      releaseBtn.textContent = 'Pause Cart';
+      runCoasterSim();
+    } else if (state === 'running') {
+      state = 'ready';
+      releaseBtn.textContent = 'Resume Cart';
+      cancelAnimationFrame(coasterAnimationId);
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    state = 'ready';
+    releaseBtn.textContent = 'Release Cart';
+    cancelAnimationFrame(coasterAnimationId);
+    track = [
+      { x: 50, y: 80 },
+      { x: 220, y: 280 },
+      { x: 380, y: 150 },
+      { x: 520, y: 230 }
+    ];
+    precomputePath();
+    cart.s = 0; cart.v = 0;
+    thermalEnergy = 0;
+    let pos = getCoasterPos(cart.s);
+    cart.x = pos.x; cart.y = pos.y;
+    draw();
+  });
+
+  draw();
+})();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+</script>
+
+</body>
+</html>

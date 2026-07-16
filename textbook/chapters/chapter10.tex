@@ -1,0 +1,112 @@
+%%-----------Chapter 10------------------------------------------
+\chapter{Modern Physics: A Quantum Preview}
+
+\section{Introduction: The Crack in the Classical World}
+
+By the late nineteenth century, physicists believed they had nearly finished their work. Mechanics had been solved by Newton, thermodynamics by Joule and Boltzmann, and electromagnetism by Maxwell. The universe seemed to run like a clockwork machine: if you knew the positions and velocities of all particles at one instant, you could predict their future for all eternity. 
+
+But as scientists began probing the subatomic scale, this beautiful clockwork picture fell apart. Classical physics could not explain why hot objects glowed with the colors they did, or why light shining on metal could knock out electrons in ways that defied wave theory. Solving these puzzles required a radical rewrite of the laws of nature: **quantum mechanics**. In this final chapter, we take a preview look at this strange subatomic world where particles act like waves, waves act like particles, and probability replaces certainty.
+
+\section{The Photoelectric Effect}
+
+In 1887, Heinrich Hertz noticed that electric sparks jumped more easily between electrodes when they were illuminated with ultraviolet light. This phenomenon—where light shining on a metal surface ejects electrons—is the **photoelectric effect**.
+
+According to classical electromagnetic wave theory, light is a continuous wave carrying energy. The electric field of the wave oscillates and shakes the electrons in the metal. If you turn up the light intensity, the electric field becomes stronger, which should shake the electrons harder and eject them with higher kinetic energy. Furthermore, if the light is very dim, it should take time (minutes or hours) for an electron to absorb enough energy to break free.
+
+But experiments showed the exact opposite:
+1. **No Time Delay**: Even in extremely dim light, electrons are ejected almost instantly.
+2. **Frequency Threshold**: If the frequency of the light is below a certain threshold $f_0$, no electrons are ejected, no matter how intense the light is.
+3. **Intensity Rules Number, Not Energy**: Turning up the intensity increases the *number* of ejected electrons per second, but does not change their maximum kinetic energy. That energy depends only on the *frequency* of the light.
+
+\subsection{Einstein's Photon Hypothesis (1905)}
+
+Albert Einstein solved the mystery by proposing that light is not a continuous wave, but is quantized into tiny packets of energy called **photons**. 
+
+\begin{keybox}[Energy of a Photon]
+The energy $E$ of a single photon is directly proportional to its frequency $f$:
+\begin{equation}
+    E = h f,
+\end{equation}
+where $h \approx \SI{6.626e-34}{J.s}$ is Planck's constant.
+\end{keybox}
+
+When a photon strikes the metal, it is absorbed by a single electron in an all-or-nothing collision. To escape the metal, the electron must overcome an attractive potential energy barrier called the **work function**, $\Phi$. Any remaining energy becomes the electron's maximum kinetic energy, $K_{\text{max}}$:
+\begin{equation}
+    K_{\text{max}} = h f - \Phi.
+\end{equation}
+This formula explained all the experimental observations in one stroke. It won Einstein the 1921 Nobel Prize in Physics (not his work on relativity, which was still considered too speculative at the time!).
+
+\section{Wave-Particle Duality}
+
+If light—which we proved was a wave in Chapter 9—can act like a stream of particles (photons), can objects we think of as solid particles (like electrons) act like waves?
+
+In 1924, a French graduate student named Louis de Broglie proposed exactly that. He argued that if nature is symmetric, then matter must also have a wave nature.
+
+\begin{keybox}[The de Broglie Relation]
+A particle with momentum $p = mv$ has an associated wavelength $\lambda$:
+\begin{equation}
+    \lambda = \frac{h}{p}.
+\end{equation}
+\end{keybox}
+
+For macroscopic objects, Planck's constant is so tiny that the wavelength is completely undetectable. A thrown cricket ball has a wavelength of about $10^{-34}\,\mathrm{m}$—far too small to interact with any obstacle. But for an electron moving at high speed, its wavelength is around $10^{-10}\,\mathrm{m}$, which is the size of the spacing between atoms in a crystal.
+
+\subsection{Historical Experiment: Davisson-Germer (1927)}
+
+Clinton Davisson and Lester Germer fired a beam of electrons at a nickel crystal in a vacuum. They discovered that the electrons did not scatter randomly; instead, they formed a distinct diffraction pattern of peaks and valleys, exactly like X-rays reflecting off a crystal. The atomic grid of the nickel acted as a diffraction grating, proving that electrons are waves.
+
+\subsection{The Quantum Mystery: The Double-Slit with Electrons}
+
+To see the weirdness of quantum mechanics, let us compare three double-slit experiments:
+1. **With Bullets**: If we fire bullets at a double-slit, they pass through one slit or the other. We get a simple pile of bullets behind each slit. The distribution is $I_{\text{both}} = I_1 + I_2$.
+2. **With Waves**: If we block one slit, we get a single peak. If we open both, the waves interfere, creating an interference pattern with bright and dark spots: $I_{\text{both}} \neq I_1 + I_2$.
+3. **With Electrons**: If we fire electrons *one by one*, each electron lands as a single dot on the detector (particle behavior). We cannot predict where any single electron will land. But as we fire thousands of electrons one by one, the dots gradually build up to form a perfect double-slit interference pattern (wave behavior)! 
+
+Each electron seems to pass through *both* slits simultaneously, interfering with itself, before collapsing to a single point on the screen.
+
+\section{Foundations of Quantum Mechanics}
+
+How do we describe this behavior mathematically? In 1926, Erwin Schrödinger wrote down the wave equation for matter, whose solution is the **wavefunction** $\Psi(x,t)$. 
+
+Unlike a water wave where the amplitude is the physical height, the wavefunction itself is not directly measurable. Instead, the German physicist Max Born proposed that the square of the wavefunction represents a probability:
+\begin{keybox}[Born's Probability Interpretation]
+The probability $P(x)\,dx$ of finding a particle in a small range $dx$ around position $x$ is:
+\begin{equation}
+    P(x)\,dx = |\Psi(x,t)|^2\,dx.
+\end{equation}
+\end{keybox}
+In the quantum world, determinism is gone. We cannot calculate where a particle *is*; we can only calculate the *probability* of finding it there.
+
+\subsection{Watching the Electrons: Measurement Collapse}
+
+What if we place a light source behind the double-slit to watch which slit each electron goes through? 
+As soon as we do this, the measurement forces each electron to choose a path. The instant we detect which slit the electron passed through, the interference pattern disappears! The act of measurement collapses the quantum wave state, returning the system to classical, bullet-like behavior.
+
+\subsection{The Heisenberg Uncertainty Principle}
+
+Because a particle is described by a wave packet, we cannot specify both its position and its momentum with absolute certainty. Werner Heisenberg proved that the product of their uncertainties has a fundamental limit:
+\begin{keybox}[Heisenberg Uncertainty Principle]
+\begin{equation}
+    \Delta x \Delta p \ge \frac{\hbar}{2}, \quad \text{where } \hbar \equiv \frac{h}{2\pi}.
+\end{equation}
+\end{keybox}
+If you design an experiment to pin down the position of an electron ($\Delta x \to 0$), its momentum becomes completely wild and unpredictable ($\Delta p \to \infty$). This is not a limitation of our instruments; it is a fundamental property of wave-like matter.
+
+\begin{checkpoint}[10.1]
+If the wavelength of a light wave is cut in half, the energy of its photons is:
+\newline
+\begin{tabular}{ll}
+  A. Cut in half. & B. Doubled. \\
+  C. Quadrupled. & D. Unchanged.
+\end{tabular}
+\checkanswer{B. Since $f = c/\lambda$, cutting the wavelength in half doubles the frequency ($f \to 2f$), which doubles the photon energy $E = hf$.}
+\end{checkpoint}
+
+\begin{whiteboard}[10.1: Rutherford's Gold Foil]
+In 1911, Ernest Rutherford's students fired alpha particles (heavy positive helium nuclei) at a thin sheet of gold foil.
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=1pt]
+  \item If the gold atoms were like J.J. Thomson's ``plum pudding'' model (a soft sphere of positive charge with tiny electrons scattered inside), what should happen to the alpha particles?
+  \item In the actual experiment, most passed straight through, but about $1$ in $8000$ bounced almost straight back. Rutherford wrote: ``It was as if you fired a 15-inch shell at a piece of tissue paper and it came back and hit you.'' What does this say about where the mass and positive charge of the atom are concentrated?
+\end{enumerate}
+\textit{(It proved that the atom is mostly empty space, with almost all its mass and positive charge concentrated in a tiny, dense core called the nucleus.)}
+\end{whiteboard}

@@ -1,0 +1,166 @@
+%%-----------Chapter 9------------------------------------------
+\chapter{Optics: Waves and Rays}
+
+\section{Introduction: The Dual Face of Light}
+
+What is light? This question has split the physics community for centuries. Isaac Newton famously argued that light is a stream of tiny particles (``corpuscles''), which explained why light travels in straight lines and casts sharp shadows. But his contemporary Christiaan Huygens argued that light is a wave, propagating through a medium much like sound waves in air. 
+
+For a hundred years, Newton's prestige kept the wave theory in the shadows. But in 1801, a simple experiment involving a card with two thin slits changed everything, proving beyond doubt that light can interfere with itself—a property unique to waves. Later, James Clerk Maxwell showed that light is actually an electromagnetic wave, moving at a speed dictated by the electrical and magnetic constants of space.
+
+Yet, when light interacts with objects much larger than its wavelength (like lenses, mirrors, or water drops), we do not need to worry about wave crests and interference. We can treat light as a set of straight lines called **rays**. In this chapter, we explore both descriptions, showing how the wave description leads to ray behaviors under the beautiful unifying rule of Fermat's principle of least time.
+
+\section{Wave Optics}
+
+A wave is a disturbance that travels through space, carrying energy without transporting matter. Waves can be **transverse** (where the medium oscillates perpendicular to the direction of wave travel, like waves on a string) or **longitudinal** (where the medium oscillates parallel, like sound waves).
+
+Mathematically, a one-dimensional wave traveling along the $x$-axis with speed $v$ is represented by a wavefunction $\psi(x,t)$:
+\begin{equation}
+    \psi(x,t) = f(x \mp v t),
+\end{equation}
+where the minus sign is for a wave traveling to the right, and the plus sign is for a wave traveling to the left. Any function of this form satisfies the **wave equation**:
+\begin{equation}
+    \frac{\partial^2\psi}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2\psi}{\partial t^2}.
+\end{equation}
+
+\subsection{Electromagnetic Waves and the Speed of Light}
+
+In 1864, Maxwell compiled the laws of electricity and magnetism and discovered that in vacuum, the electric and magnetic fields satisfy the wave equation:
+\begin{equation}
+    \frac{\partial^2 E}{\partial x^2} = \mu_0\varepsilon_0 \frac{\partial^2 E}{\partial t^2}.
+\end{equation}
+Comparing this to the standard wave equation, he realized that electromagnetic disturbances must travel at speed:
+\begin{equation}
+    c = \frac{1}{\sqrt{\mu_0\varepsilon_0}}.
+\end{equation}
+Using the values of $\mu_0 = 4\pi\times10^{-7}\,\mathrm{T\cdot m/A}$ and $\varepsilon_0 = 8.854\times10^{-12}\,\mathrm{C^2/(N\cdot m^2)}$, he calculated:
+\begin{equation}
+    c = \frac{1}{\sqrt{(4\pi\times10^{-7})(8.854\times10^{-12})}} \approx \SI{2.998e8}{m/s}.
+\end{equation}
+This matched the measured speed of light exactly! Maxwell wrote: ``we can scarcely avoid the inference that light consists in the transverse undulations of the same medium which is the cause of electric and magnetic phenomena.''
+
+\subsection{Rayleigh Scattering: Why the Sky is Blue}
+
+When light hits small molecules in the atmosphere, it scatters. The efficiency of this scattering is inversely proportional to the fourth power of the wavelength:
+\begin{equation}
+    I_{\text{scattered}} \propto \frac{1}{\lambda^4}.
+\end{equation}
+Because blue light has a much shorter wavelength than red light ($\lambda_{\text{blue}} \approx \SI{400}{nm}$ vs $\lambda_{\text{red}} \approx \SI{700}{nm}$), blue light is scattered about ten times more efficiently. When we look up, we see this scattered blue light. At sunset, the light must travel through a much thicker layer of atmosphere, which scatters away all the blue, leaving only the direct red and orange wavelengths to reach our eyes.
+
+\subsection{Young's Double-Slit Experiment}
+
+In 1801, Thomas Young split a thin beam of sunlight using two closely spaced slits. On a screen behind them, he saw not two bright lines, but a series of bright and dark bands (fringes). 
+
+This interference is explained by the path length difference $\Delta L$ between the waves from the two slits. If the slits are separated by distance $d$ and we look at angle $\theta$:
+\begin{equation}
+    \Delta L = d\sin\theta.
+\end{equation}
+- **Constructive Interference (Bright Fringes)**: If the path difference is an integer number of wavelengths, the waves arrive in phase:
+  \begin{equation}
+      d\sin\theta = m\lambda, \quad m = 0, \pm 1, \pm 2, \dots
+  \end{equation}
+- **Destructive Interference (Dark Fringes)**: If the path difference is a half-integer, they arrive out of phase and cancel out:
+  \begin{equation}
+      d\sin\theta = \left(m + \frac{1}{2}\right)\lambda, \quad m = 0, \pm 1, \pm 2, \dots
+  \end{equation}
+
+\section{Ray Optics}
+
+When light hits a boundary between two media, it is partially **reflected** and partially **refracted** (bent). Lenses and mirrors work by bending rays of light.
+
+The bending of light is characterized by the **index of refraction** $n$ of the material, defined as the ratio of light speed in vacuum to its speed in the medium:
+\begin{equation}
+    n \equiv \frac{c}{v}.
+\end{equation}
+Air has $n \approx 1.0$, water has $n \approx 1.33$, and glass has $n \approx 1.5$.
+
+\subsection{Fermat's Principle of Least Time}
+
+In 1662, the French mathematician Pierre de Fermat proposed a beautiful principle that generates all of ray optics:
+
+\begin{keybox}[Fermat's Principle of Least Time]
+A ray of light traveling between two points takes the path that requires the **least time** compared to nearby paths.
+\end{keybox}
+
+Let us use Fermat's principle to derive **Snell's Law of Refraction**.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.2]
+  % Boundary
+  \draw[thick] (0,1.5) -- (4,1.5) node[right] {boundary};
+  \node[above right] at (0, 1.5) {$n_1$};
+  \node[below right] at (0, 1.5) {$n_2$};
+
+  % Normal line
+  \draw[dashed] (2,0) -- (2,3) node[above] {normal};
+
+  % Points A and B
+  \coordinate (A) at (0.8, 2.7);
+  \coordinate (B) at (3.2, 0.3);
+  \fill (A) circle (0.05) node[left] {$A$};
+  \fill (B) circle (0.05) node[right] {$B$};
+
+  % Light path
+  \draw[myred, very thick] (A) -- (1.5, 1.5) -- (B);
+  \fill[myred] (1.5, 1.5) circle (0.05) node[above right] {$x$};
+  
+  % Angles
+  \draw[thin] (1.5, 1.5) -- (1.5, 2.0);
+  \node at (1.3, 2.2) {$\theta_1$};
+  \node at (1.8, 0.8) {$\theta_2$};
+\end{tikzpicture}
+\caption{Light travels from $A$ to $B$, crossing the boundary at position $x$. The path of least time bends at the interface.}
+\label{fig:fermat_proof}
+\end{figure}
+
+Let point $A$ be at coordinates $(0, y_1)$ in medium 1 ($n_1$), and point $B$ be at $(d, -y_2)$ in medium 2 ($n_2$). The light crosses the boundary at $(x, 0)$ (Fig.~\ref{fig:fermat_proof}).
+The total time taken is:
+\begin{equation}
+    t(x) = \frac{d_1}{v_1} + \frac{d_2}{v_2} = \frac{n_1}{c}\sqrt{x^2 + y_1^2} + \frac{n_2}{c}\sqrt{(d-x)^2 + y_2^2}.
+\end{equation}
+To minimize this time, we set the derivative $dt/dx = 0$:
+\begin{equation}
+    \frac{dt}{dx} = \frac{n_1}{c}\frac{x}{\sqrt{x^2 + y_1^2}} - \frac{n_2}{c}\frac{d-x}{\sqrt{(d-x)^2 + y_2^2}} = 0.
+\end{equation}
+From the geometry in Fig.~\ref{fig:fermat_proof}, the terms inside are exactly the sines of the angles $\theta_1$ and $\theta_2$:
+\begin{equation}
+    \sin\theta_1 = \frac{x}{\sqrt{x^2 + y_1^2}}, \quad \sin\theta_2 = \frac{d-x}{\sqrt{(d-x)^2 + y_2^2}}.
+\end{equation}
+Substituting these:
+\begin{equation}
+    n_1 \sin\theta_1 = n_2 \sin\theta_2.
+\end{equation}
+This is **Snell's Law**! The refraction of light is simply the consequence of light taking the fastest possible path across a boundary where its speed changes.
+
+\begin{checkpoint}[9.1]
+Light travels from water ($n = 1.33$) to glass ($n = 1.50$). The refracted ray:
+\newline
+\begin{tabular}{ll}
+  A. Bends toward the normal. & B. Bends away from the normal. \\
+  C. Does not bend. & D. Is totally internally reflected.
+\end{tabular}
+\checkanswer{A. Since $n_2 > n_1$, the speed of light is lower in glass, so the angle must decrease ($\theta_2 < \theta_1$) to maintain the equality $n_1 \sin\theta_1 = n_2 \sin\theta_2$. The ray bends toward the normal.}
+\end{checkpoint}
+
+\begin{supplementary}{The Physics of Rainbows}
+A rainbow is one of nature's most spectacular displays of optics, combining refraction, reflection, and dispersion inside falling raindrops.
+
+When sunlight hits a spherical raindrop, it is refracted at the front surface, reflected off the back surface, and refracted again as it exits the front-bottom of the drop.
+Because water has **dispersion** (its index of refraction depends slightly on color: $n_{\text{violet}} \approx 1.344$ and $n_{\text{red}} \approx 1.331$), different colors bend at slightly different angles:
+- Red light exits at a maximum concentration angle of about $42^\circ$ relative to the incoming sunlight.
+- Violet light exits at a maximum concentration angle of about $40^\circ$.
+
+If you calculate the deflection angle $\theta(b)$ as a function of the impact parameter $b$ (where the ray hits the drop relative to the center line), you find that the deflection angle reaches a maximum at a specific impact parameter, creating a concentration of rays (a ``rainbow ray'') at $42^\circ$. This is why the rainbow is a circle of radius $42^\circ$ centered on your anti-solar point (the shadow of your head). Since violet bends more, it forms the inner edge of the primary bow, while red forms the outer edge.
+
+If light undergoes *two* internal reflections inside the raindrop before exiting, it forms the fainter **secondary rainbow** at an angle of $51^\circ$. Because of the extra reflection, the colors of the secondary rainbow are reversed, with red on the inside and violet on the outer edge.
+\end{supplementary}
+
+\begin{whiteboard}[9.1: Total Internal Reflection]
+When light travels from a dense medium (like water, $n_1 = 1.33$) to a less dense medium (like air, $n_2 = 1.0$), it bends away from the normal.
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=1pt]
+  \item What happens to the refracted angle $\theta_2$ as you increase the incident angle $\theta_1$?
+  \item Calculate the critical angle $\theta_c$ at which the refracted ray would theoretically bend to $90^\circ$ (skimming the surface).
+  \item What happens if the incident angle is greater than $\theta_c$? As a group, decide: does any light escape into the air?
+\end{enumerate}
+\textit{(You should find $\theta_c = \sin^{-1}(1/1.33) \approx 48.8^\circ$. For angles larger than this, no light is refracted; it is $100\%$ reflected back into the water, a phenomenon called total internal reflection, which is how fibre-optic cables transmit data.)}
+\end{whiteboard}

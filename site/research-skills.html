@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research Skills — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.hist-bar { fill: var(--blue); opacity: 0.7; }
+.hist-bar:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
+</nav>
+
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 7</div>
+    <h1>Research Skills</h1>
+    <p class="lead">Physics is an experimental science. To think like a scientist, you must understand the language of physical reality: how to quantify the inevitable "give or take" in measurement error and how to fit lines to noisy data.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#uncertainty">1. Reaction Time Histogram</a></li>
+      <li><a href="#fitting">2. Data Fitting</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="uncertainty">
+      <h2>1 &nbsp;Reaction Time &amp; Normal Distribution</h2>
+      <p>Every measurement has uncertainty. If you time a pendulum, your reaction time adds random fluctuations. By repeating the measurement, we see a bell curve (normal distribution) form. The average (mean) is our best estimate. The standard deviation ($\sigma$) measures clicking precision, and the standard error of the mean ($\sigma_m = \sigma / \sqrt{N}$) measures how certain we are of that average.</p>
+
+      <div class="viz">
+        <div class="vhead">Time the Pendulum (Click at the right-most peak)</div>
+        <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:center; justify-content:center; margin-bottom:1rem">
+          <canvas id="pendulumCv" width="220" height="190" style="border: 1px solid var(--paper-line); background:#fbf9f0; border-radius:4px;"></canvas>
+          <div style="flex:1; min-width:200px; display:flex; flex-direction:column; gap:0.5rem; font-family:Helvetica; font-size:0.85rem">
+            <button id="timerBtn" style="padding:0.7rem; font-weight:bold; font-size:0.95rem; background:var(--blue); color:white; border:none; border-radius:4px;">CLICK AT BOTTOM</button>
+            <button id="clearTimerBtn">Reset Measurements</button>
+            <span>Trials (N): <span class="big" id="nVal">0</span></span>
+            <span>Mean Period: <span class="big" id="meanVal">---</span> s</span>
+            <span>Standard Deviation (&sigma;): <span class="big" id="sdVal">---</span> s</span>
+            <span>Standard Error (&sigma;<sub>m</sub>): <span class="big" id="seVal">---</span> s</span>
+          </div>
+        </div>
+
+        <div class="viz" style="margin-top:0;">
+        <svg id="histogramSvg" viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid var(--paper-line); background: #09090b; border-radius: 4px;">
+          <!-- Live histogram dynamically rendered here -->
+        </svg>
+        <div class="note" style="margin-top:0.4rem">Click the button repeatedly exactly when the pendulum reaches its rightmost peak (period is 2.0 seconds). Your human reaction time has random noise. Watch the histogram shape a normal distribution around 2.0 seconds!</div>
+      </div>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="fitting">
+      <h2>2 &nbsp;Data Fitting &amp; Least Squares</h2>
+      <p>Scientific data is noisy. To extract a physical relationship, we fit a line (or curve) to the data. In the method of least squares, the "best" line is the one that minimizes the sum of squared residuals—the vertical distances between the points and the line. By minimizing this error, we find the true trend.</p>
+
+      <div class="viz">
+        <div class="vhead">Click Canvas to Add Points, then Fit the Line</div>
+        <canvas id="fitCv" width="680" height="320" style="border: 1px solid var(--paper-line); background: #fbf9f0; border-radius: 4px; cursor:crosshair;"></canvas>
+        
+        <div class="controls">
+          <label>Slope (m) <input type="range" id="fitSlope" min="-1" max="1" step="0.02" value="0.3"></label>
+          <label>Intercept (c) <input type="range" id="fitIntercept" min="-100" max="100" step="2" value="0"></label>
+          <button id="autoFitBtn" style="background:var(--green); color:white; border-color:var(--green)">Auto-Fit Line</button>
+          <button id="clearFitBtn">Clear Points</button>
+        </div>
+
+        <div class="controls" style="justify-content:space-around; font-size:0.85rem">
+          <span>Your SSR (Sum of Squared Residuals): <span class="big" id="ssrVal">0</span></span>
+          <span>Equation: <b style="color:var(--blue)">y = <span id="eqSlope">0.30</span>x + <span id="eqIntercept">0.00</span></b></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Click on the canvas to place at least 3 points. Drag the sliders to align the line to the points and minimize the SSR (the vertical dashes). Click "Auto-Fit Line" to mathematically solve the regression!</div>
+      </div>
+    </section>
+
+    <footer class="pager">
+      <a href="work-energy-momentum.html">&larr; Chapter 6: Energy &amp; Momentum</a>
+      <a href="electricity-magnetism.html">Chapter 8: Electricity &amp; Magnetism &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ---------- SECTION 1: PENDULUM CLICK TIMER ---------- */
+(function() {
+  const canvas = document.getElementById('pendulumCv');
+  const ctx = canvas.getContext('2d');
+  const timerBtn = document.getElementById('timerBtn');
+  const clearBtn = document.getElementById('clearTimerBtn');
+
+  const nEl = document.getElementById('nVal');
+  const meanEl = document.getElementById('meanVal');
+  const sdEl = document.getElementById('sdVal');
+  const seEl = document.getElementById('seVal');
+
+  const histSvg = document.getElementById('histogramSvg');
+
+  let theta = 0;
+  let period = 2.0; 
+  let omega = (2 * Math.PI) / period;
+  let lastTime = performance.now();
+  let cx = 110, cy = 30, len = 100;
+
+  let measurements = [];
+
+  function tick(timestamp) {
+    let dt = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+
+    theta = 0.5 * Math.sin(omega * (timestamp / 1000));
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(cx - 30, cy);
+    ctx.lineTo(cx + 30, cy);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + 30);
+    ctx.lineTo(cx, cy + len + 30);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    let bx = cx + len * Math.sin(theta);
+    let by = cy + len * Math.cos(theta);
+
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(bx, by);
+    ctx.stroke();
+
+    ctx.fillStyle = 'var(--blue)';
+    ctx.beginPath();
+    ctx.arc(bx, by, 14, 0, 2*Math.PI);
+    ctx.fill();
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  let lastClickTime = null;
+  timerBtn.addEventListener('click', () => {
+    let now = performance.now();
+    timerBtn.style.transform = 'scale(0.95)';
+    setTimeout(() => timerBtn.style.transform = 'none', 100);
+
+    if (lastClickTime !== null) {
+      let u1 = Math.random(), u2 = Math.random();
+      let randStdNorm = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2.0 * Math.PI * u2); 
+      let humanError = randStdNorm * 0.12; 
+      let measuredPeriod = 2.0 + humanError;
+      measurements.push(measuredPeriod);
+      updateStats();
+    }
+    lastClickTime = now;
+  });
+
+  clearBtn.addEventListener('click', () => {
+    measurements = [];
+    lastClickTime = null;
+    updateStats();
+  });
+
+  function updateStats() {
+    let N = measurements.length;
+    nEl.textContent = N;
+    if (N === 0) {
+      meanEl.textContent = "---";
+      sdEl.textContent = "---";
+      seEl.textContent = "---";
+      histSvg.innerHTML = '';
+      return;
+    }
+    let sum = measurements.reduce((a, b) => a + b, 0);
+    let mean = sum / N;
+    meanEl.textContent = mean.toFixed(3);
+    let sd = 0;
+    if (N > 1) {
+      let varianceSum = measurements.reduce((a, b) => a + (b - mean)**2, 0);
+      sd = Math.sqrt(varianceSum / (N - 1));
+      sdEl.textContent = sd.toFixed(3);
+      seEl.textContent = (sd / Math.sqrt(N)).toFixed(3);
+    }
+    drawHistogram(mean, sd);
+  }
+
+  function drawHistogram(mean, sd) {
+    histSvg.innerHTML = '';
+    let W = 680, H = 180;
+    let minBin = 1.4, maxBin = 2.6, binWidth = 0.05;
+    let numBins = Math.round((maxBin - minBin) / binWidth);
+    let bins = new Array(numBins).fill(0);
+    measurements.forEach(m => {
+      let idx = Math.floor((m - minBin) / binWidth);
+      if (idx >= 0 && idx < numBins) bins[idx]++;
+    });
+    let maxCount = Math.max(...bins, 1);
+    let margin = { top: 25, bottom: 25, left: 30, right: 30 };
+    let graphW = W - margin.left - margin.right;
+    let graphH = H - margin.top - margin.bottom;
+    let s = `<line x1="${margin.left}" y1="${H - margin.bottom}" x2="${W - margin.right}" y2="${H - margin.bottom}" stroke="#fff" stroke-width="1.5"/>`;
+    let barW = graphW / numBins;
+    for (let i = 0; i < numBins; i++) {
+      let val = bins[i];
+      let barH = (val / maxCount) * graphH;
+      let x = margin.left + i * barW;
+      let y = H - margin.bottom - barH;
+      if (val > 0) s += `<rect x="${x+1}" y="${y}" width="${barW-2}" height="${barH}" class="hist-bar"/>`;
+    }
+    const scaleX = (t) => margin.left + ((t - minBin) / (maxBin - minBin)) * graphW;
+    for (let tickVal = 1.4; tickVal <= 2.6; tickVal += 0.2) {
+      let tx = scaleX(tickVal);
+      s += `<line x1="${tx}" y1="${H - margin.bottom}" x2="${tx}" y2="${H - margin.bottom + 5}" stroke="#fff"/>`;
+      s += `<text x="${tx}" y="${H - margin.bottom + 18}" font-size="10" font-family="Helvetica" text-anchor="middle" fill="#fff">${tickVal.toFixed(1)}s</text>`;
+    }
+    if (measurements.length > 0) {
+      let mx = scaleX(mean);
+      s += `<line x1="${mx}" y1="${margin.top - 10}" x2="${mx}" y2="${H - margin.bottom}" stroke="var(--red)" stroke-width="2"/>`;
+      s += `<text x="${mx}" y="${margin.top - 14}" font-size="11" font-family="Helvetica" font-weight="bold" fill="var(--red)" text-anchor="middle">mean: ${mean.toFixed(2)}s</text>`;
+    }
+
+    histSvg.innerHTML = s;
+  }
+})();
+
+/* ---------- SECTION 2: LINE FITTER ---------- */
+(function() {
+  const canvas = document.getElementById('fitCv');
+  const ctx = canvas.getContext('2d');
+  const slopeSlider = document.getElementById('fitSlope');
+  const interceptSlider = document.getElementById('fitIntercept');
+  const autoBtn = document.getElementById('autoFitBtn');
+  const clearBtn = document.getElementById('clearFitBtn');
+
+  const ssrEl = document.getElementById('ssrVal');
+  const eqSlopeEl = document.getElementById('eqSlope');
+  const eqInterceptEl = document.getElementById('eqIntercept');
+
+  let points = [];
+  const cx0 = canvas.width / 2;
+  const cy0 = canvas.height / 2;
+
+  // Add initial points to start with
+  points = [
+    { x: -150, y: -45 },
+    { x: -50, y: -20 },
+    { x: 40, y: 15 },
+    { x: 160, y: 55 }
+  ];
+
+  canvas.addEventListener('click', (e) => {
+    // Avoid double trigger from click if dragging sliders
+    if (e.target !== canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+    // Coordinate system centered on canvas
+    let px = mx - cx0;
+    let py = cy0 - my; // Y goes up
+    points.push({ x: px, y: py });
+    updateStats();
+    draw();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    points = [];
+    updateStats();
+    draw();
+  });
+
+  autoBtn.addEventListener('click', () => {
+    if (points.length < 2) return;
+    // Calculate least squares regression
+    let n = points.length;
+    let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+    points.forEach(p => {
+      sumX += p.x;
+      sumY += p.y;
+      sumXY += p.x * p.y;
+      sumXX += p.x * p.x;
+    });
+
+    let m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    let c = (sumY - m * sumX) / n;
+
+    slopeSlider.value = m;
+    interceptSlider.value = c;
+    updateStats();
+    draw();
+  });
+
+  [slopeSlider, interceptSlider].forEach(slider => {
+    slider.addEventListener('input', () => {
+      updateStats();
+      draw();
+    });
+  });
+
+  function updateStats() {
+    let m = parseFloat(slopeSlider.value);
+    let c = parseFloat(interceptSlider.value);
+
+    eqSlopeEl.textContent = m.toFixed(2);
+    eqInterceptEl.textContent = c.toFixed(1);
+
+    if (points.length === 0) {
+      ssrEl.textContent = "0";
+      return;
+    }
+
+    let ssr = 0;
+    points.forEach(p => {
+      let expectedY = m * p.x + c;
+      ssr += (p.y - expectedY)**2;
+    });
+    ssrEl.textContent = Math.round(ssr).toLocaleString();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw axes
+    ctx.strokeStyle = '#ffffff30';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, cy0); ctx.lineTo(canvas.width, cy0);
+    ctx.moveTo(cx0, 0); ctx.lineTo(cx0, canvas.height);
+    ctx.stroke();
+
+    // Draw grid
+    ctx.strokeStyle = '#ffffff08';
+    ctx.lineWidth = 1;
+    for(let x=0; x<canvas.width; x+=30) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for(let y=0; y<canvas.height; y+=30) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+
+    let m = parseFloat(slopeSlider.value);
+    let c = parseFloat(interceptSlider.value);
+
+    // Draw residuals (dashed lines)
+    ctx.strokeStyle = 'var(--red)';
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 1.5;
+    points.forEach(p => {
+      let expectedY = m * p.x + c;
+      let canvasX = cx0 + p.x;
+      let canvasY = cy0 - p.y;
+      let canvasExpectedY = cy0 - expectedY;
+      ctx.beginPath();
+      ctx.moveTo(canvasX, canvasY);
+      ctx.lineTo(canvasX, canvasExpectedY);
+      ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    // Draw points
+    points.forEach(p => {
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(cx0 + p.x, cy0 - p.y, 6, 0, 2*Math.PI);
+      ctx.fill();
+    });
+
+    // Draw line
+    ctx.strokeStyle = 'var(--blue)';
+    ctx.lineWidth = 3.5;
+    ctx.beginPath();
+    let x1 = -cx0, y1 = m * x1 + c;
+    let x2 = cx0, y2 = m * x2 + c;
+    ctx.moveTo(cx0 + x1, cy0 - y1);
+    ctx.lineTo(cx0 + x2, cy0 - y2);
+    ctx.stroke();
+  }
+
+  updateStats();
+  draw();
+})();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+</script>
+
+</body>
+</html>

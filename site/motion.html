@@ -9,13 +9,22 @@
 <body>
 
 <nav class="topnav">
-  <a class="brand" href="index.html">Fundamentals of Physics</a>
-  <a class="chap" href="vectors.html">1 Vectors</a>
-  <a class="chap" href="dimensions.html">2 Dimensions</a>
-  <a class="chap current" href="motion.html">3 Motion</a>
-  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
-  <a class="chap" href="further-applications.html">5 Applications</a>
-  <a class="pdf" href="main.pdf">Textbook PDF</a>
+  <div class="nav-container">
+    <a class="brand" href="https://tashi-wangchuk.github.io" target="_blank" rel="noopener noreferrer">TASHI WANGCHUK</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#chapters">Chapters</a>
+      <a href="main.pdf" class="pdf">Textbook</a>
+    </div>
+    <button id="menuBtn" class="menu-btn">
+      <i id="menuIcon" data-lucide="menu"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="index.html#chapters">Chapters</a>
+    <a href="main.pdf">Textbook PDF</a>
+  </div>
 </nav>
 
 <div class="chapter-head">
@@ -147,9 +156,9 @@
       document.getElementById('vdt').textContent = dt.toFixed(2);
       cx.clearRect(0, 0, cv.width, cv.height);
       // axes
-      cx.strokeStyle = '#00000045'; cx.lineWidth = 1;
-      cx.beginPath(); cx.moveTo(L, B - H2); cx.lineTo(L, B); cx.lineTo(L + W2, B); cx.stroke();
-      cx.fillStyle = '#555'; cx.font = '12px Helvetica';
+      cx.strokeStyle = '#ffffff45'; cx.lineWidth = 1;
+      cx.beginPath(); cx.moveTo(L, B); cx.lineTo(L + 600, B); cx.stroke();
+      cx.fillStyle = '#a1a1aa'; cx.font = '12px Helvetica';
       cx.fillText('t (s)', L + W2 - 20, B + 24);
       cx.fillText('s (m)', L - 40, B - H2 + 12);
       for (var tt = 1; tt <= 4; tt++) cx.fillText(tt, X(tt) - 3, B + 14);
@@ -182,11 +191,11 @@
       cx.lineTo(X(Math.min(t1 + 0.7, TMAX)), Y(s(T0) + slope * (Math.min(t1 + 0.7, TMAX) - T0)));
       cx.stroke();
       // points
-      [[T0, '#111'], [t1, '#2E86C1']].forEach(function (q) {
+      [[T0, '#fff'], [t1, '#2E86C1']].forEach(function (q) {
         cx.fillStyle = q[1];
         cx.beginPath(); cx.arc(X(q[0]), Y(s(q[0])), 6, 0, 7); cx.fill();
       });
-      cx.fillStyle = '#111'; cx.font = 'bold 12px Helvetica';
+      cx.fillStyle = '#fff'; cx.font = 'bold 12px Helvetica';
       cx.fillText('t = 2 s', X(T0) - 44, Y(s(T0)) + 4);
       document.getElementById('vavg').textContent = slope.toFixed(1) + ' m/s';
     }
@@ -218,6 +227,8 @@
     var cur = 1, revealed = false, playing = false, playT = 0, lastFrame = null;
     var tcv = document.getElementById('trackcv'), tcx = tcv.getContext('2d');
     var gcv = document.getElementById('graphcv'), gcx = gcv.getContext('2d');
+    var TW = tcv.width, TH = tcv.height;
+    var GW = gcv.width, GH = gcv.height;
     var sel = document.getElementById('preset');
     PRESETS.forEach(function (p, i) {
       var o = document.createElement('option');
@@ -267,21 +278,21 @@
       var rg = range(f, T);
       function X(t) { return L + t / T * (W - L - R); }
       function Y(s) { return y0 + h - (s - rg[0]) / (rg[1] - rg[0]) * h; }
-      gcx.strokeStyle = '#00000022'; gcx.lineWidth = 1;
-      gcx.strokeRect(L, y0, W - L - R, h);
-      if (rg[0] < 0 && rg[1] > 0) {
-        gcx.beginPath(); gcx.moveTo(L, Y(0)); gcx.lineTo(W - R, Y(0));
-        gcx.strokeStyle = '#00000030'; gcx.stroke();
-      }
-      gcx.fillStyle = '#333'; gcx.font = 'bold 14px Georgia';
-      gcx.fillText(label, 6, y0 + 16);
-      gcx.font = '10px Helvetica'; gcx.fillStyle = '#666';
-      gcx.fillText(rg[1].toFixed(0) + ' ' + unit, 6, y0 + 30);
-      gcx.fillText(rg[0].toFixed(0) + ' ' + unit, 6, y0 + h - 3);
+      gcx.strokeStyle = '#ffffff22'; gcx.lineWidth = 1;
+      gcx.beginPath();
+      for (var y = 20; y < GH; y += 40) { gcx.moveTo(0, y); gcx.lineTo(GW, y); }
+      for (var x = 40; x < GW; x += 40) { gcx.moveTo(x, 0); gcx.lineTo(x, GH); }
+      gcx.stroke();
+      gcx.beginPath(); gcx.moveTo(0, GH/2); gcx.lineTo(GW, GH/2); 
+      gcx.strokeStyle = '#ffffff30'; gcx.stroke();
+      gcx.fillStyle = '#f4f4f5'; gcx.font = 'bold 14px Georgia';
+      gcx.fillText('Interactive graph builder', 20, 28);
+      gcx.font = '10px Helvetica'; gcx.fillStyle = '#a1a1aa';
+      gcx.fillText('drag orange control points below to shape the motion graph', 20, 44);
       if (!revealed) {
-        gcx.fillStyle = '#00000010';
+        gcx.fillStyle = '#ffffff10';
         gcx.fillRect(L, y0, W - L - R, h);
-        gcx.fillStyle = '#777'; gcx.font = 'italic 13px Georgia';
+        gcx.fillStyle = '#a1a1aa'; gcx.font = 'italic 13px Georgia';
         gcx.fillText('hidden — predict first, then reveal', L + 14, y0 + h / 2 + 4);
         return;
       }
@@ -298,9 +309,9 @@
       var p = PRESETS[cur];
       tcx.clearRect(0, 0, tcv.width, tcv.height);
       var rg = range(p.s, p.T), L = 50, R = 10;
-      tcx.strokeStyle = '#555'; tcx.lineWidth = 2;
-      tcx.beginPath(); tcx.moveTo(L, 42); tcx.lineTo(tcv.width - R, 42); tcx.stroke();
-      tcx.fillStyle = '#333'; tcx.font = 'bold 11px Helvetica';
+      tcx.strokeStyle = '#a1a1aa'; tcx.lineWidth = 2;
+      tcx.beginPath(); tcx.moveTo(0, TH/2); tcx.lineTo(TW, TH/2); tcx.stroke();
+      tcx.fillStyle = '#f4f4f5'; tcx.font = 'bold 11px Helvetica';
       tcx.fillText('the motion itself:', 6, 14);
       tcx.fillText('t = ' + playT.toFixed(1) + ' s', tcv.width - 64, 14);
       var frac = (p.s(playT) - rg[0]) / (rg[1] - rg[0]);
@@ -317,8 +328,8 @@
   /* ---------- section 3: drop vs flick ---------- */
   (function () {
     var cv = document.getElementById('coincv'), cx = cv.getContext('2d');
-    var G = 9.8, H0 = 4.5;                  // launch height, metres
-    var U = 60;                              // px per metre
+    var G = 9.8, H0 = 4.5;
+    var U = 60;
     var ox = 90, groundY = 300;
     var t = 0, running = false, lastTs = null;
     var sl = document.getElementById('vflick');
@@ -327,21 +338,21 @@
       cx.clearRect(0, 0, cv.width, cv.height);
       document.getElementById('vfl').textContent = vf().toFixed(1);
       // ground
-      cx.strokeStyle = '#6a5f45'; cx.lineWidth = 2;
-      cx.beginPath(); cx.moveTo(0, groundY); cx.lineTo(cv.width, groundY); cx.stroke();
-      // table edge
-      cx.fillStyle = '#00000018';
-      cx.fillRect(ox - 70, groundY - H0 * U, 70, H0 * U);
-      cx.strokeStyle = '#00000040';
-      cx.strokeRect(ox - 70, groundY - H0 * U, 70, H0 * U);
-      // equal-height guide lines
-      cx.strokeStyle = '#00000012';
+      cx.strokeStyle = '#a1a1aa'; cx.lineWidth = 2;
+      cx.beginPath(); cx.moveTo(ox - 60, groundY); cx.lineTo(cv.width - 20, groundY); cx.stroke();
+      // tower
+      cx.fillStyle = '#ffffff18';
+      cx.fillRect(ox - 60, groundY - H0 * U, 40, H0 * U);
+      cx.strokeStyle = '#ffffff40';
+      cx.strokeRect(ox - 60, groundY - H0 * U, 40, H0 * U);
+      // safety grid lines
+      cx.strokeStyle = '#ffffff12';
       for (var yy = 1; yy < H0; yy++) {
         cx.beginPath();
         cx.moveTo(0, groundY - yy * U); cx.lineTo(cv.width, groundY - yy * U);
         cx.stroke();
       }
-      var tl = Math.sqrt(2 * H0 / G);          // landing time
+      var tl = Math.sqrt(2 * H0 / G);
       var tc = Math.min(t, tl);
       var y = H0 - 0.5 * G * tc * tc;
       // dropped coin
@@ -359,7 +370,7 @@
       }
       cx.stroke();
       // same-height marker
-      cx.font = 'bold 12px Helvetica'; cx.fillStyle = '#555';
+      cx.font = 'bold 12px Helvetica'; cx.fillStyle = '#a1a1aa';
       cx.fillText('t = ' + tc.toFixed(2) + ' s', cv.width - 80, 20);
       if (t >= tl) {
         document.getElementById('coinmsg').textContent = 'they land together';
@@ -384,6 +395,25 @@
     sl.addEventListener('input', function () { if (!running) draw(); });
     draw();
   })();
+</script>
+
+<!-- Lucide Icons & Hamburger Menu Script -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    if (menu.classList.contains('active')) {
+      menu.classList.remove('active');
+      icon.setAttribute('data-lucide', 'menu');
+    } else {
+      menu.classList.add('active');
+      icon.setAttribute('data-lucide', 'x');
+    }
+    lucide.createIcons();
+  }
+  document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 </script>
 
 </body>

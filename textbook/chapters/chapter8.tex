@@ -1,0 +1,204 @@
+%%-----------Chapter 8------------------------------------------
+\chapter{Electricity and Magnetism}
+
+\section{Introduction: The Unified Force}
+
+For thousands of years, electricity and magnetism were seen as two completely unrelated phenomena. Electricity was about lightning, electric eels, and amber rods attracting lint when rubbed. Magnetism was about lodestones—mysterious rocks found in Thessaly that could attract iron and align themselves north-south. 
+
+In the nineteenth century, a series of breakthrough experiments revealed that they are actually two sides of the same coin: **electromagnetism**. Today, we know that static electric charges create electric fields, but when those charges start moving (forming an electric current), they create magnetic fields. In this chapter, we will build the bridge between the two, moving from static charges, through electric circuits, to magnetic forces and moving charges.
+
+\section{Electrostatics: Charges and Fields}
+
+The basic building block of electricity is **electric charge**, denoted by $q$. In the universe as we observe it on a macroscopic level, charge is always conserved and always comes in integer multiples of the elementary charge $e \approx \SI{1.602e-19}{C}$ (coulombs).
+
+However, modern particle physics has revealed that the protons and neutrons inside the nucleus are not fundamental. They are made of **quarks**, which carry fractional electric charges: the up quark ($u$) carries $+\frac{2}{3}e$, and the down quark ($d$) carries $-\frac{1}{3}e$. A proton ($uud$) has charge $+1e$, while a neutron ($udd$) has charge $0e$. Because quarks are confined inside hadrons and cannot be isolated individually, the free charges we measure in the lab are still always integer multiples of $e$.
+
+\subsection{Historical Experiments: Coulomb and Millikan}
+
+How do charges interact, and how do we know they are quantized?
+
+1. **Coulomb's Torsion Balance (1785)**: The French physicist Charles-Augustin de Coulomb measured the force between small charged spheres using a torsion balance—a fine silver wire holding a horizontal needle. By twisting the wire, he could measure incredibly tiny forces, showing that the electrostatic force between two point charges $q_1$ and $q_2$ separated by distance $r$ is:
+\begin{equation}
+    F_e = k_e \frac{|q_1 q_2|}{r^2}, \quad \text{where } k_e \equiv \frac{1}{4\pi\varepsilon_0} \approx \SI{8.988e9}{N.m^2/C^2}.
+\end{equation}
+This is **Coulomb's Law**, which looks mathematically identical to Newton's law of gravity, but with one massive difference: gravity only attracts, while charges can repel (like charges repel, opposites attract).
+
+2. **Millikan's Oil Drop Experiment (1909)**: The American physicist Robert A. Millikan measured the charge of the electron directly. He sprayed tiny, charged droplets of oil into a chamber between two horizontal metal plates. By adjusting the electric field between the plates, he could balance the upward electric force ($qE$) against the downward force of gravity ($mg$) and air resistance. By measuring the terminal velocity of the drops as they fell or rose, he discovered that the charge on every drop was always an integer multiple of a fundamental value: $e \approx \SI{1.6e-19}{C}$.
+
+\subsection{The Electric Field}
+
+How does charge $q_1$ push on charge $q_2$ across empty space? We say that $q_1$ sets up an **electric field** $\vec{E}$ in the surrounding space, and that field exerts a force on any test charge $q_0$ placed inside it:
+\begin{equation}
+    \vec{E} \equiv \frac{\vec{F}_e}{q_0}.
+\end{equation}
+The electric field of a single point charge $q$ is:
+\begin{equation}
+    \vec{E} = k_e \frac{q}{r^2} \hat{r}.
+\end{equation}
+Electric fields are represented by field lines that emerge from positive charges and terminate on negative charges. The density of lines represents the strength of the field.
+
+\subsection{Electric Potential and Potential Difference}
+
+Because the electrostatic force is conservative, we can define an **electric potential energy** $U_e$. We define the **electric potential** $V$ as the potential energy per unit charge:
+\begin{equation}
+    V \equiv \frac{U_e}{q}.
+\end{equation}
+The unit of potential is the joule per coulomb, renamed the **volt** (\si{V}). If a charge $q$ moves through a potential difference $\Delta V$, its potential energy changes by $\Delta U_e = q \Delta V$. 
+
+\section{Electric Circuits}
+
+If we connect two points at different potentials with a conductor (like a copper wire), charges will flow from the higher potential to the lower potential. This flow of charge is an **electric current**, $I$:
+\begin{equation}
+    I \equiv \frac{dq}{dt}.
+\end{equation}
+The unit of current is the ampere (\si{A}, or ``amp''), representing one coulomb per second. By convention, current is defined as the flow of *positive* charge, even though in metal wires it is actually negative electrons flowing in the opposite direction.
+
+To maintain a continuous current, we need a device that pumps charges back to the higher potential. Such a device is a source of **electromotive force (EMF)**, denoted by $\mathcal{E}$, such as a battery or solar cell.
+
+\subsection{Ohm's Law, Resistance, and Resistivity}
+
+For most materials, the current flowing through a conductor is directly proportional to the potential difference (voltage) across it. This is **Ohm's Law**:
+\begin{equation}
+    V = I R,
+\end{equation}
+where $R$ is the electrical **resistance**, measured in ohms ($\Omega$). 
+
+The resistance of a wire depends on its geometry and the material it is made of:
+\begin{equation}
+    R = \rho \frac{L}{A},
+\end{equation}
+where $L$ is the length, $A$ is the cross-sectional area, and $\rho$ is the **resistivity** of the material (measured in $\Omega\cdot\text{m}$).
+
+\subsection{Resistor Combinations and Internal Resistance}
+
+Real batteries are not perfect; they have internal resistance $r$. The terminal voltage $V$ delivered to a circuit is less than the EMF $\mathcal{E}$ when current flows:
+\begin{equation}
+    V = \mathcal{E} - I r.
+\end{equation}
+
+When combining multiple resistors:
+- **In Series**: The current through each is the same. The equivalent resistance is the sum:
+  \begin{equation}
+      R_{\text{eq}} = R_1 + R_2 + R_3 + \dots
+  \end{equation}
+- **In Parallel**: The voltage across each is the same. The reciprocal of the equivalent resistance is the sum of the reciprocals:
+  \begin{equation}
+      \frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + \dots
+  \end{equation}
+
+\subsection{Electrical Power and Energy}
+
+When a current $I$ passes through a resistor with a voltage drop $V$, electrical energy is converted into thermal energy. The rate of this energy transfer is the **power** $P$:
+\begin{equation}
+    P = I V = I^2 R = \frac{V^2}{R}.
+\end{equation}
+
+\begin{workedexample}[Internal Resistance of a Car Battery]
+A car battery has an EMF of $\mathcal{E} = \SI{12.6}{V}$ and an internal resistance of $r = \SI{0.08}{\Omega}$.
+\begin{enumerate}[label=(\alph*), itemsep=1pt]
+  \item What is the terminal voltage of the battery when it is connected to a headlight of resistance $R = \SI{5.00}{\Omega}$?
+  \item What is the terminal voltage when the starter motor is engaged, drawing a massive current of $I = \SI{100}{A}$?
+\end{enumerate}
+\textbf{Solution:}
+\begin{enumerate}[label=(\alph*)]
+  \item The total resistance of the loop is $R_{\text{total}} = R + r = 5.00 + 0.08 = \SI{5.08}{\Omega}$. The current is:
+        \begin{equation*}
+            I = \frac{\mathcal{E}}{R_{\text{total}}} = \frac{\SI{12.6}{V}}{\SI{5.08}{\Omega}} \approx \SI{2.48}{A}.
+        \end{equation*}
+        The terminal voltage is:
+        \begin{equation*}
+            V = \mathcal{E} - I r = 12.6 - (2.48)(0.08) \approx \SI{12.4}{V}.
+        \end{equation*}
+  \item When the starter draws $I = \SI{100}{A}$:
+        \begin{equation*}
+            V = \mathcal{E} - I r = 12.6 - (100)(0.08) = 12.6 - 8.0 = \SI{4.6}{V}.
+        \end{equation*}
+        The terminal voltage drops drastically because of the internal resistance, which is why car cabin lights dim when you start the engine.
+\end{enumerate}
+\end{workedexample}
+
+\section{Magnetostatics: Fields and Currents}
+
+A permanent magnet has north and south poles. Like poles repel, opposite poles attract. If you cut a magnet in half, you do not get an isolated north pole and south pole; instead, you get two smaller magnets, each with its own north and south pole. There are no isolated magnetic charges (magnetic monopoles) in nature.
+
+At the atomic level, magnetism arises from moving electric charges. Electrons orbit the nucleus and spin on their axes; each electron acts as a tiny current loop, forming a miniature **magnetic dipole**. In most materials, these dipoles point in random directions and cancel out. In ferromagnetic materials (like iron), they align themselves in domains, creating a macroscopic magnet.
+
+\subsection{Oersted's Compass Needle (1820)}
+
+During a lecture at the University of Copenhagen in April 1820, the Danish physicist Hans Christian Oersted noticed that a magnetic needle deflected whenever he switched on an electric current in a nearby wire. This was the first experimental proof that an electric current creates a magnetic field. 
+
+Shortly after, André-Marie Ampère and others worked out the rules: a current-carrying wire is surrounded by circular magnetic field lines $\vec{B}$, whose direction is given by the **right-hand rule** (point your thumb in the direction of the current, and your fingers curl in the direction of the magnetic field).
+
+\subsection{Magnetic Force on Moving Charges}
+
+While static charges feel no force from a magnetic field, a charge $q$ moving with velocity $\vec{v}$ in a magnetic field $\vec{B}$ experiences a force $\vec{F}_B$ given by the cross product:
+\begin{keybox}[Magnetic Lorentz Force]
+The magnetic force $\vec{F}_B$ on a charge $q$ moving with velocity $\vec{v}$ in a magnetic field $\vec{B}$ is:
+\begin{equation}
+    \vec{F}_B = q(\vec{v} \times \vec{B}).
+\end{equation}
+Its magnitude is $F_B = |q| v B \sin\theta$, where $\theta$ is the angle between $\vec{v}$ and $\vec{B}$. The force is perpendicular to both $\vec{v}$ and $\vec{B}$.
+\end{keybox}
+
+Because $\vec{F}_B$ is always perpendicular to $\vec{v}$, the work done on the charge by the magnetic field is zero:
+\begin{equation}
+    P = \vec{F}_B \cdot \vec{v} = q(\vec{v} \times \vec{B}) \cdot \vec{v} = 0.
+\end{equation}
+A magnetic field can change the *direction* of a moving charge's velocity, but it can never change its *speed* or its kinetic energy!
+
+\subsection{A Curved Trajectory: Uniform Circular Motion}
+
+Consider a particle of mass $m$ and charge $q$ entering a uniform magnetic field $\vec{B}$ perpendicular to its velocity $\vec{v}$ (Fig.~\ref{fig:mag_circle}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.2]
+  % Draw grid of X's indicating magnetic field pointing into page
+  \foreach \x in {0.5, 1.5, 2.5, 3.5}
+    \foreach \y in {0.5, 1.5, 2.5}
+      \node[gray!70] at (\x,\y) {$\times$};
+  
+  \node[gray!90, above] at (3.5, 2.5) {$\vec{B}$ (into page)};
+
+  % Circular trajectory
+  \draw[myblue, thick, dashed] (2, 1.5) circle (1.0);
+  
+  % Particle at theta = 30 deg
+  \coordinate (P) at ({2 + 1*cos(30)}, {1.5 + 1*sin(30)});
+  \draw[fill=myred, myred] (P) circle (0.12);
+  
+  % Velocity vector (tangential)
+  \draw[-latex, mygreen, very thick] (P) -- ++({-0.8*sin(30)}, {0.8*cos(30)}) node[right] {$\vec{v}$};
+  
+  % Force vector (radial, pointing inward)
+  \draw[-latex, black, very thick] (P) -- (2,1.5) node[midway, below right] {$\vec{F}_B$};
+\end{tikzpicture}
+\caption{A positive charge moving perpendicular to a uniform magnetic field $\vec{B}$ (pointing into the page) undergoes uniform circular motion.}
+\label{fig:mag_circle}
+\end{figure}
+
+Since the magnetic force is perpendicular to the velocity, it acts as a centripetal force:
+\begin{equation}
+    q v B = m \frac{v^2}{R} \implies R = \frac{m v}{q B}.
+\end{equation}
+The radius of the circular path is proportional to the momentum $mv$ and inversely proportional to the field strength $B$. This is the basis of mass spectrometers and particle accelerators.
+
+\begin{checkpoint}[8.1]
+An electron (charge $-e$) and a proton (charge $+e$) enter a uniform magnetic field with the same velocity. The magnetic force on the proton is:
+\newline
+\begin{tabular}{ll}
+  A. In the same direction as on the electron. & B. In the opposite direction to the electron. \\
+  C. Zero, because protons are inside nuclei. & D. Double the force on the electron.
+\end{tabular}
+\checkanswer{B. Because the charge of the proton has the opposite sign to the electron ($q_p = -q_e$), the cross product direction flips, so the forces are in opposite directions.}
+\end{checkpoint}
+
+\begin{whiteboard}[8.1: Designing a Velocity Selector]
+Imagine a beam of ions containing both fast and slow particles. We want to design a device that lets only particles of a single chosen speed $v$ pass through in a straight line.
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em, itemsep=1pt]
+  \item If we apply a downward electric field $\vec{E}$, what force does a positive ion feel?
+  \item If we also apply a magnetic field $\vec{B}$ perpendicular to the velocity, how must we orient it so the magnetic force opposes the electric force?
+  \item Set the net force to zero and solve for the speed $v$ that passes undeflected. Does this speed depend on the mass or charge of the ion?
+\end{enumerate}
+\textit{(You should find $v = E/B$. Mass and charge cancel out, meaning this device acts as a pure velocity filter!)}
+\end{whiteboard}
