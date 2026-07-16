@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Fundamentals of Physics</a>
+  <a class="chap" href="vectors.html">1 Vectors</a>
+  <a class="chap" href="dimensions.html">2 Dimensions</a>
+  <a class="chap current" href="motion.html">3 Motion</a>
+  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
+  <a class="chap" href="further-applications.html">5 Applications</a>
+  <a class="pdf" href="main.pdf">Textbook PDF</a>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 3</div>
+    <h1>Motion</h1>
+    <p class="lead">Zeno argued an arrow frozen at one instant is indistinguishable
+    from an arrow at rest — so what does "90 km/h at this moment" even mean? This
+    chapter builds the missing idea: the derivative, invented for exactly this
+    problem.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#instant">1. Speed at an instant</a></li>
+      <li><a href="#graphs">2. The three graphs</a></li>
+      <li><a href="#twocoin">3. Two motions at once</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="instant">
+      <h2>1 &nbsp;Speed at an instant</h2>
+      <p>Average velocity is honest but blunt: displacement divided by elapsed
+      time. To get the speed <em>right now</em>, we shrink the stopwatch window.
+      Take a falling ball, s = 5t², and ask how fast it moves at t = 2 s. Measure
+      over a window Δt after that moment, and you get an average; make Δt smaller
+      and the average settles toward one definite number.</p>
+
+      <div class="viz">
+        <div class="vhead">Shrink the window: secant becomes tangent</div>
+        <canvas id="seccv" width="680" height="360"></canvas>
+        <div class="controls">
+          <label>window Δt <input type="range" id="sdt" min="0.02" max="2" step="0.02" value="2"> <span class="big" id="vdt"></span> s</label>
+          <span>average velocity over the window: <span class="big" id="vavg"></span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">The line through the two
+        measurement points is a <i>secant</i>. As Δt → 0 the two points merge and
+        the secant becomes the <i>tangent</i> — its slope, 20 m/s, is the
+        instantaneous velocity. That limit is the derivative: v = ds/dt.</div>
+      </div>
+
+      <p>This is the answer to Zeno: motion at an instant is not a property of one
+      frozen frame, but of how neighbouring instants compare — taken to the limit.
+      For s = 5t² the limit works out to v = 10t, and at t = 2 s that is exactly
+      20 m/s.</p>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="graphs">
+      <h2>2 &nbsp;The three graphs</h2>
+      <p>Position, velocity, acceleration: each graph is the <em>slope</em> of the
+      one above it. Reading this triple fluently is the core skill of kinematics —
+      and it is trained by predicting. Pick a motion, sketch the three graphs on
+      paper, then reveal.</p>
+
+      <div class="viz">
+        <div class="vhead">Predict, then reveal</div>
+        <div class="controls" style="margin-top:0; margin-bottom:0.6rem">
+          <select id="preset" style="font-family:Helvetica; font-size:0.85rem; padding:0.3rem"></select>
+          <button id="revealbtn">Reveal graphs</button>
+          <button id="playbtn">&#9654; Play</button>
+        </div>
+        <canvas id="trackcv" width="680" height="64"></canvas>
+        <canvas id="graphcv" width="680" height="470"></canvas>
+        <div class="note" id="gdesc" style="margin-top:0.4rem"></div>
+      </div>
+
+      <p>Watch for the classic trap in "ball thrown straight up": at the top the
+      velocity passes through zero, but its <em>slope</em> — the acceleration —
+      stays constant at −10 m/s². If it were zero there, the ball would hang in
+      the air forever.</p>
+    </section>
+
+    <!-- ============ section 3 ============ -->
+    <section class="idea" id="twocoin">
+      <h2>3 &nbsp;Two motions at once</h2>
+      <p>Put two coins at a table's edge. Drop one; at the same instant, flick the
+      other horizontally. Which lands first? Almost everyone predicts the dropped
+      one — commit to your own answer before pressing release.</p>
+
+      <div class="viz">
+        <div class="vhead">Drop one, flick the other</div>
+        <canvas id="coincv" width="680" height="330"></canvas>
+        <div class="controls">
+          <button id="dropbtn">Release both</button>
+          <label>flick speed <input type="range" id="vflick" min="2" max="12" step="0.5" value="6"> <span class="big" id="vfl"></span> m/s</label>
+          <span class="big" id="coinmsg"></span>
+        </div>
+      </div>
+
+      <p>They land together — always, at any flick speed. Gravity does not care
+      about horizontal motion: the vertical fall proceeds identically whether the
+      coin moves sideways or not. Projectile motion is just two independent
+      motions happening at once — constant velocity horizontally, free fall
+      vertically — which is why the one-dimensional tools above solve it
+      completely. The full treatment (range, maximum height, the parabola) is in
+      the <a href="main.pdf">textbook chapter</a>.</p>
+    </section>
+
+    <footer class="pager">
+      <a href="dimensions.html">&larr; Chapter 2: Dimensional Analysis</a>
+      <a href="newtons-laws.html">Chapter 4: Newton's Laws &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  /* ---------- section 1: secant -> tangent ---------- */
+  (function () {
+    var cv = document.getElementById('seccv'), cx = cv.getContext('2d');
+    var sl = document.getElementById('sdt');
+    var T0 = 2, TMAX = 4.4, SMAX = 100;
+    var L = 56, B = 320, W2 = 600, H2 = 290;
+    function s(t) { return 5 * t * t; }
+    function X(t) { return L + t / TMAX * W2; }
+    function Y(v) { return B - v / SMAX * H2; }
+    function draw() {
+      var dt = parseFloat(sl.value);
+      document.getElementById('vdt').textContent = dt.toFixed(2);
+      cx.clearRect(0, 0, cv.width, cv.height);
+      // axes
+      cx.strokeStyle = '#00000045'; cx.lineWidth = 1;
+      cx.beginPath(); cx.moveTo(L, B - H2); cx.lineTo(L, B); cx.lineTo(L + W2, B); cx.stroke();
+      cx.fillStyle = '#555'; cx.font = '12px Helvetica';
+      cx.fillText('t (s)', L + W2 - 20, B + 24);
+      cx.fillText('s (m)', L - 40, B - H2 + 12);
+      for (var tt = 1; tt <= 4; tt++) cx.fillText(tt, X(tt) - 3, B + 14);
+      for (var ss = 20; ss <= 100; ss += 20) cx.fillText(ss, L - 30, Y(ss) + 4);
+      // curve
+      cx.strokeStyle = '#C0392B'; cx.lineWidth = 2.5;
+      cx.beginPath();
+      for (var i = 0; i <= 220; i++) {
+        var t = i / 220 * TMAX;
+        if (i === 0) cx.moveTo(X(t), Y(s(t))); else cx.lineTo(X(t), Y(s(t)));
+      }
+      cx.stroke();
+      // tangent (ghost)
+      var m = 10 * T0;
+      cx.strokeStyle = '#1E844966'; cx.lineWidth = 2;
+      cx.setLineDash([6, 6]);
+      cx.beginPath();
+      cx.moveTo(X(T0 - 1.6), Y(s(T0) - m * 1.6));
+      cx.lineTo(X(T0 + 2.2), Y(s(T0) + m * 2.2));
+      cx.stroke();
+      cx.setLineDash([]);
+      cx.fillStyle = '#1E8449'; cx.font = 'bold 12px Helvetica';
+      cx.fillText('tangent: slope 20 m/s', X(2.8), Y(s(2.8) + 26));
+      // secant
+      var t1 = T0 + dt;
+      var slope = (s(t1) - s(T0)) / dt;
+      cx.strokeStyle = '#2E86C1'; cx.lineWidth = 2.5;
+      cx.beginPath();
+      cx.moveTo(X(T0 - 0.7), Y(s(T0) - slope * 0.7));
+      cx.lineTo(X(Math.min(t1 + 0.7, TMAX)), Y(s(T0) + slope * (Math.min(t1 + 0.7, TMAX) - T0)));
+      cx.stroke();
+      // points
+      [[T0, '#111'], [t1, '#2E86C1']].forEach(function (q) {
+        cx.fillStyle = q[1];
+        cx.beginPath(); cx.arc(X(q[0]), Y(s(q[0])), 6, 0, 7); cx.fill();
+      });
+      cx.fillStyle = '#111'; cx.font = 'bold 12px Helvetica';
+      cx.fillText('t = 2 s', X(T0) - 44, Y(s(T0)) + 4);
+      document.getElementById('vavg').textContent = slope.toFixed(1) + ' m/s';
+    }
+    sl.addEventListener('input', draw);
+    draw();
+  })();
+
+  /* ---------- section 2: the three graphs ---------- */
+  (function () {
+    var PRESETS = [
+      { name: 'Steady walk (uniform velocity)',
+        desc: 'Constant velocity: s is a straight ramp, v is flat, a is zero.',
+        T: 10, s: function(t){return 2*t;}, v: function(){return 2;}, a: function(){return 0;} },
+      { name: 'Falling ball (s = 5t²)',
+        desc: 'The parabola whose slope steepens forever; v = 10t ramps; a = 10 is flat.',
+        T: 5, s: function(t){return 5*t*t;}, v: function(t){return 10*t;}, a: function(){return 10;} },
+      { name: 'Ball thrown straight up',
+        desc: 'v passes through zero at the top while a stays at −10 the whole flight.',
+        T: 6, s: function(t){return 30*t-5*t*t;}, v: function(t){return 30-10*t;}, a: function(){return -10;} },
+      { name: 'Car braking to a stop',
+        desc: 's flattens out; v ramps down to zero and stays; a is a negative step.',
+        T: 8, s: function(t){var tb=6; return t<tb ? 24*t-2*t*t : 24*tb-2*tb*tb;},
+              v: function(t){var tb=6; return t<tb ? 24-4*t : 0;},
+              a: function(t){var tb=6; return t<tb ? -4 : 0;} },
+      { name: 'Oscillation (a taste of waves)',
+        desc: 'Three sinusoids, each the slope of the one above, shifted a quarter cycle.',
+        T: 12.6, s: function(t){return 8*Math.sin(t);}, v: function(t){return 8*Math.cos(t);}, a: function(t){return -8*Math.sin(t);} }
+    ];
+    var cur = 1, revealed = false, playing = false, playT = 0, lastFrame = null;
+    var tcv = document.getElementById('trackcv'), tcx = tcv.getContext('2d');
+    var gcv = document.getElementById('graphcv'), gcx = gcv.getContext('2d');
+    var sel = document.getElementById('preset');
+    PRESETS.forEach(function (p, i) {
+      var o = document.createElement('option');
+      o.value = i; o.textContent = p.name;
+      sel.appendChild(o);
+    });
+    sel.value = cur;
+    sel.addEventListener('change', function () {
+      cur = parseInt(sel.value, 10); revealed = false; playing = false; playT = 0;
+      document.getElementById('revealbtn').textContent = 'Reveal graphs';
+      document.getElementById('playbtn').innerHTML = '&#9654; Play';
+      document.getElementById('gdesc').textContent = '';
+      draw();
+    });
+    document.getElementById('revealbtn').addEventListener('click', function () {
+      revealed = !revealed;
+      this.textContent = revealed ? 'Hide graphs' : 'Reveal graphs';
+      document.getElementById('gdesc').textContent = revealed ? PRESETS[cur].desc : '';
+      draw();
+    });
+    document.getElementById('playbtn').addEventListener('click', function () {
+      playing = !playing;
+      this.innerHTML = playing ? '&#10074;&#10074; Pause' : '&#9654; Play';
+      if (playing) { lastFrame = null; requestAnimationFrame(tick); }
+    });
+    function tick(ts) {
+      if (!playing) return;
+      if (lastFrame === null) lastFrame = ts;
+      playT += (ts - lastFrame) / 1000 * PRESETS[cur].T / 8;
+      lastFrame = ts;
+      if (playT > PRESETS[cur].T) playT = 0;
+      draw();
+      requestAnimationFrame(tick);
+    }
+    function range(f, T) {
+      var lo = Infinity, hi = -Infinity;
+      for (var i = 0; i <= 200; i++) {
+        var y = f(i * T / 200);
+        if (y < lo) lo = y; if (y > hi) hi = y;
+      }
+      if (hi - lo < 1e-9) { hi += 1; lo -= 1; }
+      var pad = (hi - lo) * 0.12;
+      return [lo - pad, hi + pad];
+    }
+    function panel(y0, h, f, T, color, label, unit) {
+      var L = 50, R = 10, W = gcv.width;
+      var rg = range(f, T);
+      function X(t) { return L + t / T * (W - L - R); }
+      function Y(s) { return y0 + h - (s - rg[0]) / (rg[1] - rg[0]) * h; }
+      gcx.strokeStyle = '#00000022'; gcx.lineWidth = 1;
+      gcx.strokeRect(L, y0, W - L - R, h);
+      if (rg[0] < 0 && rg[1] > 0) {
+        gcx.beginPath(); gcx.moveTo(L, Y(0)); gcx.lineTo(W - R, Y(0));
+        gcx.strokeStyle = '#00000030'; gcx.stroke();
+      }
+      gcx.fillStyle = '#333'; gcx.font = 'bold 14px Georgia';
+      gcx.fillText(label, 6, y0 + 16);
+      gcx.font = '10px Helvetica'; gcx.fillStyle = '#666';
+      gcx.fillText(rg[1].toFixed(0) + ' ' + unit, 6, y0 + 30);
+      gcx.fillText(rg[0].toFixed(0) + ' ' + unit, 6, y0 + h - 3);
+      if (!revealed) {
+        gcx.fillStyle = '#00000010';
+        gcx.fillRect(L, y0, W - L - R, h);
+        gcx.fillStyle = '#777'; gcx.font = 'italic 13px Georgia';
+        gcx.fillText('hidden — predict first, then reveal', L + 14, y0 + h / 2 + 4);
+        return;
+      }
+      gcx.beginPath();
+      for (var i = 0; i <= 300; i++) {
+        var t = i * T / 300;
+        if (i === 0) gcx.moveTo(X(t), Y(f(t))); else gcx.lineTo(X(t), Y(f(t)));
+      }
+      gcx.strokeStyle = color; gcx.lineWidth = 2.5; gcx.stroke();
+      gcx.beginPath(); gcx.arc(X(playT), Y(f(playT)), 5, 0, 7);
+      gcx.fillStyle = color; gcx.fill();
+    }
+    function draw() {
+      var p = PRESETS[cur];
+      tcx.clearRect(0, 0, tcv.width, tcv.height);
+      var rg = range(p.s, p.T), L = 50, R = 10;
+      tcx.strokeStyle = '#555'; tcx.lineWidth = 2;
+      tcx.beginPath(); tcx.moveTo(L, 42); tcx.lineTo(tcv.width - R, 42); tcx.stroke();
+      tcx.fillStyle = '#333'; tcx.font = 'bold 11px Helvetica';
+      tcx.fillText('the motion itself:', 6, 14);
+      tcx.fillText('t = ' + playT.toFixed(1) + ' s', tcv.width - 64, 14);
+      var frac = (p.s(playT) - rg[0]) / (rg[1] - rg[0]);
+      tcx.beginPath(); tcx.arc(L + frac * (tcv.width - L - R), 42, 9, 0, 7);
+      tcx.fillStyle = '#C0392B'; tcx.fill();
+      gcx.clearRect(0, 0, gcv.width, gcv.height);
+      panel(8, 140, p.s, p.T, '#C0392B', 's(t)', 'm');
+      panel(166, 140, p.v, p.T, '#2E86C1', 'v(t)', 'm/s');
+      panel(324, 140, p.a, p.T, '#1E8449', 'a(t)', 'm/s²');
+    }
+    draw();
+  })();
+
+  /* ---------- section 3: drop vs flick ---------- */
+  (function () {
+    var cv = document.getElementById('coincv'), cx = cv.getContext('2d');
+    var G = 9.8, H0 = 4.5;                  // launch height, metres
+    var U = 60;                              // px per metre
+    var ox = 90, groundY = 300;
+    var t = 0, running = false, lastTs = null;
+    var sl = document.getElementById('vflick');
+    function vf() { return parseFloat(sl.value); }
+    function draw() {
+      cx.clearRect(0, 0, cv.width, cv.height);
+      document.getElementById('vfl').textContent = vf().toFixed(1);
+      // ground
+      cx.strokeStyle = '#6a5f45'; cx.lineWidth = 2;
+      cx.beginPath(); cx.moveTo(0, groundY); cx.lineTo(cv.width, groundY); cx.stroke();
+      // table edge
+      cx.fillStyle = '#00000018';
+      cx.fillRect(ox - 70, groundY - H0 * U, 70, H0 * U);
+      cx.strokeStyle = '#00000040';
+      cx.strokeRect(ox - 70, groundY - H0 * U, 70, H0 * U);
+      // equal-height guide lines
+      cx.strokeStyle = '#00000012';
+      for (var yy = 1; yy < H0; yy++) {
+        cx.beginPath();
+        cx.moveTo(0, groundY - yy * U); cx.lineTo(cv.width, groundY - yy * U);
+        cx.stroke();
+      }
+      var tl = Math.sqrt(2 * H0 / G);          // landing time
+      var tc = Math.min(t, tl);
+      var y = H0 - 0.5 * G * tc * tc;
+      // dropped coin
+      cx.fillStyle = '#2E86C1';
+      cx.beginPath(); cx.arc(ox - 35, groundY - y * U, 9, 0, 7); cx.fill();
+      // flicked coin + trace
+      cx.fillStyle = '#C0392B';
+      cx.beginPath(); cx.arc(ox + vf() * tc * U * 0.55, groundY - y * U, 9, 0, 7); cx.fill();
+      cx.strokeStyle = '#C0392B44';
+      cx.beginPath();
+      for (var i = 0; i <= 40; i++) {
+        var tt = tl * i / 40;
+        var xx = ox + vf() * tt * U * 0.55, yy2 = groundY - (H0 - 0.5 * G * tt * tt) * U;
+        if (i === 0) cx.moveTo(xx, yy2); else cx.lineTo(xx, yy2);
+      }
+      cx.stroke();
+      // same-height marker
+      cx.font = 'bold 12px Helvetica'; cx.fillStyle = '#555';
+      cx.fillText('t = ' + tc.toFixed(2) + ' s', cv.width - 80, 20);
+      if (t >= tl) {
+        document.getElementById('coinmsg').textContent = 'they land together';
+        document.getElementById('coinmsg').style.color = '#1E8449';
+      }
+    }
+    function tick(ts) {
+      if (!running) return;
+      if (lastTs === null) lastTs = ts;
+      t += (ts - lastTs) / 1000 * 0.45;       // slow motion
+      lastTs = ts;
+      var tl = Math.sqrt(2 * H0 / G);
+      if (t >= tl) { t = tl; running = false; }
+      draw();
+      if (running) requestAnimationFrame(tick);
+    }
+    document.getElementById('dropbtn').addEventListener('click', function () {
+      t = 0; running = true; lastTs = null;
+      document.getElementById('coinmsg').textContent = '';
+      requestAnimationFrame(tick);
+    });
+    sl.addEventListener('input', function () { if (!running) draw(); });
+    draw();
+  })();
+</script>
+
+</body>
+</html>

@@ -3,108 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fundamentals of Physics — G11 Companion</title>
-<style>
-  :root {
-    --paper: #F2E4C2;
-    --ink: #222;
-    --blue: #2E86C1;
-    --red: #C0392B;
-    --green: #1E8449;
-    --rule: #333;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--ink);
-    background: #faf6ec;
-    line-height: 1.55;
-  }
-  header {
-    background: var(--paper);
-    border-bottom: 5px solid var(--rule);
-    padding: 2.2rem 1.5rem 1.4rem;
-  }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1rem; }
-  h1 {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1.9rem;
-    margin: 0 0 0.3rem;
-  }
-  header p { margin: 0; color: #555; }
-  main { padding: 1.5rem 0 3rem; }
-  h2 {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1.15rem;
-    border-bottom: 2px solid var(--rule);
-    padding-bottom: 0.25rem;
-    margin-top: 2rem;
-  }
-  .chapter {
-    margin: 0.8rem 0;
-    padding: 0.9rem 1.1rem;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-left: 4px solid var(--blue);
-  }
-  .chapter.pending { border-left-color: #bbb; color: #666; }
-  .chapter b { font-family: Helvetica, Arial, sans-serif; }
-  a { color: var(--blue); }
-  .pdflink {
-    display: inline-block;
-    margin-top: 0.6rem;
-    padding: 0.5rem 1rem;
-    background: var(--rule);
-    color: #fff;
-    text-decoration: none;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 0.95rem;
-  }
-  footer { color: #777; font-size: 0.85rem; padding: 1rem 0 2rem; }
-</style>
+<title>Fundamentals of Physics — a visual introduction</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <h1>Fundamentals of Physics</h1>
-    <p>Interactive companion to the G11 physics lecture notes &middot; Druk Gyalpo's Institute</p>
-    <a class="pdflink" href="main.pdf">Download the textbook (PDF)</a>
+<div class="hero">
+  <h1>Fundamentals of Physics</h1>
+  <p class="tag">A visual, interactive companion to the Grade 11 physics course at
+  Druk Gyalpo's Institute. Every idea comes with something to poke at:
+  predict first, then check.</p>
+  <div class="actions">
+    <a class="primary" href="vectors.html">Start with Chapter 1</a>
+    <a class="secondary" href="main.pdf">Download the full textbook (PDF)</a>
   </div>
-</header>
+</div>
 
-<main class="wrap">
-  <p>
-    Each chapter of the textbook gets a small interactive companion here —
-    something you can poke at with your hands, not just read. Predict first,
-    then check.
-  </p>
+<div class="cards">
+  <a class="card" href="vectors.html">
+    <div class="num">Chapter 1</div>
+    <h3>Vectors</h3>
+    <p>Why 4 + 3 can equal anything from 1 to 7 — the arithmetic of quantities that point.</p>
+  </a>
+  <a class="card" href="dimensions.html">
+    <div class="num">Chapter 2</div>
+    <h3>Dimensional Analysis</h3>
+    <p>Predict formulas before deriving them, using nothing but the bookkeeping of units.</p>
+  </a>
+  <a class="card" href="motion.html">
+    <div class="num">Chapter 3</div>
+    <h3>Motion</h3>
+    <p>What a speedometer actually means — Zeno's puzzle, the derivative, and graphs that talk to each other.</p>
+  </a>
+  <a class="card" href="newtons-laws.html">
+    <div class="num">Chapter 4</div>
+    <h3>Newton's Three Laws</h3>
+    <p>Galileo's ramps, force as the changer of motion, and why equal forces have unequal consequences.</p>
+  </a>
+  <a class="card" href="further-applications.html">
+    <div class="num">Chapter 5</div>
+    <h3>Friction, Elevators &amp; Gravity</h3>
+    <p>Contact forces, what a scale really reads, and the law that connects a falling apple to the Moon.</p>
+  </a>
+  <a class="card soon" href="#">
+    <div class="num">Chapter 6</div>
+    <h3>Work, Energy &amp; Momentum</h3>
+    <p>Coming soon.</p>
+  </a>
+</div>
 
-  <h2>Interactive simulations</h2>
-
-  <div class="chapter">
-    <b>Chapter 5 — Further Applications of Newton's Laws</b><br>
-    <a href="chapters/chapter5/elevator.html">Elevator &amp; apparent weight simulator</a>
-    — drag the acceleration slider and watch what the scale reads.
-  </div>
-
-  <div class="chapter">
-    <b>Chapter 1 — Vectors</b><br>
-    <a href="chapters/chapter1/vectors.html">Vector addition sandbox</a>
-    — drag two arrows, watch the head-to-tail sum live, and try to make 4&nbsp;+&nbsp;3&nbsp;=&nbsp;5.
-  </div>
-
-  <div class="chapter">
-    <b>Chapter 3 — Motion</b><br>
-    <a href="chapters/chapter3/grapher.html">Motion grapher</a>
-    — pick a motion, predict the s, v, a graphs on paper, then reveal.
-  </div>
-
-  <footer>
-    Tashi Wangchuk &middot; Druk Gyalpo's Institute, Pangbisa, Paro
-  </footer>
-</main>
+<p class="sitefoot">
+  Tashi Wangchuk &middot; Druk Gyalpo's Institute, Pangbisa, Paro<br>
+  The same content, in full written form: <a href="main.pdf">textbook PDF</a>.
+</p>
 
 </body>
 </html>

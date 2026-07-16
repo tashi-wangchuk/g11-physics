@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Friction, Elevators &amp; Gravity — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Fundamentals of Physics</a>
+  <a class="chap" href="vectors.html">1 Vectors</a>
+  <a class="chap" href="dimensions.html">2 Dimensions</a>
+  <a class="chap" href="motion.html">3 Motion</a>
+  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
+  <a class="chap current" href="further-applications.html">5 Applications</a>
+  <a class="pdf" href="main.pdf">Textbook PDF</a>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 5</div>
+    <h1>Friction, Elevators &amp; Gravity</h1>
+    <p class="lead">Newton's laws put to work: the friction that holds the world
+    together, what a bathroom scale actually measures, and the single law that
+    connects a falling apple to the orbiting Moon.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#friction">1. Friction: stick and slip</a></li>
+      <li><a href="#elevator">2. The elevator</a></li>
+      <li><a href="#cannon">3. Newton's cannonball</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="friction">
+      <h2>1 &nbsp;Friction: stick and slip</h2>
+      <p>Push a heavy box gently and it does not move — friction pushes back with
+      <em>exactly</em> the force you apply. Push harder: it matches you again.
+      Static friction is not a fixed number but an adjustable constraint, up to a
+      maximum μ<sub>s</sub>𝒩. Beyond that threshold the box slips, and the
+      friction drops to a fixed kinetic value μ<sub>k</sub>𝒩 — slightly
+      <em>less</em> than the static maximum, which is why boxes lurch when they
+      finally let go.</p>
+
+      <div class="viz">
+        <div class="vhead">Push the box (m = 10 kg, μ<sub>s</sub> = 0.5, μ<sub>k</sub> = 0.4)</div>
+        <canvas id="fricv" width="680" height="260"></canvas>
+        <div class="controls">
+          <label>your push <input type="range" id="fpush" min="0" max="80" step="0.5" value="20"> <span class="big" id="fpv"></span> N</label>
+          <span class="big" id="fstate"></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Increase the push slowly and
+        watch the friction bar track yours exactly — until 50 N. Leonardo da Vinci
+        measured these laws five hundred years ago; his surprise: the contact area
+        does not matter.</div>
+      </div>
+
+      <p>The two facts worth keeping: friction is proportional to how hard the
+      surfaces press together (the normal force 𝒩), and independent of contact
+      area — a brick dragged flat or on edge needs the same pull.</p>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="elevator">
+      <h2>2 &nbsp;The elevator</h2>
+      <p>A bathroom scale does not measure gravity — it measures the <b>normal
+      force</b> 𝒩 pressing on it, and displays 𝒩/g. Standing still, 𝒩 = mg
+      and the two agree, so the distinction hides. An elevator exposes it:
+      Newton's second law gives 𝒩 = m(g + a), so the reading rises when the
+      elevator accelerates upward, falls when it accelerates downward — and
+      drops to <em>zero</em> if the cable snaps, even though gravity never
+      switched off. Weightlessness is the absence of the normal force, not of
+      gravity.</p>
+
+      <div class="viz">
+        <div class="vhead">A 60 kg person on a scale (g = 10 m/s²)</div>
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-start">
+          <svg id="elsvg" viewBox="0 0 300 400" style="flex:0 1 240px" xmlns="http://www.w3.org/2000/svg">
+            <line id="cable" x1="150" y1="8" x2="150" y2="48" stroke="#222" stroke-width="3"/>
+            <g id="snap" visibility="hidden"><line x1="140" y1="22" x2="162" y2="36" stroke="#C0392B" stroke-width="3"/></g>
+            <rect x="52" y="48" width="196" height="300" fill="none" stroke="#222" stroke-width="4"/>
+            <rect x="54" y="336" width="192" height="10" fill="#ccc"/>
+            <rect x="112" y="310" width="76" height="26" fill="#bbb" stroke="#222" stroke-width="2"/>
+            <rect x="126" y="315" width="48" height="16" fill="#fff" stroke="#888"/>
+            <text id="elread" x="150" y="327" font-size="11" font-family="Courier New" text-anchor="middle" font-weight="bold">60.0</text>
+            <g stroke="#222" stroke-width="4" fill="none" stroke-linecap="round">
+              <line x1="138" y1="310" x2="150" y2="292"/><line x1="162" y1="310" x2="150" y2="292"/>
+              <line x1="150" y1="292" x2="150" y2="222"/>
+              <line x1="150" y1="255" x2="124" y2="268"/><line x1="150" y1="255" x2="176" y2="268"/>
+            </g>
+            <circle cx="150" cy="202" r="18" fill="#F2E4C2" stroke="#222" stroke-width="4"/>
+            <g id="Nar">
+              <line id="Nl" x1="92" y1="310" x2="92" y2="210" stroke="#2E86C1" stroke-width="5"/>
+              <polygon id="Nh" points="92,200 84,216 100,216" fill="#2E86C1"/>
+              <text id="Nt" x="78" y="260" font-size="15" font-style="italic" fill="#2E86C1" text-anchor="middle">&#119977;</text>
+            </g>
+            <g>
+              <line x1="212" y1="210" x2="212" y2="310" stroke="#C0392B" stroke-width="5"/>
+              <polygon points="212,320 204,304 220,304" fill="#C0392B"/>
+              <text x="232" y="262" font-size="13" font-style="italic" fill="#C0392B" text-anchor="middle">mg</text>
+            </g>
+            <g id="Aar" visibility="hidden">
+              <line id="Al" x1="272" y1="250" x2="272" y2="190" stroke="#1E8449" stroke-width="5"/>
+              <polygon id="Ah" points="272,180 264,196 280,196" fill="#1E8449"/>
+              <text id="At" x="272" y="168" font-size="13" font-style="italic" fill="#1E8449" text-anchor="middle">a</text>
+            </g>
+          </svg>
+          <div style="flex:1 1 240px; font-family:Helvetica; font-size:0.85rem">
+            <label style="display:block">elevator acceleration (up = +)<br>
+              <input type="range" id="eacc" min="-10" max="10" step="0.1" value="0" style="width:95%">
+            </label>
+            <div class="big" id="eav" style="margin:0.3rem 0"></div>
+            <div style="margin:0.5rem 0">scale reads <span class="big" id="ekg"></span></div>
+            <div>𝒩 = <span class="big" id="eN"></span> &nbsp;·&nbsp; mg = <span class="big">600 N</span></div>
+            <div style="margin-top:0.6rem; display:flex; flex-wrap:wrap; gap:0.3rem">
+              <button data-a="0">at rest / cruising</button>
+              <button data-a="2">accelerating up</button>
+              <button data-a="-2">accelerating down</button>
+              <button data-a="-10">cable snaps</button>
+            </div>
+            <div class="note" id="ecase" style="margin-top:0.6rem"></div>
+          </div>
+        </div>
+      </div>
+
+      <p>Note the case people argue about longest: cruising upward at steady
+      speed reads exactly 60.0 — the scale responds to <em>acceleration</em>,
+      never to velocity. And astronauts float for the snapped-cable reason: the
+      station and everyone in it are permanently falling, together.</p>
+    </section>
+
+    <!-- ============ section 3 ============ -->
+    <section class="idea" id="cannon">
+      <h2>3 &nbsp;Newton's cannonball</h2>
+      <p>Newton's own thought experiment, from the <em>Principia</em>: fire a
+      cannonball horizontally from a high mountain. Too slow, and it falls to the
+      ground. Faster, and it falls farther before landing. Fast enough — about
+      7.9 km/s — and the ground curves away exactly as fast as the ball falls:
+      it misses the Earth forever. <em>That is what an orbit is.</em> The Moon is
+      doing nothing else.</p>
+
+      <div class="viz">
+        <div class="vhead">Fire the cannonball</div>
+        <canvas id="cncv" width="680" height="420"></canvas>
+        <div class="controls">
+          <label>launch speed <input type="range" id="cnv" min="1" max="12" step="0.1" value="5"> <span class="big" id="cnvv"></span> km/s</label>
+          <button id="cnbtn">Fire</button>
+          <span class="big" id="cnmsg"></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Try 5, then 7.9, then 11.5.
+        Somewhere near 11.2 km/s the ball stops coming back at all — escape
+        velocity.</div>
+      </div>
+
+      <p>The same inverse-square law does all of it: the apple's fall, the
+      cannonball's arc, the Moon's orbit, the tides. Newton checked it with a
+      number — the Moon "falls" with exactly 1/3600 of the apple's acceleration,
+      at 60 times the distance — and you can redo his arithmetic in the
+      <a href="main.pdf">textbook chapter</a>, along with Kepler's laws,
+      Cavendish's weighing of the Earth, and why the Bay of Fundy breathes
+      sixteen metres twice a day.</p>
+    </section>
+
+    <footer class="pager">
+      <a href="newtons-laws.html">&larr; Chapter 4: Newton's Laws</a>
+      <span></span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  /* ---------- section 1: stick and slip ---------- */
+  (function () {
+    var cv = document.getElementById('fricv'), cx = cv.getContext('2d');
+    var sl = document.getElementById('fpush');
+    var MU_S = 0.5, MU_K = 0.4, N = 100;      // m = 10 kg, g = 10
+    var pos = 60, lastTs = null, vel = 0;
+    function state() {
+      var F = parseFloat(sl.value);
+      if (F <= MU_S * N) return { F: F, f: F, slip: false };
+      return { F: F, f: MU_K * N, slip: true };
+    }
+    function draw() {
+      var st = state();
+      document.getElementById('fpv').textContent = st.F.toFixed(1);
+      var el = document.getElementById('fstate');
+      if (st.slip) { el.textContent = 'slipping!'; el.style.color = '#C0392B'; }
+      else { el.textContent = 'stuck — friction matches you'; el.style.color = '#1E8449'; }
+      cx.clearRect(0, 0, cv.width, cv.height);
+      // ground
+      cx.strokeStyle = '#6a5f45'; cx.lineWidth = 2;
+      cx.beginPath(); cx.moveTo(0, 150); cx.lineTo(cv.width, 150); cx.stroke();
+      // box
+      cx.fillStyle = '#00000020'; cx.strokeStyle = '#333';
+      cx.fillRect(pos, 90, 90, 60); cx.strokeRect(pos, 90, 90, 60);
+      // push arrow (red, from left)
+      cx.strokeStyle = '#C0392B'; cx.fillStyle = '#C0392B'; cx.lineWidth = 5;
+      var alen = st.F * 1.6;
+      cx.beginPath(); cx.moveTo(pos - alen - 12, 120); cx.lineTo(pos - 12, 120); cx.stroke();
+      cx.beginPath(); cx.moveTo(pos - 2, 120); cx.lineTo(pos - 16, 113); cx.lineTo(pos - 16, 127); cx.fill();
+      // friction arrow (green, from right at base)
+      cx.strokeStyle = '#1E8449'; cx.fillStyle = '#1E8449';
+      var flen = st.f * 1.6;
+      cx.beginPath(); cx.moveTo(pos + 90 + flen + 12, 144); cx.lineTo(pos + 90 + 12, 144); cx.stroke();
+      cx.beginPath(); cx.moveTo(pos + 90 + 2, 144); cx.lineTo(pos + 90 + 16, 137); cx.lineTo(pos + 90 + 16, 151); cx.fill();
+      // force bars
+      cx.font = 'bold 12px Helvetica';
+      cx.fillStyle = '#C0392B';
+      cx.fillText('your push: ' + st.F.toFixed(0) + ' N', 20, 195);
+      cx.fillRect(150, 185, st.F * 5, 12);
+      cx.fillStyle = '#1E8449';
+      cx.fillText('friction: ' + st.f.toFixed(0) + ' N', 20, 225);
+      cx.fillRect(150, 215, st.f * 5, 12);
+      // threshold tick
+      cx.strokeStyle = '#111'; cx.lineWidth = 1.5;
+      cx.beginPath(); cx.moveTo(150 + 50 * 5, 180); cx.lineTo(150 + 50 * 5, 232); cx.stroke();
+      cx.font = '11px Helvetica'; cx.fillStyle = '#555';
+      cx.fillText('μs𝒩 = 50 N', 150 + 250 + 6, 181);
+    }
+    function tick(ts) {
+      var st = state();
+      if (lastTs === null) lastTs = ts;
+      var dt = Math.min((ts - lastTs) / 1000, 0.05);
+      lastTs = ts;
+      if (st.slip) {
+        var a = (st.F - st.f) / 10;      // m = 10 kg
+        vel += a * dt * 30;
+        pos += vel * dt;
+        if (pos > cv.width - 130) { pos = 60; vel = 0; }
+      } else { vel = 0; }
+      draw();
+      requestAnimationFrame(tick);
+    }
+    sl.addEventListener('input', draw);
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------- section 2: elevator ---------- */
+  (function () {
+    var G = 10, M = 60;
+    var sl = document.getElementById('eacc');
+    var cases = {
+      rest: 'Zero acceleration — cruising or parked, the scale cannot tell. 𝒩 = mg.',
+      up:   'Accelerating upward: the floor must push harder than mg to also supply ma. 𝒩 = m(g + a) — you genuinely feel heavier.',
+      down: 'Accelerating downward: the floor presses less than mg, leaving a net downward force. 𝒩 = m(g − |a|) — you feel lighter.',
+      fall: 'Free fall: floor and person fall together, so the floor never has to push. 𝒩 = 0. Gravity is still fully on.'
+    };
+    function update() {
+      var a = parseFloat(sl.value);
+      var N = Math.max(M * (G + a), 0);
+      var kg = N / G;
+      document.getElementById('eav').textContent =
+        'a = ' + a.toFixed(1) + ' m/s²' + (a > 0 ? ' (up)' : a < 0 ? ' (down)' : '');
+      document.getElementById('ekg').textContent = kg.toFixed(1) + ' kg';
+      document.getElementById('eN').textContent = Math.round(N) + ' N';
+      document.getElementById('elread').textContent = kg.toFixed(1);
+      var c = a === -G ? cases.fall : a > 0 ? cases.up : a < 0 ? cases.down : cases.rest;
+      document.getElementById('ecase').textContent = c;
+      // N arrow
+      var Nar = document.getElementById('Nar');
+      if (N < 0.5) Nar.setAttribute('visibility', 'hidden');
+      else {
+        Nar.setAttribute('visibility', 'visible');
+        var len = 100 * N / (M * G);
+        if (len > 190) len = 190;
+        var top = 310 - len;
+        document.getElementById('Nl').setAttribute('y2', top + 10);
+        document.getElementById('Nh').setAttribute('points', '92,' + top + ' 84,' + (top + 16) + ' 100,' + (top + 16));
+        document.getElementById('Nt').setAttribute('y', (310 + top) / 2);
+      }
+      // a arrow
+      var Aar = document.getElementById('Aar');
+      if (a === 0) Aar.setAttribute('visibility', 'hidden');
+      else {
+        Aar.setAttribute('visibility', 'visible');
+        var l = 24 + 44 * Math.abs(a) / G, y0 = 250;
+        var Al = document.getElementById('Al'), Ah = document.getElementById('Ah'), At = document.getElementById('At');
+        if (a > 0) {
+          var tip = y0 - l;
+          Al.setAttribute('y1', y0); Al.setAttribute('y2', tip + 10);
+          Ah.setAttribute('points', '272,' + tip + ' 264,' + (tip + 16) + ' 280,' + (tip + 16));
+          At.setAttribute('y', tip - 8);
+        } else {
+          var tip2 = y0 + l;
+          Al.setAttribute('y1', y0); Al.setAttribute('y2', tip2 - 10);
+          Ah.setAttribute('points', '272,' + tip2 + ' 264,' + (tip2 - 16) + ' 280,' + (tip2 - 16));
+          At.setAttribute('y', y0 - 8);
+        }
+        At.textContent = a === -G ? 'a = g' : 'a';
+      }
+      document.getElementById('snap').setAttribute('visibility', a === -G ? 'visible' : 'hidden');
+      document.getElementById('cable').setAttribute('stroke-dasharray', a === -G ? '6,7' : 'none');
+    }
+    sl.addEventListener('input', update);
+    document.querySelectorAll('#elevator .viz button[data-a]').forEach(function (b) {
+      b.addEventListener('click', function () { sl.value = b.dataset.a; update(); });
+    });
+    update();
+  })();
+
+  /* ---------- section 3: Newton's cannonball ---------- */
+  (function () {
+    var cv = document.getElementById('cncv'), cx = cv.getContext('2d');
+    var sl = document.getElementById('cnv');
+    var CX = 340, CY = 230, RE = 80;          // Earth center + radius in px
+    var VC = 7.9;                              // km/s: circular at surface
+    var running = false, trail = [], p = null, v = null, lastTs = null, elapsed = 0;
+    function drawStatic() {
+      cx.clearRect(0, 0, cv.width, cv.height);
+      // Earth
+      cx.beginPath(); cx.arc(CX, CY, RE, 0, 7);
+      cx.fillStyle = '#2E86C122'; cx.fill();
+      cx.strokeStyle = '#2E86C1'; cx.lineWidth = 2; cx.stroke();
+      // mountain
+      cx.fillStyle = '#6a5f45';
+      cx.beginPath();
+      cx.moveTo(CX - 10, CY - RE + 2); cx.lineTo(CX, CY - RE - 14); cx.lineTo(CX + 10, CY - RE + 2);
+      cx.closePath(); cx.fill();
+      // trail
+      cx.strokeStyle = '#C0392B'; cx.lineWidth = 2;
+      cx.beginPath();
+      trail.forEach(function (q, i) { if (i === 0) cx.moveTo(q.x, q.y); else cx.lineTo(q.x, q.y); });
+      cx.stroke();
+      // ball
+      if (p) {
+        cx.fillStyle = '#C0392B';
+        cx.beginPath(); cx.arc(p.x, p.y, 5, 0, 7); cx.fill();
+      }
+    }
+    function fire() {
+      var kms = parseFloat(sl.value);
+      var speed = kms / VC;                    // in units where circular-at-surface = 1
+      p = { x: CX, y: CY - RE - 14 };
+      v = { x: speed, y: 0 };                  // unit speeds; scaled in tick
+      trail = [{ x: p.x, y: p.y }];
+      running = true; lastTs = null; elapsed = 0;
+      document.getElementById('cnmsg').textContent = '';
+      requestAnimationFrame(tick);
+    }
+    function tick(ts) {
+      if (!running) return;
+      if (lastTs === null) lastTs = ts;
+      var wall = Math.min((ts - lastTs) / 1000, 1.0);
+      lastTs = ts; elapsed += wall;
+      // advance by wall-time in fixed-size substeps so the speed is the same at
+      // any frame rate; a = -mu r / r^3 with mu = RE (px units, unit speeds)
+      var advance = wall * 80;
+      var steps = Math.max(1, Math.ceil(advance / 0.15));
+      for (var i = 0; i < steps; i++) {
+        var dt = advance / steps;
+        var dx = p.x - CX, dy = p.y - CY;
+        var r = Math.hypot(dx, dy);
+        var acc = RE / (r * r);                // |a| in these units (mu = RE)
+        var ax = -acc * dx / r, ay = -acc * dy / r;
+        v.x += ax * dt; v.y += ay * dt;
+        p.x += v.x * dt; p.y += v.y * dt;
+        if (r < RE - 1) { running = false; document.getElementById('cnmsg').textContent = 'crashed — too slow'; document.getElementById('cnmsg').style.color = '#C0392B'; break; }
+        if (r > 500) { running = false; document.getElementById('cnmsg').textContent = 'gone — escape velocity exceeded'; document.getElementById('cnmsg').style.color = '#1E8449'; break; }
+      }
+      trail.push({ x: p.x, y: p.y });
+      if (trail.length > 2000) trail.shift();
+      if (elapsed > 20) running = false;
+      drawStatic();
+      if (running) requestAnimationFrame(tick);
+      else if (!document.getElementById('cnmsg').textContent && elapsed > 19) {
+        document.getElementById('cnmsg').textContent = 'still going — it keeps missing the Earth: an orbit';
+        document.getElementById('cnmsg').style.color = '#1E8449';
+      }
+    }
+    sl.addEventListener('input', function () {
+      document.getElementById('cnvv').textContent = parseFloat(sl.value).toFixed(1);
+    });
+    document.getElementById('cnbtn').addEventListener('click', fire);
+    document.getElementById('cnvv').textContent = parseFloat(sl.value).toFixed(1);
+    drawStatic();
+  })();
+</script>
+
+</body>
+</html>

@@ -1,7 +1,19 @@
-# G11 Physics — Textbook and Interactive Companion
+# G11 Physics — one course, two renderings
 
-Lecture-note textbook (*Fundamentals of Physics*) and interactive companion
-site for Grade 11 physics at Druk Gyalpo's Institute, by Tashi Wangchuk.
+*Fundamentals of Physics* for Grade 11 at Druk Gyalpo's Institute, by Tashi
+Wangchuk. One body of chapter content, rendered two ways (modeled on
+[Seeing Theory](https://seeing-theory.brown.edu)):
+
+1. **The interactive site** (`site/`) — the primary experience. A minimal
+   homepage of chapter cards; each chapter is one page of short sections,
+   each pairing a couple of paragraphs with one focused inline
+   visualization.
+2. **The PDF textbook** (`textbook/`) — the same content as a complete
+   written treatment, for reading offline or printing. Not a summary.
+
+Both deploy together: the site via GitHub Pages, with the freshly built PDF
+copied in so every "Download the textbook (PDF)" button serves the current
+build.
 
 ## What's in here
 
@@ -13,9 +25,11 @@ g11-physics/
 │   ├── frontmatter/        acknowledgements etc.
 │   ├── figures/            images used by the textbook
 │   └── build/              compiled output (gitignored)
-├── site/                   companion website (GitHub Pages source)
-│   ├── index.html
-│   └── chapters/           one folder per chapter with its simulations
+├── site/                   interactive site (GitHub Pages source)
+│   ├── index.html          homepage: chapter cards + PDF button
+│   ├── style.css           shared minimal design
+│   └── <chapter>.html      one self-contained page per chapter,
+│                           prose + inline visualizations, no build step
 ├── syllabus/
 │   ├── syllabus.md         working copy of the syllabus
 │   └── g11_physics_syllabus.pdf

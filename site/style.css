@@ -1,0 +1,252 @@
+/* Shared styles for the G11 physics interactive companion.
+   Design philosophy (after Seeing Theory): one idea, one visual,
+   lots of breathing room. Identity: warm paper accents + serif prose,
+   matching the textbook's TikZ figures. */
+
+:root {
+  --paper: #F2E4C2;
+  --paper-line: #d8c89e;
+  --ink: #222;
+  --muted: #666;
+  --blue: #2E86C1;
+  --red: #C0392B;
+  --green: #1E8449;
+  --rule: #2b2b2b;
+  --bg: #fdfbf5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 17px;
+}
+
+h1, h2, h3, .sans { font-family: Helvetica, Arial, sans-serif; }
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- top navigation ---------- */
+.topnav {
+  background: var(--paper);
+  border-bottom: 4px solid var(--rule);
+  padding: 0.55rem 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1.1rem;
+}
+.topnav .brand {
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-right: 0.6rem;
+}
+.topnav a.chap {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #444;
+}
+.topnav a.chap.current { color: #000; font-weight: bold; border-bottom: 2px solid var(--rule); }
+.topnav .pdf {
+  margin-left: auto;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  background: var(--rule);
+  color: #fff;
+  padding: 0.25rem 0.7rem;
+  border-radius: 3px;
+}
+.topnav .pdf:hover { text-decoration: none; opacity: 0.85; }
+
+/* ---------- homepage ---------- */
+.hero {
+  background: var(--paper);
+  border-bottom: 4px solid var(--rule);
+  padding: 4rem 1.5rem 3.4rem;
+  text-align: center;
+}
+.hero h1 { font-size: 2.6rem; margin: 0 0 0.5rem; }
+.hero p.tag { font-size: 1.15rem; color: #4a4436; margin: 0 auto 1.8rem; max-width: 34em; }
+.hero .actions a {
+  display: inline-block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.4rem;
+  margin: 0 0.4rem;
+  border-radius: 4px;
+}
+.hero .actions .primary { background: var(--rule); color: #fff; }
+.hero .actions .secondary { border: 1.5px solid var(--rule); color: var(--ink); }
+.hero .actions a:hover { text-decoration: none; opacity: 0.85; }
+
+.cards {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2.6rem 1.2rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.1rem;
+}
+.card {
+  display: block;
+  background: #fff;
+  border: 1px solid #e3ddcd;
+  border-top: 4px solid var(--rule);
+  padding: 1.1rem 1.2rem 1.2rem;
+  color: var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.card:hover {
+  text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(60, 45, 10, 0.10);
+}
+.card .num {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.card h3 { margin: 0.15rem 0 0.4rem; font-size: 1.12rem; }
+.card p { margin: 0; font-size: 0.9rem; color: #555; }
+.card.soon { opacity: 0.55; pointer-events: none; }
+
+.sitefoot {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 0 1rem 2.5rem;
+}
+
+/* ---------- chapter pages ---------- */
+.chapter-head {
+  background: var(--paper);
+  border-bottom: 4px solid var(--rule);
+  padding: 2.6rem 1.5rem 2.2rem;
+}
+.chapter-head .inner { max-width: 980px; margin: 0 auto; }
+.chapter-head .num {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6a5f45;
+}
+.chapter-head h1 { font-size: 2rem; margin: 0.1rem 0 0.6rem; }
+.chapter-head p.lead { max-width: 44em; margin: 0; color: #4a4436; }
+
+.layout {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem 3rem;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 2.2rem;
+}
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static !important; }
+}
+
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+}
+.sidebar .label {
+  font-weight: bold;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+.sidebar ol { list-style: none; margin: 0 0 1.2rem; padding: 0; }
+.sidebar li { margin: 0.35rem 0; }
+.sidebar a { color: #444; }
+.sidebar .pdfside {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--rule);
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+main.content { max-width: 700px; }
+
+section.idea { margin-bottom: 4rem; }
+section.idea h2 {
+  font-size: 1.3rem;
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--rule);
+}
+section.idea p { margin: 0.8rem 0; }
+
+/* the inline visualization panel */
+.viz {
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  padding: 0.9rem;
+  margin: 1.4rem 0;
+}
+.viz canvas, .viz svg { display: block; width: 100%; height: auto; touch-action: none; }
+.viz .vhead {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6a5f45;
+  margin: 0 0 0.5rem;
+}
+.viz .controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  align-items: center;
+  margin-top: 0.7rem;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+}
+.viz .controls label { display: flex; align-items: center; gap: 0.5rem; }
+.viz input[type=range] { width: 150px; accent-color: var(--green); }
+.viz button {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.7rem;
+  background: #fff;
+  border: 1px solid #a99a72;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.viz button:hover { background: #fffaf0; }
+.viz .big {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+.viz .note { font-size: 0.8rem; color: #6a5f45; font-family: Helvetica, Arial, sans-serif; }
+
+/* prev / next chapter footer */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #e3ddcd;
+  padding-top: 1.2rem;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+}

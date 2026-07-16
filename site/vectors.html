@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vectors — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Fundamentals of Physics</a>
+  <a class="chap current" href="vectors.html">1 Vectors</a>
+  <a class="chap" href="dimensions.html">2 Dimensions</a>
+  <a class="chap" href="motion.html">3 Motion</a>
+  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
+  <a class="chap" href="further-applications.html">5 Applications</a>
+  <a class="pdf" href="main.pdf">Textbook PDF</a>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 1</div>
+    <h1>Vectors</h1>
+    <p class="lead">Some quantities are single numbers. Others carry a direction
+    with them — and adding those requires new rules, in which 4 + 3 can come out
+    anywhere from 1 to 7. This chapter builds the single most important
+    mathematical tool of the course.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#broken">1. Broken arithmetic</a></li>
+      <li><a href="#adding">2. Adding arrows</a></li>
+      <li><a href="#components">3. Components</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="broken">
+      <h2>1 &nbsp;Broken arithmetic</h2>
+      <p>Walk 4 m, stop, then walk 3 m more. How far are you from where you
+      started? You cannot answer — and that is the point. It depends on which
+      <em>direction</em> the second walk took. The total <em>distance</em> you
+      covered is always 7 m; your <em>displacement</em> — the straight-line
+      shortcut from start to finish — can be anything from 1 m to 7 m.</p>
+
+      <div class="viz">
+        <div class="vhead">Walk 4 m, turn, walk 3 m</div>
+        <canvas id="walkcv" width="680" height="300"></canvas>
+        <div class="controls">
+          <label>turn angle <input type="range" id="walkang" min="0" max="180" step="1" value="90"></label>
+          <span>distance walked: <span class="big">7.0 m</span></span>
+          <span>displacement: <span class="big" id="walkdisp">5.0 m</span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Drag the slider. At what angle is the displacement exactly 5 m? 1 m? 7 m?</div>
+      </div>
+
+      <p>Quantities that obey ordinary arithmetic — distance, mass, time,
+      temperature — are called <b>scalars</b>. Quantities that carry a direction —
+      displacement, velocity, force — are <b>vectors</b>, drawn as arrows: length
+      for magnitude, arrowhead for direction.</p>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="adding">
+      <h2>2 &nbsp;Adding arrows</h2>
+      <p>That forces and velocities combine like walks — direction and all — is a
+      <em>discovery about nature</em>, first worked out by the Flemish engineer
+      Simon Stevin in 1586. The rule: place the tail of the second arrow at the
+      head of the first; the sum runs from the start of the first to the tip of
+      the second. From the geometry, two arrows of lengths <i>a</i> and <i>b</i>
+      at angle <i>θ</i> add up to a resultant of magnitude
+      <i>R</i> = &radic;(a&sup2; + 2ab&thinsp;cos&thinsp;θ + b&sup2;).</p>
+
+      <div class="viz">
+        <div class="vhead">Drag the arrowheads</div>
+        <svg id="board" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="mA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E86C1"/></marker>
+            <marker id="mB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+            <marker id="mBg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B" opacity="0.35"/></marker>
+            <marker id="mR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+          </defs>
+          <g id="grid"></g>
+          <line id="bg" stroke="#C0392B" stroke-width="3" opacity="0.35" marker-end="url(#mBg)"/>
+          <line id="rr" stroke="#111" stroke-width="4" marker-end="url(#mR)"/>
+          <line id="va" stroke="#2E86C1" stroke-width="4" marker-end="url(#mA)"/>
+          <line id="vb" stroke="#C0392B" stroke-width="4" marker-end="url(#mB)"/>
+          <circle id="ha" r="14" fill="#2E86C1" fill-opacity="0.15" stroke="#2E86C1" stroke-width="1.5" cursor="grab"/>
+          <circle id="hb" r="14" fill="#C0392B" fill-opacity="0.15" stroke="#C0392B" stroke-width="1.5" cursor="grab"/>
+          <text id="la" font-size="17" font-style="italic" fill="#2E86C1" font-weight="bold">a</text>
+          <text id="lb" font-size="17" font-style="italic" fill="#C0392B" font-weight="bold">b</text>
+          <text id="lr" font-size="17" font-style="italic" fill="#111" font-weight="bold">a+b</text>
+        </svg>
+        <div class="controls">
+          <span>|<b style="color:#2E86C1">a</b>| = <span class="big" id="maga"></span></span>
+          <span>|<b style="color:#C0392B">b</b>| = <span class="big" id="magb"></span></span>
+          <span>θ = <span class="big" id="ang"></span></span>
+          <span>|<b>a+b</b>| = <span class="big" id="magr"></span></span>
+          <button id="lockbtn">Challenge: lock at 4 and 3</button>
+        </div>
+        <div class="note" id="chmsg" style="margin-top:0.4rem">The faint red arrow is the head-to-tail copy of <b>b</b>. Challenge: with magnitudes locked at 4 and 3, make the sum exactly 5.</div>
+      </div>
+
+      <p>Rotate the locked arrows and watch the resultant: parallel gives 7,
+      opposite gives 1, and exactly 5 demands a right angle — because
+      cos&thinsp;θ must vanish. The broken arithmetic of the first section is
+      fixed: the angle decides.</p>
+    </section>
+
+    <!-- ============ section 3 ============ -->
+    <section class="idea" id="components">
+      <h2>3 &nbsp;Components</h2>
+      <p>Working with arrows geometrically gets clumsy fast. The professional
+      trick is to split every vector into perpendicular <b>components</b> — its
+      shadows on the coordinate axes. A vector of magnitude <i>A</i> at angle
+      <i>θ</i> above the <i>x</i>-axis has components
+      <i>A<sub>x</sub></i> = A&thinsp;cos&thinsp;θ and
+      <i>A<sub>y</sub></i> = A&thinsp;sin&thinsp;θ; and Pythagoras returns the
+      magnitude: A = &radic;(A<sub>x</sub>&sup2; + A<sub>y</sub>&sup2;).</p>
+
+      <div class="viz">
+        <div class="vhead">One vector and its two shadows</div>
+        <svg id="cboard" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="mC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker>
+          </defs>
+          <g id="cgrid"></g>
+          <line id="cshx" stroke="#1E8449" stroke-width="4" opacity="0.8"/>
+          <line id="cshy" stroke="#D35400" stroke-width="4" opacity="0.8"/>
+          <line id="cdash1" stroke="#888" stroke-width="1" stroke-dasharray="5,5"/>
+          <line id="cdash2" stroke="#888" stroke-width="1" stroke-dasharray="5,5"/>
+          <line id="cv" stroke="#111" stroke-width="4" marker-end="url(#mC)"/>
+          <circle id="ch" r="14" fill="#111" fill-opacity="0.1" stroke="#111" stroke-width="1.5" cursor="grab"/>
+          <text id="clx" font-size="14" fill="#1E8449" font-weight="bold" font-family="Helvetica"></text>
+          <text id="cly" font-size="14" fill="#D35400" font-weight="bold" font-family="Helvetica"></text>
+          <text id="clv" font-size="16" font-style="italic" fill="#111" font-weight="bold">A</text>
+        </svg>
+        <div class="controls">
+          <span>A = <span class="big" id="cmag"></span></span>
+          <span>θ = <span class="big" id="cang"></span></span>
+          <span style="color:#1E8449">A cos θ = <span class="big" id="ccos"></span></span>
+          <span style="color:#D35400">A sin θ = <span class="big" id="csin"></span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Drag the arrowhead in a circle and watch the two shadows trade length. Where is the green shadow zero? Where are the two shadows equal?</div>
+      </div>
+
+      <p>Once vectors become pairs (or triples) of numbers, every operation turns
+      into ordinary arithmetic on like components: addition adds them, and the dot
+      and cross products get one-line formulas. The full machinery — with worked
+      examples, the dot and cross products, and position and separation vectors —
+      is in the <a href="main.pdf">textbook chapter</a>.</p>
+    </section>
+
+    <footer class="pager">
+      <span></span>
+      <a href="dimensions.html">Chapter 2: Dimensional Analysis &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  /* ---------- section 1: the walk dial ---------- */
+  (function () {
+    var cv = document.getElementById('walkcv'), cx = cv.getContext('2d');
+    var sl = document.getElementById('walkang');
+    function draw() {
+      var angDeg = parseFloat(sl.value);          // turn angle: 0 = straight on
+      var ang = angDeg * Math.PI / 180;
+      var U = 46;                                  // px per metre
+      var ox = 110, oy = 210;
+      cx.clearRect(0, 0, cv.width, cv.height);
+      // first leg: 4 m east
+      var p1 = { x: ox + 4 * U, y: oy };
+      // second leg: 3 m, turned by ang (counterclockwise up)
+      var p2 = { x: p1.x + 3 * U * Math.cos(ang), y: p1.y - 3 * U * Math.sin(ang) };
+      function arrow(a, b, color, w) {
+        cx.strokeStyle = color; cx.fillStyle = color; cx.lineWidth = w;
+        var dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy);
+        var ux = dx / L, uy = dy / L, hx = b.x - 12 * ux, hy = b.y - 12 * uy;
+        cx.beginPath(); cx.moveTo(a.x, a.y); cx.lineTo(hx, hy); cx.stroke();
+        cx.beginPath();
+        cx.moveTo(b.x, b.y);
+        cx.lineTo(hx - 5 * uy, hy + 5 * ux);
+        cx.lineTo(hx + 5 * uy, hy - 5 * ux);
+        cx.closePath(); cx.fill();
+      }
+      // legs
+      arrow({x:ox,y:oy}, p1, '#2E86C1', 4);
+      arrow(p1, p2, '#C0392B', 4);
+      // displacement
+      cx.setLineDash([7, 6]);
+      arrow({x:ox,y:oy}, p2, '#111', 3);
+      cx.setLineDash([]);
+      // labels
+      cx.font = 'bold 14px Helvetica';
+      cx.fillStyle = '#2E86C1'; cx.fillText('4 m', ox + 2 * U - 12, oy + 22);
+      cx.fillStyle = '#C0392B';
+      cx.fillText('3 m', (p1.x + p2.x) / 2 + 10, (p1.y + p2.y) / 2 - 8);
+      // start dot
+      cx.fillStyle = '#111';
+      cx.beginPath(); cx.arc(ox, oy, 4, 0, 7); cx.fill();
+      cx.font = '12px Helvetica'; cx.fillStyle = '#555';
+      cx.fillText('start', ox - 14, oy + 20);
+      // displacement magnitude: law of cosines with interior angle
+      var disp = Math.sqrt(16 + 9 + 24 * Math.cos(ang));
+      document.getElementById('walkdisp').textContent = disp.toFixed(1) + ' m';
+    }
+    sl.addEventListener('input', draw);
+    draw();
+  })();
+
+  /* ---------- section 2: drag sandbox ---------- */
+  (function () {
+    var U = 44, ORG = { x: 240, y: 240 }, W = 680, H = 380;
+    var a = { x: 4, y: 0 }, b = { x: 0, y: 3 }, locked = false;
+    var svg = document.getElementById('board');
+    var g = document.getElementById('grid'), s = '';
+    for (var x = ORG.x % U; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#00000010"/>';
+    for (var y = ORG.y % U; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#00000010"/>';
+    s += '<line x1="0" y1="'+ORG.y+'" x2="'+W+'" y2="'+ORG.y+'" stroke="#00000030"/>';
+    s += '<line x1="'+ORG.x+'" y1="0" x2="'+ORG.x+'" y2="'+H+'" stroke="#00000030"/>';
+    g.innerHTML = s;
+
+    function px(v) { return { x: ORG.x + v.x * U, y: ORG.y - v.y * U }; }
+    function setLine(id, f, t) {
+      var e = document.getElementById(id);
+      e.setAttribute('x1', f.x); e.setAttribute('y1', f.y);
+      e.setAttribute('x2', t.x); e.setAttribute('y2', t.y);
+    }
+    function mag(v) { return Math.hypot(v.x, v.y); }
+
+    function update() {
+      var pa = px(a), pb = px(b), r = { x: a.x + b.x, y: a.y + b.y }, pr = px(r);
+      setLine('va', {x:ORG.x,y:ORG.y}, pa);
+      setLine('vb', {x:ORG.x,y:ORG.y}, pb);
+      setLine('bg', pa, pr);
+      setLine('rr', {x:ORG.x,y:ORG.y}, pr);
+      [['ha',pa],['hb',pb]].forEach(function (q) {
+        var e = document.getElementById(q[0]);
+        e.setAttribute('cx', q[1].x); e.setAttribute('cy', q[1].y);
+      });
+      [['la',pa],['lb',pb],['lr',pr]].forEach(function (q) {
+        var e = document.getElementById(q[0]);
+        e.setAttribute('x', q[1].x + 10); e.setAttribute('y', q[1].y - 8);
+      });
+      var ma = mag(a), mb = mag(b), mr = mag(r);
+      var cosT = (ma && mb) ? (a.x*b.x + a.y*b.y)/(ma*mb) : 1;
+      cosT = Math.max(-1, Math.min(1, cosT));
+      var th = Math.acos(cosT) * 180 / Math.PI;
+      document.getElementById('maga').textContent = ma.toFixed(2);
+      document.getElementById('magb').textContent = mb.toFixed(2);
+      document.getElementById('ang').textContent = th.toFixed(1) + '°';
+      document.getElementById('magr').textContent = mr.toFixed(2);
+      if (locked) {
+        document.getElementById('chmsg').innerHTML =
+          Math.abs(mr - 5) < 0.05
+            ? '<b style="color:#1E8449">4 + 3 = 5 — you did it!</b> The angle reads ' + th.toFixed(1) + '°: cos θ has to vanish, so the arrows must be perpendicular.'
+            : 'Magnitudes locked. |a+b| = ' + mr.toFixed(2) + ' — rotate until it reads exactly 5.';
+      }
+    }
+
+    var dragging = null;
+    function fromEvent(e) {
+      var rect = svg.getBoundingClientRect();
+      var sx = (e.clientX - rect.left) * (W / rect.width);
+      var sy = (e.clientY - rect.top) * (H / rect.height);
+      return { gx: (sx - ORG.x) / U, gy: (ORG.y - sy) / U };
+    }
+    function applyDrag(e) {
+      if (!dragging) return;
+      var p = fromEvent(e);
+      if (locked) {
+        var m = mag(dragging) || 1, d = Math.hypot(p.gx, p.gy) || 1;
+        dragging.x = p.gx / d * m; dragging.y = p.gy / d * m;
+      } else {
+        dragging.x = Math.round(p.gx * 4) / 4;
+        dragging.y = Math.round(p.gy * 4) / 4;
+      }
+      update();
+    }
+    function hook(id, vec) {
+      var h = document.getElementById(id);
+      ['pointerdown', 'mousedown'].forEach(function (t) {
+        h.addEventListener(t, function (e) { dragging = vec; e.preventDefault(); });
+      });
+    }
+    hook('ha', a); hook('hb', b);
+    ['pointermove','mousemove'].forEach(function (t) {
+      window.addEventListener(t, function (e) { if (dragging) { applyDrag(e); e.preventDefault(); } });
+    });
+    ['pointerup','mouseup'].forEach(function (t) {
+      window.addEventListener(t, function () { dragging = null; });
+    });
+    document.getElementById('lockbtn').addEventListener('click', function () {
+      locked = true;
+      var ma = mag(a) || 1, mb = mag(b) || 1;
+      a.x = a.x/ma*4; a.y = a.y/ma*4; b.x = b.x/mb*3; b.y = b.y/mb*3;
+      update();
+    });
+    update();
+  })();
+
+  /* ---------- section 3: components ---------- */
+  (function () {
+    var U = 44, ORG = { x: 200, y: 260 }, W = 680, H = 340;
+    var v = { x: 5, y: 3 };
+    var svg = document.getElementById('cboard');
+    var g = document.getElementById('cgrid'), s = '';
+    for (var x = ORG.x % U; x <= W; x += U) s += '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#00000010"/>';
+    for (var y = ORG.y % U; y <= H; y += U) s += '<line x1="0" y1="'+y+'" x2="'+W+'" y2="'+y+'" stroke="#00000010"/>';
+    s += '<line x1="0" y1="'+ORG.y+'" x2="'+W+'" y2="'+ORG.y+'" stroke="#00000030"/>';
+    s += '<line x1="'+ORG.x+'" y1="0" x2="'+ORG.x+'" y2="'+H+'" stroke="#00000030"/>';
+    g.innerHTML = s;
+
+    function update() {
+      var p = { x: ORG.x + v.x * U, y: ORG.y - v.y * U };
+      function set(id, f, t) {
+        var e = document.getElementById(id);
+        e.setAttribute('x1', f.x); e.setAttribute('y1', f.y);
+        e.setAttribute('x2', t.x); e.setAttribute('y2', t.y);
+      }
+      set('cv', ORG, p);
+      set('cshx', ORG, { x: p.x, y: ORG.y });
+      set('cshy', { x: ORG.x, y: ORG.y }, { x: ORG.x, y: p.y });
+      set('cdash1', { x: p.x, y: ORG.y }, p);
+      set('cdash2', { x: ORG.x, y: p.y }, p);
+      var h = document.getElementById('ch');
+      h.setAttribute('cx', p.x); h.setAttribute('cy', p.y);
+      var lv = document.getElementById('clv');
+      lv.setAttribute('x', (ORG.x + p.x)/2 + 8); lv.setAttribute('y', (ORG.y + p.y)/2 - 8);
+      var lx = document.getElementById('clx');
+      lx.setAttribute('x', (ORG.x + p.x)/2 - 10); lx.setAttribute('y', ORG.y + 18);
+      lx.textContent = 'Ax';
+      var ly = document.getElementById('cly');
+      ly.setAttribute('x', ORG.x - 32); ly.setAttribute('y', (ORG.y + p.y)/2);
+      ly.textContent = 'Ay';
+      var A = Math.hypot(v.x, v.y);
+      var th = Math.atan2(v.y, v.x) * 180 / Math.PI;
+      document.getElementById('cmag').textContent = A.toFixed(2);
+      document.getElementById('cang').textContent = th.toFixed(1) + '°';
+      document.getElementById('ccos').textContent = v.x.toFixed(2);
+      document.getElementById('csin').textContent = v.y.toFixed(2);
+    }
+
+    var dragging = false;
+    ['pointerdown','mousedown'].forEach(function (t) {
+      document.getElementById('ch').addEventListener(t, function (e) { dragging = true; e.preventDefault(); });
+    });
+    ['pointermove','mousemove'].forEach(function (t) {
+      window.addEventListener(t, function (e) {
+        if (!dragging) return;
+        var rect = svg.getBoundingClientRect();
+        var sx = (e.clientX - rect.left) * (W / rect.width);
+        var sy = (e.clientY - rect.top) * (H / rect.height);
+        v.x = Math.round((sx - ORG.x) / U * 4) / 4;
+        v.y = Math.round((ORG.y - sy) / U * 4) / 4;
+        update();
+        e.preventDefault();
+      });
+    });
+    ['pointerup','mouseup'].forEach(function (t) {
+      window.addEventListener(t, function () { dragging = false; });
+    });
+    update();
+  })();
+</script>
+
+</body>
+</html>

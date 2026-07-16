@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Newton's Three Laws — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Fundamentals of Physics</a>
+  <a class="chap" href="vectors.html">1 Vectors</a>
+  <a class="chap" href="dimensions.html">2 Dimensions</a>
+  <a class="chap" href="motion.html">3 Motion</a>
+  <a class="chap current" href="newtons-laws.html">4 Newton's Laws</a>
+  <a class="chap" href="further-applications.html">5 Applications</a>
+  <a class="pdf" href="main.pdf">Textbook PDF</a>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 4</div>
+    <h1>Newton's Three Laws</h1>
+    <p class="lead">What does it take to keep something moving? Aristotle said a
+    continuous push, and every rolling ball seems to agree. It took Galileo's
+    imagination to see past friction — and Newton to build the whole of mechanics
+    on what he saw.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#galileo">1. Galileo's ramps</a></li>
+      <li><a href="#secondlaw">2. Equal force, unequal effect</a></li>
+      <li><a href="#atwood">3. The Atwood machine</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="galileo">
+      <h2>1 &nbsp;Galileo's ramps</h2>
+      <p>Release a ball on one incline and let it roll down and up a facing
+      incline: it climbs back to (very nearly) its starting height. Galileo
+      reasoned it would reach <em>exactly</em> that height if friction could be
+      removed. Now make the second incline shallower — the ball must roll farther
+      to regain its height. And if the second incline is perfectly flat? The ball
+      still "tries" to regain its height, but never can. It must roll forever.</p>
+
+      <div class="viz">
+        <div class="vhead">Flatten the second ramp</div>
+        <canvas id="rampcv" width="680" height="300"></canvas>
+        <div class="controls">
+          <label>second ramp angle <input type="range" id="rang" min="0" max="30" step="1" value="20"> <span class="big" id="rangv"></span>°</label>
+          <button id="rollbtn">Release the ball</button>
+          <span class="note" id="rampmsg"></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">The dashed line marks the starting height. Try 20°, then 8°, then 0°.</div>
+      </div>
+
+      <p>Nothing pushes the ball on the flat track — and nothing stops it. That is
+      Newton's <b>first law</b>: force is not what <em>maintains</em> motion but
+      what <em>changes</em> it. A body at constant velocity is no more mysterious
+      than a body at rest.</p>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="secondlaw">
+      <h2>2 &nbsp;Equal force, unequal effect</h2>
+      <p>If force changes motion, how much change does a given force buy? Newton's
+      <b>second law</b> answers: the acceleration equals the net force divided by
+      the mass, <b>F</b> = m<b>a</b>. Mass is the resistance to being
+      accelerated — inertia, measured in kilograms.</p>
+      <p>His <b>third law</b> adds a twist that fools almost everyone: when two
+      bodies interact, the forces on each are <em>always</em> equal and opposite —
+      a speeding truck and the mosquito it hits exert exactly equal forces on each
+      other. What differs is what those equal forces <em>do</em>.</p>
+
+      <div class="viz">
+        <div class="vhead">Same force, different mass</div>
+        <canvas id="f2cv" width="680" height="240"></canvas>
+        <div class="controls">
+          <label>mass ratio <input type="range" id="mratio" min="1" max="1000" step="1" value="100"> <span class="big" id="mrv"></span>&times;</label>
+          <span class="note">both bodies feel the same 100 N force</span>
+        </div>
+      </div>
+
+      <p>Equal forces, unequal consequences: the same 100 N gives the light body a
+      thousand times the acceleration when it has a thousandth of the mass. Do not
+      confuse the force with what the force does.</p>
+    </section>
+
+    <!-- ============ section 3 ============ -->
+    <section class="idea" id="atwood">
+      <h2>3 &nbsp;The Atwood machine</h2>
+      <p>In 1784 George Atwood faced a problem: free fall is too fast to measure
+      with an eighteenth-century clock. His fix was sly — hang two nearly equal
+      masses over a pulley. Only the <em>difference</em> of the weights drives the
+      motion, but the <em>whole</em> combined mass must be accelerated, so the
+      system falls in slow motion: a = (m₁ − m₂)g / (m₁ + m₂).</p>
+
+      <div class="viz">
+        <div class="vhead">Free fall, slowed to order</div>
+        <canvas id="atcv" width="680" height="330"></canvas>
+        <div class="controls">
+          <label>m₁ <input type="range" id="m1" min="1" max="10" step="0.5" value="6"> <span class="big" id="m1v"></span> kg</label>
+          <label>m₂ <input type="range" id="m2" min="1" max="10" step="0.5" value="4"> <span class="big" id="m2v"></span> kg</label>
+          <button id="atbtn">Release</button>
+        </div>
+        <div class="controls">
+          <span>acceleration a = <span class="big" id="atacc"></span></span>
+          <span>tension T = <span class="big" id="atten"></span></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">Before releasing: will the
+        tension be bigger than, smaller than, or between the two weights? Try
+        equal masses, and try 10 vs 1. (g = 10 m/s².)</div>
+      </div>
+
+      <p>With 6 kg and 4 kg the acceleration is exactly g/5 — free fall slowed
+      five-fold, gentle enough for a pendulum clock. Atwood measured g this way to
+      about one percent. The full analysis — free-body diagrams, and why the
+      tension always sits <em>between</em> the two weights — is in the
+      <a href="main.pdf">textbook chapter</a>.</p>
+    </section>
+
+    <footer class="pager">
+      <a href="motion.html">&larr; Chapter 3: Motion</a>
+      <a href="further-applications.html">Chapter 5: Friction, Elevators &amp; Gravity &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  /* ---------- section 1: Galileo's ramps ---------- */
+  (function () {
+    var cv = document.getElementById('rampcv'), cx = cv.getContext('2d');
+    var sl = document.getElementById('rang');
+    var G = 10, H = 0.8;                     // start height, m
+    var U = 80;                              // px per m
+    var LEFT_ANG = 30 * Math.PI / 180;
+    var vx0 = 180, vy0 = 240;                // valley point, px
+    var s = 0, v = 0, seg = 'L', running = false, lastTs = null, stoppedAtTop = false;
+    // s: distance along current segment from the valley (L: up-left, R: up-right, F: flat to the right)
+    var LA = H / Math.sin(LEFT_ANG);         // left incline length, m
+    function ang() { return parseFloat(sl.value) * Math.PI / 180; }
+
+    function posOf(seg, s) {
+      if (seg === 'L') return { x: vx0 - s * Math.cos(LEFT_ANG) * U, y: vy0 - s * Math.sin(LEFT_ANG) * U };
+      var a = ang();
+      return { x: vx0 + s * Math.cos(a) * U, y: vy0 - s * Math.sin(a) * U };
+    }
+
+    function draw() {
+      cx.clearRect(0, 0, cv.width, cv.height);
+      document.getElementById('rangv').textContent = sl.value;
+      var a = ang();
+      // dashed start-height line
+      cx.strokeStyle = '#88774f'; cx.setLineDash([6, 6]); cx.lineWidth = 1.2;
+      cx.beginPath(); cx.moveTo(0, vy0 - H * U); cx.lineTo(cv.width, vy0 - H * U); cx.stroke();
+      cx.setLineDash([]);
+      cx.font = '12px Helvetica'; cx.fillStyle = '#6a5f45';
+      cx.fillText('starting height', 8, vy0 - H * U - 6);
+      // left incline
+      var top = posOf('L', LA);
+      cx.strokeStyle = '#333'; cx.lineWidth = 3;
+      cx.beginPath(); cx.moveTo(top.x, top.y); cx.lineTo(vx0, vy0);
+      // right incline / flat
+      var rlen = a > 0.001 ? (H / Math.sin(a)) * 1.15 : 6.2;
+      var rend = posOf('R', rlen);
+      cx.lineTo(rend.x, rend.y); cx.stroke();
+      // ball, lifted perpendicular off the track
+      var p = posOf(seg, s);
+      var lift = seg === 'L' ? Math.cos(LEFT_ANG) : Math.cos(ang());
+      cx.fillStyle = '#C0392B';
+      cx.beginPath();
+      cx.arc(p.x, p.y - 11 * lift - 1, 10, 0, 7);
+      cx.fill();
+      if (stoppedAtTop) {
+        cx.font = 'bold 13px Helvetica'; cx.fillStyle = '#1E8449';
+        cx.fillText('same height!', p.x - 30, p.y - 24);
+      }
+    }
+
+    // Closed-form kinematics: no integration, no drift.
+    // Phase 1 (descent): s(t) = LA - ½ a1 t², a1 = g sin(30°), until t1 = √(2·LA/a1).
+    // Phase 2 (climb):   d(τ) = v0 τ - ½ a2 τ², a2 = g sin(θ); stops at τ = v0/a2
+    //                    having rolled exactly v0²/(2 a2) — the same-height point.
+    var simT = 0, startWall = 0;
+    function tick(ts) {
+      if (!running) return;
+      simT = (ts - startWall) / 1000 * 1.2;   // wall-clock based: robust even if frames are throttled
+      var a = ang();
+      var a1 = G * Math.sin(LEFT_ANG);
+      var t1 = Math.sqrt(2 * LA / a1);
+      var v0 = a1 * t1;
+      if (simT <= t1) {
+        seg = 'L';
+        s = LA - 0.5 * a1 * simT * simT;
+      } else {
+        seg = 'R';
+        var tau = simT - t1;
+        var a2 = G * Math.sin(a);
+        if (a > 0.001) {
+          var tauStop = v0 / a2;
+          if (tau >= tauStop) {
+            s = v0 * v0 / (2 * a2);            // exactly the same-height distance
+            running = false; stoppedAtTop = true;
+            document.getElementById('rampmsg').textContent =
+              'stopped at its starting height, after rolling ' + s.toFixed(1) + ' m along the ramp';
+          } else {
+            s = v0 * tau - 0.5 * a2 * tau * tau;
+            if (posOf('R', s).x > cv.width + 20) {
+              running = false;
+              document.getElementById('rampmsg').textContent =
+                'so shallow it left the screen still climbing — it would stop after ' +
+                (v0 * v0 / (2 * a2)).toFixed(1) + ' m, at its starting height';
+            }
+          }
+        } else {
+          s = v0 * tau;                        // flat: constant velocity forever
+          if (posOf('R', s).x > cv.width + 20) {
+            document.getElementById('rampmsg').textContent =
+              'flat track: nothing stops it — it just keeps going';
+            running = false;
+          }
+        }
+      }
+      draw();
+      if (running) requestAnimationFrame(tick);
+    }
+
+    document.getElementById('rollbtn').addEventListener('click', function () {
+      seg = 'L'; s = LA; v = 0; simT = 0; startWall = performance.now();
+      running = true; stoppedAtTop = false;
+      document.getElementById('rampmsg').textContent = '';
+      requestAnimationFrame(tick);
+    });
+    sl.addEventListener('input', function () { if (!running) { stoppedAtTop = false; draw(); } });
+    seg = 'L'; s = LA;
+    draw();
+  })();
+
+  /* ---------- section 2: equal force, unequal effect ---------- */
+  (function () {
+    var cv = document.getElementById('f2cv'), cx = cv.getContext('2d');
+    var sl = document.getElementById('mratio');
+    var F = 100;
+    function draw() {
+      var ratio = parseFloat(sl.value);
+      document.getElementById('mrv').textContent = ratio.toFixed(0);
+      cx.clearRect(0, 0, cv.width, cv.height);
+      var rows = [
+        { label: 'heavy body:  m = ' + (ratio).toFixed(0) + ' kg', m: ratio, y: 60, size: 30 + 26 * Math.log10(ratio) / 3 },
+        { label: 'light body:  m = 1 kg', m: 1, y: 165, size: 26 }
+      ];
+      rows.forEach(function (r) {
+        // block
+        cx.fillStyle = '#00000020'; cx.strokeStyle = '#333'; cx.lineWidth = 2;
+        var s = r.size;
+        cx.fillRect(70, r.y - s / 2, s, s); cx.strokeRect(70, r.y - s / 2, s, s);
+        // force arrow — SAME length for both
+        cx.strokeStyle = '#C0392B'; cx.fillStyle = '#C0392B'; cx.lineWidth = 5;
+        cx.beginPath(); cx.moveTo(18, r.y); cx.lineTo(58, r.y); cx.stroke();
+        cx.beginPath(); cx.moveTo(68, r.y); cx.lineTo(54, r.y - 7); cx.lineTo(54, r.y + 7); cx.fill();
+        cx.font = 'bold 12px Helvetica';
+        cx.fillText('F = 100 N', 6, r.y - 14);
+        // acceleration bar
+        var acc = F / r.m;
+        var barw = Math.min(430, 4.3 * acc);
+        cx.fillStyle = '#1E8449';
+        cx.fillRect(70 + s + 26, r.y - 8, Math.max(barw, 2), 16);
+        cx.fillStyle = '#111'; cx.font = '12px Helvetica';
+        cx.fillText('a = ' + (acc >= 10 ? acc.toFixed(0) : acc.toFixed(1)) + ' m/s²', 70 + s + 30 + Math.max(barw, 2), r.y + 4);
+        cx.fillStyle = '#555';
+        cx.fillText(r.label, 70, r.y - s / 2 - 8);
+      });
+    }
+    sl.addEventListener('input', draw);
+    draw();
+  })();
+
+  /* ---------- section 3: Atwood machine ---------- */
+  (function () {
+    var cv = document.getElementById('atcv'), cx = cv.getContext('2d');
+    var s1 = document.getElementById('m1'), s2 = document.getElementById('m2');
+    var G = 10;
+    var t = 0, running = false, lastTs = null;
+    var px = 340, py = 46, R = 26;           // pulley
+    var y10 = 150, y20 = 150;                // rest positions (px below pulley)
+    function vals() {
+      var m1 = parseFloat(s1.value), m2 = parseFloat(s2.value);
+      var a = (m1 - m2) * G / (m1 + m2);
+      var T = 2 * m1 * m2 * G / (m1 + m2);
+      return { m1: m1, m2: m2, a: a, T: T };
+    }
+    function draw() {
+      var v = vals();
+      document.getElementById('m1v').textContent = v.m1.toFixed(1);
+      document.getElementById('m2v').textContent = v.m2.toFixed(1);
+      document.getElementById('atacc').textContent = v.a.toFixed(2) + ' m/s²' + (Math.abs(v.a) < 1e-9 ? ' (balanced)' : '');
+      document.getElementById('atten').textContent = v.T.toFixed(1) + ' N';
+      cx.clearRect(0, 0, cv.width, cv.height);
+      // ceiling
+      cx.strokeStyle = '#333'; cx.lineWidth = 2;
+      cx.beginPath(); cx.moveTo(px - 80, 12); cx.lineTo(px + 80, 12); cx.stroke();
+      cx.beginPath(); cx.moveTo(px, 12); cx.lineTo(px, py - R); cx.stroke();
+      // pulley
+      cx.beginPath(); cx.arc(px, py, R, 0, 7);
+      cx.fillStyle = '#00000015'; cx.fill(); cx.strokeStyle = '#333'; cx.stroke();
+      // displacement (m -> px): slow-mo animation, 30 px per metre
+      var d = 0.5 * v.a * t * t * 30;
+      d = Math.max(Math.min(d, 100), -100);
+      var y1 = py + y10 + d, y2 = py + y20 - d;
+      // strings
+      cx.beginPath(); cx.moveTo(px - R, py); cx.lineTo(px - R, y1); cx.stroke();
+      cx.beginPath(); cx.moveTo(px + R, py); cx.lineTo(px + R, y2); cx.stroke();
+      // blocks: size ∝ mass
+      function block(x, y, m, color, label) {
+        var s = 26 + m * 3.4;
+        cx.fillStyle = color; cx.strokeStyle = '#333'; cx.lineWidth = 2;
+        cx.fillRect(x - s / 2, y, s, s); cx.strokeRect(x - s / 2, y, s, s);
+        cx.fillStyle = '#111'; cx.font = 'bold 12px Helvetica';
+        cx.fillText(label, x - 20, y + s + 15);
+      }
+      block(px - R, y1, v.m1, '#2E86C155', 'm₁ = ' + v.m1.toFixed(1) + ' kg');
+      block(px + R, y2, v.m2, '#C0392B55', 'm₂ = ' + v.m2.toFixed(1) + ' kg');
+    }
+    function tick(ts) {
+      if (!running) return;
+      if (lastTs === null) lastTs = ts;
+      t += (ts - lastTs) / 1000;
+      lastTs = ts;
+      if (0.5 * Math.abs(vals().a) * t * t * 30 >= 100) running = false;
+      draw();
+      if (running) requestAnimationFrame(tick);
+    }
+    document.getElementById('atbtn').addEventListener('click', function () {
+      t = 0; running = true; lastTs = null;
+      requestAnimationFrame(tick);
+    });
+    [s1, s2].forEach(function (s) {
+      s.addEventListener('input', function () { t = 0; running = false; draw(); });
+    });
+    draw();
+  })();
+</script>
+
+</body>
+</html>

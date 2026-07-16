@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dimensional Analysis — Fundamentals of Physics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="index.html">Fundamentals of Physics</a>
+  <a class="chap" href="vectors.html">1 Vectors</a>
+  <a class="chap current" href="dimensions.html">2 Dimensions</a>
+  <a class="chap" href="motion.html">3 Motion</a>
+  <a class="chap" href="newtons-laws.html">4 Newton's Laws</a>
+  <a class="chap" href="further-applications.html">5 Applications</a>
+  <a class="pdf" href="main.pdf">Textbook PDF</a>
+</nav>
+
+<div class="chapter-head">
+  <div class="inner">
+    <div class="num">Chapter 2</div>
+    <h1>Dimensional Analysis</h1>
+    <p class="lead">Every physical quantity is built from a few base ingredients —
+    mass [M], length [L], time [T]. Any honest equation must balance these on both
+    sides. That single rule catches algebra mistakes, and sometimes predicts a
+    formula before any physics is done.</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="label">Sections</div>
+    <ol>
+      <li><a href="#build">1. Guess the formula</a></li>
+      <li><a href="#bomb">2. The bomb in the photograph</a></li>
+    </ol>
+    <div class="label">Offline</div>
+    <a class="pdfside" href="main.pdf">Download the textbook (PDF)</a>
+  </aside>
+
+  <main class="content">
+
+    <!-- ============ section 1 ============ -->
+    <section class="idea" id="build">
+      <h2>1 &nbsp;Guess the formula</h2>
+      <p>Here is a challenge that sounds impossible: predict how a pendulum's
+      period depends on its length <i>l</i>, its bob's mass <i>m</i>, and gravity
+      <i>g</i> — <em>without using any law of motion</em>. Assume the answer is a
+      product, t = k&thinsp;l<sup>a</sup>&thinsp;m<sup>b</sup>&thinsp;g<sup>c</sup>,
+      and demand only that the dimensions work out to a time.</p>
+
+      <div class="viz">
+        <div class="vhead">Balance the dimensions: make a time</div>
+        <div style="font-size:1.25rem; text-align:center; margin:0.6rem 0; font-family:Georgia">
+          t &nbsp;=&nbsp; k &middot; l<sup id="expa">?</sup> &middot; m<sup id="expb">?</sup> &middot; g<sup id="expc">?</sup>
+        </div>
+        <div style="text-align:center; font-size:1.05rem; margin-bottom:0.6rem">
+          dimensions: <span class="big" id="dims"></span>
+          <span id="verdict" style="font-family:Helvetica; font-weight:bold; margin-left:0.8rem"></span>
+        </div>
+        <div class="controls" style="justify-content:center">
+          <label>a (length) <input type="range" id="sa" min="-1" max="1" step="0.5" value="0"> <span class="big" id="va2">0</span></label>
+          <label>b (mass) <input type="range" id="sb" min="-1" max="1" step="0.5" value="0"> <span class="big" id="vb2">0</span></label>
+          <label>c (gravity) <input type="range" id="sc" min="-1" max="1" step="0.5" value="0"> <span class="big" id="vc2">0</span></label>
+        </div>
+        <div class="note" style="margin-top:0.5rem">
+          Reminders: [l] = L, [m] = M, [g] = L&thinsp;T<sup>&minus;2</sup>. You need the total to come out as plain T.
+        </div>
+      </div>
+
+      <p>There is exactly one way to win — and notice what the winning setting
+      says: the mass exponent must be <b>zero</b>. A heavy stone and a light
+      stone on equal strings must swing in step, not because anyone measured it,
+      but because no other answer can balance. Two stones and a shoelace will
+      confirm it. (What the method cannot give you is the dimensionless constant
+      k; the full theory says k = 2π.)</p>
+    </section>
+
+    <!-- ============ section 2 ============ -->
+    <section class="idea" id="bomb">
+      <h2>2 &nbsp;The bomb in the photograph</h2>
+      <p>In 1947 the US government declassified photographs of the first atomic
+      fireball, each frame stamped with a time and a distance scale. The yield was
+      still top secret. The British physicist G.&thinsp;I.&thinsp;Taylor reasoned
+      that the fireball radius <i>R</i> could depend only on the energy <i>E</i>,
+      the air density <i>ρ</i>, and the time <i>t</i> — and there is exactly one
+      way to build a length from those:
+      R = (E&thinsp;t&sup2;/ρ)<sup>1/5</sup>.</p>
+
+      <div class="viz">
+        <div class="vhead">Fit the energy to the photograph</div>
+        <canvas id="bombcv" width="680" height="330"></canvas>
+        <div class="controls">
+          <label>energy E <input type="range" id="se" min="1" max="60" step="0.5" value="5"> <span class="big" id="ve"></span> kilotons</label>
+          <span id="bombmsg" class="note"></span>
+        </div>
+        <div class="note" style="margin-top:0.4rem">
+          The dot is the declassified data: R ≈ 140 m at t = 25 ms. Slide E until
+          the curve passes through it — you are re-deriving a military secret with
+          bookkeeping.
+        </div>
+      </div>
+
+      <p>Taylor published his estimate in 1950: about twenty kilotons,
+      embarrassingly close to the classified value. No espionage — just the same
+      exponent-balancing you did in the previous section. The full story, and the
+      method's limits, are in the <a href="main.pdf">textbook chapter</a>.</p>
+    </section>
+
+    <footer class="pager">
+      <a href="vectors.html">&larr; Chapter 1: Vectors</a>
+      <a href="motion.html">Chapter 3: Motion &rarr;</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  /* ---------- section 1: exponent builder ---------- */
+  (function () {
+    var sa = document.getElementById('sa'), sb = document.getElementById('sb'), sc = document.getElementById('sc');
+    function fmt(x) { return (x === 0 ? '0' : (Math.round(x*100)/100).toString()); }
+    function supFmt(x) {
+      if (x === 0.5) return '½';
+      if (x === -0.5) return '−½';
+      return (x < 0 ? '−' : '') + Math.abs(x);
+    }
+    function update() {
+      var a = parseFloat(sa.value), b = parseFloat(sb.value), c = parseFloat(sc.value);
+      document.getElementById('expa').textContent = supFmt(a);
+      document.getElementById('expb').textContent = supFmt(b);
+      document.getElementById('expc').textContent = supFmt(c);
+      document.getElementById('va2').textContent = fmt(a);
+      document.getElementById('vb2').textContent = fmt(b);
+      document.getElementById('vc2').textContent = fmt(c);
+      // dimensions: L^{a+c} M^b T^{-2c}
+      var L = a + c, M = b, T = -2 * c;
+      var parts = [];
+      if (Math.abs(L) > 1e-9) parts.push('L' + expo(L));
+      if (Math.abs(M) > 1e-9) parts.push('M' + expo(M));
+      if (Math.abs(T) > 1e-9) parts.push('T' + expo(T));
+      document.getElementById('dims').innerHTML = parts.length ? parts.join('&thinsp;') : 'dimensionless';
+      var win = Math.abs(L) < 1e-9 && Math.abs(M) < 1e-9 && Math.abs(T - 1) < 1e-9;
+      var v = document.getElementById('verdict');
+      if (win) { v.textContent = '✓ a time! t = k √(l/g)'; v.style.color = '#1E8449'; }
+      else if (parts.length === 0) { v.textContent = 'dimensionless — not a time'; v.style.color = '#C0392B'; }
+      else { v.textContent = 'not a time yet'; v.style.color = '#C0392B'; }
+    }
+    function expo(x) {
+      if (Math.abs(x - 1) < 1e-9) return '';
+      var nice = { '0.5': '½', '-0.5': '−½', '1.5': '³⁄₂', '-1.5': '−³⁄₂', '2': '2', '-2': '−2', '-1': '−1' };
+      var key = (Math.round(x * 100) / 100).toString();
+      return '<sup>' + (nice[key] || key) + '</sup>';
+    }
+    [sa, sb, sc].forEach(function (s) { s.addEventListener('input', update); });
+    update();
+  })();
+
+  /* ---------- section 2: fireball fit ---------- */
+  (function () {
+    var cv = document.getElementById('bombcv'), cx = cv.getContext('2d');
+    var se = document.getElementById('se');
+    var RHO = 1.2;                 // kg/m^3
+    var KT = 4.184e12;             // J per kiloton
+    var TMAX = 0.062, RMAX = 260;  // axes: s, m
+    var L = 60, B = 290, W2 = 600, H2 = 260;
+    function X(t) { return L + t / TMAX * W2; }
+    function Y(r) { return B - r / RMAX * H2; }
+    function draw() {
+      var Ekt = parseFloat(se.value);
+      document.getElementById('ve').textContent = Ekt.toFixed(1);
+      var E = Ekt * KT;
+      cx.clearRect(0, 0, cv.width, cv.height);
+      // axes
+      cx.strokeStyle = '#00000045'; cx.lineWidth = 1;
+      cx.beginPath(); cx.moveTo(L, B - H2); cx.lineTo(L, B); cx.lineTo(L + W2, B); cx.stroke();
+      cx.fillStyle = '#555'; cx.font = '12px Helvetica';
+      cx.fillText('time after detonation (ms)', L + W2/2 - 70, B + 26);
+      cx.save(); cx.translate(16, B - H2/2 + 50); cx.rotate(-Math.PI/2);
+      cx.fillText('fireball radius (m)', 0, 0); cx.restore();
+      for (var ms = 0; ms <= 60; ms += 10) {
+        cx.fillText(ms, X(ms/1000) - 6, B + 14);
+      }
+      for (var r = 0; r <= 250; r += 50) {
+        cx.fillText(r, L - 30, Y(r) + 4);
+        cx.strokeStyle = '#00000012';
+        cx.beginPath(); cx.moveTo(L, Y(r)); cx.lineTo(L + W2, Y(r)); cx.stroke();
+      }
+      // curve R = (E t^2 / rho)^(1/5)
+      cx.strokeStyle = '#C0392B'; cx.lineWidth = 2.5;
+      cx.beginPath();
+      for (var i = 0; i <= 200; i++) {
+        var t = i / 200 * TMAX;
+        var R = Math.pow(E * t * t / RHO, 0.2);
+        var x = X(t), y = Y(Math.min(R, RMAX));
+        if (i === 0) cx.moveTo(x, y); else cx.lineTo(x, y);
+      }
+      cx.stroke();
+      // Taylor's data point
+      var tD = 0.025, rD = 140;
+      cx.fillStyle = '#111';
+      cx.beginPath(); cx.arc(X(tD), Y(rD), 6, 0, 7); cx.fill();
+      cx.font = 'bold 12px Helvetica';
+      cx.fillText('declassified frame: 140 m at 25 ms', X(tD) + 12, Y(rD) - 6);
+      // fit check: R(t=25ms) vs 140
+      var Rat = Math.pow(E * tD * tD / RHO, 0.2);
+      var msg = document.getElementById('bombmsg');
+      if (Math.abs(Rat - rD) < 5) {
+        msg.innerHTML = '<b style="color:#1E8449">The curve passes through the data at E ≈ ' + Ekt.toFixed(0) + ' kt — the classified value was ≈ 21 kt. Bookkeeping alone, with its unknown constant taken as 1, lands within about 20% of a state secret.</b>';
+      } else {
+        msg.textContent = 'curve at 25 ms: ' + Rat.toFixed(0) + ' m — ' + (Rat < rD ? 'too low, more energy' : 'too high, less energy');
+      }
+    }
+    se.addEventListener('input', draw);
+    draw();
+  })();
+</script>
+
+</body>
+</html>
